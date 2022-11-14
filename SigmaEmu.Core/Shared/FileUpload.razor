@@ -1,0 +1,15 @@
+﻿<div>
+    <p>No file currently open. Please select a file</p>
+    <InputFile OnChange="@LoadFile" />
+</div>
+
+@code {
+
+    [Parameter]
+    public Func<IBrowserFile, Task>? ProcessFile { get; set; }
+    private void LoadFile(InputFileChangeEventArgs e)
+    {
+        ProcessFile?.Invoke(e.File);
+    }
+    
+}

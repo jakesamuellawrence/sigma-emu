@@ -1,0 +1,23 @@
+﻿@using SigmaEmu.Core.Models
+
+@if (_source == null)
+{
+    <FileUpload ProcessFile="LoadFile" />
+}
+else
+{
+    @foreach (var line in _source.Lines)
+    {
+        <span>@line</span><br/>
+    }
+}
+
+@code {
+    private Source? _source;
+
+    private async Task LoadFile(IBrowserFile file)
+    {
+        _source = await Source.FromFileAsync(file);
+        StateHasChanged();
+    }
+}
