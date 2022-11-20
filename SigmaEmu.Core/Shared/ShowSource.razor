@@ -2,14 +2,18 @@
 
 @if (_source == null)
 {
-    <FileUpload ProcessFile="LoadFile" />
+    <div class="w-100 h-100 bg-grey-darkest d-flex justify-content-around align-items-center">
+        <FileUpload ProcessFile="LoadFile" />
+    </div>
 }
 else
 {
-    @foreach (var line in _source.Lines)
-    {
-        <pre class="m-0">@line</pre>
-    }
+    <div class="w-100 h-100 bg-grey-main text-white p-2">
+        @foreach (var line in _source.Lines)
+        {
+            <pre class="m-0">@line</pre>
+        }
+    </div>
 }
 
 @code {
