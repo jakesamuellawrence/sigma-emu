@@ -19,9 +19,8 @@ else
 @code {
     private Source? _source;
 
-    private async Task LoadFile(IBrowserFile file)
+    private async void LoadFile(IBrowserFile file)
     {
         _source = await Source.FromFileAsync(file);
-        StateHasChanged();
     }
 }

@@ -6,10 +6,11 @@
 @code {
 
     [Parameter]
-    public Func<IBrowserFile, Task>? ProcessFile { get; set; }
+    public EventCallback<IBrowserFile> ProcessFile { get; set; }
+    // public Func<IBrowserFile, Task>? ProcessFile { get; set; }
     private void LoadFile(InputFileChangeEventArgs e)
     {
-        ProcessFile?.Invoke(e.File);
+        ProcessFile.InvokeAsync(e.File);
     }
     
 }
