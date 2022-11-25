@@ -1,6 +1,6 @@
 ﻿<div class="bg-grey-main text-text-lighter p-3 d-inline-block rounded-2 flex-grow-0">
     <p>No file currently open. Please select a file</p>
-    <InputFile OnChange="@LoadFile" />
+    <InputFile OnChange="@LoadFileAsync" />
 </div>
 
 @code {
@@ -8,9 +8,9 @@
     [Parameter]
     public EventCallback<IBrowserFile> ProcessFile { get; set; }
     // public Func<IBrowserFile, Task>? ProcessFile { get; set; }
-    private void LoadFile(InputFileChangeEventArgs e)
+    private async Task LoadFileAsync(InputFileChangeEventArgs e)
     {
-        ProcessFile.InvokeAsync(e.File);
+        await ProcessFile.InvokeAsync(e.File);
     }
     
 }

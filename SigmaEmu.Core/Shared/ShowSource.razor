@@ -22,5 +22,6 @@ else
     private async void LoadFile(IBrowserFile file)
     {
         _source = await Source.FromFileAsync(file);
+        StateHasChanged();
     }
 }
