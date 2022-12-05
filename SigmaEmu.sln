@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmaEmu.Core", "SigmaEmu.Core\SigmaEmu.Core.csproj", "{33DCB2B4-A129-47B0-8854-4258CE776671}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmaEmu.Assembler", "SigmaEmu.Assembler\SigmaEmu.Assembler.csproj", "{1C6C006C-63B2-4A15-B483-D3937DA32A5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{33DCB2B4-A129-47B0-8854-4258CE776671}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33DCB2B4-A129-47B0-8854-4258CE776671}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33DCB2B4-A129-47B0-8854-4258CE776671}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C6C006C-63B2-4A15-B483-D3937DA32A5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C6C006C-63B2-4A15-B483-D3937DA32A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C6C006C-63B2-4A15-B483-D3937DA32A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C6C006C-63B2-4A15-B483-D3937DA32A5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

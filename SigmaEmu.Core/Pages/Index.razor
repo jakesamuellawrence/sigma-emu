@@ -1,9 +1,16 @@
 ﻿@page "/"
+@using SigmaEmu.Assembler.Assembler
 
 <Toolbar/>
 
 <ShowSource/>
 
 @code {
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        Assembler.Parse("; R3 := 6 * x = 42 (hex 002a) \n ");
+        return base.SetParametersAsync(parameters);
+    }
 
 }
