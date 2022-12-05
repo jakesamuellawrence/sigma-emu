@@ -9,5 +9,9 @@
     <ItemGroup>
       <PackageReference Include="Antlr4.Runtime.Standard" Version="4.11.1" />
     </ItemGroup>
+    
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+        <Exec Command="java -jar .\Parser\antlr-4.11.1-complete.jar -Dlanguage=CSharp .\Parser\Sigma16.g4" />
+    </Target>
 
 </Project>

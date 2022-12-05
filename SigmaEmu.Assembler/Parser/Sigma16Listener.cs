@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from .\Sigma16.g4 by ANTLR 4.11.1
+// Generated from .\Parser\Sigma16.g4 by ANTLR 4.11.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -70,4 +70,34 @@ public interface ISigma16Listener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitRx_instruction([NotNull] Sigma16Parser.Rx_instructionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.data_instruction"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterData_instruction([NotNull] Sigma16Parser.Data_instructionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.data_instruction"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitData_instruction([NotNull] Sigma16Parser.Data_instructionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.reg"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterReg([NotNull] Sigma16Parser.RegContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.reg"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitReg([NotNull] Sigma16Parser.RegContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.x"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterX([NotNull] Sigma16Parser.XContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.x"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitX([NotNull] Sigma16Parser.XContext context);
 }
