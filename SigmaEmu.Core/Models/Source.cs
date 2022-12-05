@@ -6,7 +6,7 @@ public class Source
 {
     public List<string> Lines { get; }
 
-    public Source(List<string> lines)
+    private Source(List<string> lines)
     {
         Lines = lines;
     }

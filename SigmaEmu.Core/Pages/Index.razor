@@ -9,7 +9,12 @@
 
     public override Task SetParametersAsync(ParameterView parameters)
     {
-        Assembler.Parse("; R3 := 6 * x = 42 (hex 002a) \n ");
+        Console.WriteLine("loading");
+        var listing = Assembler.Assemble("start    add R1,R7,R15  \n mul R2,R0,R1 \n");
+        foreach (var line in listing.Lines)
+        {
+            Console.WriteLine($"{line.Address.toHexString()} {line.Code1.toHexString()} {line.Code2?.toHexString()} {line.Source}");
+        }
         return base.SetParametersAsync(parameters);
     }
 

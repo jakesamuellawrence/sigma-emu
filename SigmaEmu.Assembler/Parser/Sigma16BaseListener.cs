@@ -96,17 +96,17 @@ public partial class Sigma16BaseListener : ISigma16Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitData_instruction([NotNull] Sigma16Parser.Data_instructionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="Sigma16Parser.reg"/>.
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.label_def"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterReg([NotNull] Sigma16Parser.RegContext context) { }
+	public virtual void EnterLabel_def([NotNull] Sigma16Parser.Label_defContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="Sigma16Parser.reg"/>.
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.label_def"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitReg([NotNull] Sigma16Parser.RegContext context) { }
+	public virtual void ExitLabel_def([NotNull] Sigma16Parser.Label_defContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="Sigma16Parser.x"/>.
 	/// <para>The default implementation does nothing.</para>

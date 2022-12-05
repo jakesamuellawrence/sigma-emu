@@ -1,10 +1,12 @@
 ﻿using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
+using SigmaEmu.Models;
 
 namespace SigmaEmu.Assembler.Assembler;
 
 public static class Assembler
 {
-    public static void Parse(string input)
+    public static Listing Assemble(string input)
     {
         var stream = CharStreams.fromString(input);
         var lexer = new Sigma16Lexer(stream);
@@ -13,6 +15,8 @@ public static class Assembler
         {
             BuildParseTree = true
         };
-        Console.WriteLine(parser.program());
+        var assembler = new AssemblerListener(stream);
+        ParseTreeWalker.Default.Walk(assembler, parser.program());
+        return assembler.Listing;
     }
 }

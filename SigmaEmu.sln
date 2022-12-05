@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmaEmu.Core", "SigmaEmu.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmaEmu.Assembler", "SigmaEmu.Assembler\SigmaEmu.Assembler.csproj", "{1C6C006C-63B2-4A15-B483-D3937DA32A5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmaEmu.Shared", "SigmaEmu.Shared\SigmaEmu.Shared.csproj", "{B6B25F98-F90B-4160-A027-D744F5AB7110}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{1C6C006C-63B2-4A15-B483-D3937DA32A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C6C006C-63B2-4A15-B483-D3937DA32A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C6C006C-63B2-4A15-B483-D3937DA32A5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6B25F98-F90B-4160-A027-D744F5AB7110}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6B25F98-F90B-4160-A027-D744F5AB7110}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6B25F98-F90B-4160-A027-D744F5AB7110}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6B25F98-F90B-4160-A027-D744F5AB7110}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
