@@ -2,7 +2,7 @@
 
 public class Listing
 {
-    public List<ListingLine> Lines { get; } = new List<ListingLine>();
+    public List<ListingLine> Lines { get; } = new();
 
     private int _addressCounter = 0;
 

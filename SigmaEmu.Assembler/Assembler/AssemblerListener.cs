@@ -12,6 +12,7 @@ public class AssemblerListener : Sigma16BaseListener
     private readonly ICharStream _sourceStream;
 
     public Listing Listing { get; } = new();
+    public List<AssemblerError> Errors { get; } = new(); 
 
     private readonly LabelMap _labelMap = new();
 
@@ -23,6 +24,17 @@ public class AssemblerListener : Sigma16BaseListener
     public override void EnterLabel_def(Sigma16Parser.Label_defContext context)
     {
         var labelName = context.GetText();
+        
+        if (_labelMap.HasLabel(labelName))
+        {
+            Errors.Add(new AssemblerError()
+            {
+                Message = $"Duplicate label '{labelName}'",
+                LineNumber = context.Start.Line
+            });
+            return;
+        }
+        
         Listing.AddLabel(labelName);
         _labelMap.DefineLabel(labelName, Word.FromInt(Listing.CurrentAddress));
     }
@@ -41,8 +53,9 @@ public class AssemblerListener : Sigma16BaseListener
         var firstOpReg = TryParseEnum<Register>(context.firstOperand.Text);
         var secondOpReg = TryParseEnum<Register>(context.secondOperand.Text);
 
-        if (op == null || destReg == null || firstOpReg == null || secondOpReg == null) throw new Exception();
-        
+        if (op == null || destReg == null || firstOpReg == null || secondOpReg == null)
+            throw new GrammarMismatchException();
+
         var code = Word.FromInstruction((int)op, (int)destReg, (int)firstOpReg, (int)secondOpReg);
         Listing.AddInstruction(code, FindOriginalText(context));
     }
@@ -53,7 +66,7 @@ public class AssemblerListener : Sigma16BaseListener
         var destReg = TryParseEnum<Register>(context.destinationReg.Text);
         var offsetReg = TryParseEnum<Register>(context.offsetReg.Text);
 
-        if (op == null || destReg == null || offsetReg == null) throw new Exception();
+        if (op == null || destReg == null || offsetReg == null) throw new GrammarMismatchException();
         
         var displacement = context.displacement();
         Word displacementWord;
@@ -64,6 +77,17 @@ public class AssemblerListener : Sigma16BaseListener
         var line = Listing.AddInstruction(code1, FindOriginalText(context), displacementWord);
 
         if (displacementWord.Value == -1) _labelMap.RememberLineToPatch(displacement.GetText(), line);
+    }
+
+    public override void ExitProgram(Sigma16Parser.ProgramContext context)
+    {
+        if (_labelMap.HasLinesToPatch())
+        {
+            Errors.Add(new AssemblerError()
+            {
+                Message = $"Labels [{string.Join(", ", _labelMap.GetUndefinedLabels())}] were never defined"
+            });
+        }
     }
 
     private static T? TryParseEnum<T>(string name) where T : struct, Enum

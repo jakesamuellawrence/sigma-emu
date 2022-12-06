@@ -6,7 +6,7 @@ namespace SigmaEmu.Assembler.Assembler;
 
 public static class Assembler
 {
-    public static Listing Assemble(string input)
+    public static (Listing, List<AssemblerError>) Assemble(string input)
     {
         var stream = CharStreams.fromString(input);
         var lexer = new Sigma16Lexer(stream);
@@ -17,6 +17,6 @@ public static class Assembler
         };
         var assembler = new AssemblerListener(stream);
         ParseTreeWalker.Default.Walk(assembler, parser.program());
-        return assembler.Listing;
+        return (assembler.Listing, assembler.Errors);
     }
 }

@@ -10,10 +10,14 @@
     public override Task SetParametersAsync(ParameterView parameters)
     {
         Console.WriteLine("loading");
-        var listing = Assembler.Assemble("add R1,R7,R15  \n start mul R2,R0,R1 \n lea R1,6[R0] \n store R2,testVar[R0] \n testVar data 10 \n");
+        var (listing, errors) = Assembler.Assemble("start add R1,R7,R15  \n start mul R2,R0,R1 \n lea R1,start[R0] \n store R2,undefined[R0] \n load R15,testVar2[R0] \n testVar data 10 \n");
         foreach (var line in listing.Lines)
         {
             Console.WriteLine($"{line.Address.ToHexString()} {line.Code1.ToHexString()} {line.Code2?.ToHexString()} {string.Join(" ", line.Labels)} {line.Source}");
+        }
+        foreach (var error in errors)
+        {
+            Console.WriteLine(error);
         }
         return base.SetParametersAsync(parameters);
     }
