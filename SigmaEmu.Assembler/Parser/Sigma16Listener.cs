@@ -91,13 +91,13 @@ public interface ISigma16Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitLabel_def([NotNull] Sigma16Parser.Label_defContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="Sigma16Parser.x"/>.
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.displacement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterX([NotNull] Sigma16Parser.XContext context);
+	void EnterDisplacement([NotNull] Sigma16Parser.DisplacementContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="Sigma16Parser.x"/>.
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.displacement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitX([NotNull] Sigma16Parser.XContext context);
+	void ExitDisplacement([NotNull] Sigma16Parser.DisplacementContext context);
 }

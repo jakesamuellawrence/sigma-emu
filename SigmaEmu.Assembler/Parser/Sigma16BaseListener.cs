@@ -108,17 +108,17 @@ public partial class Sigma16BaseListener : ISigma16Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitLabel_def([NotNull] Sigma16Parser.Label_defContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="Sigma16Parser.x"/>.
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.displacement"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterX([NotNull] Sigma16Parser.XContext context) { }
+	public virtual void EnterDisplacement([NotNull] Sigma16Parser.DisplacementContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="Sigma16Parser.x"/>.
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.displacement"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitX([NotNull] Sigma16Parser.XContext context) { }
+	public virtual void ExitDisplacement([NotNull] Sigma16Parser.DisplacementContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

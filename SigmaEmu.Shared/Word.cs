@@ -4,7 +4,7 @@ public class Word
 {
     public int Value { get; init; } = 0;
 
-    public string toHexString()
+    public string ToHexString()
     {
         return $"{Value:X4}";
     }
