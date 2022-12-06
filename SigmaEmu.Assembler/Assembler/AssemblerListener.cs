@@ -14,17 +14,6 @@ public class AssemblerListener : Sigma16BaseListener
     public Listing Listing { get; } = new();
 
     private readonly LabelMap _labelMap = new();
-    private int _addressCounter = 0;
-
-    private ListingLine AddInstruction(Word code1, string source, Word? code2 = null)
-    {
-        var addressWord = Word.FromInt(_addressCounter);
-        _addressCounter += code2 == null ? 1 : 2;
-
-        var newLine = new ListingLine(addressWord, code1, source, code2);
-        Listing.Lines.Add(newLine);
-        return newLine;
-    }
 
     public AssemblerListener(ICharStream sourceStream)
     {
@@ -34,14 +23,15 @@ public class AssemblerListener : Sigma16BaseListener
     public override void EnterLabel_def(Sigma16Parser.Label_defContext context)
     {
         var labelName = context.GetText();
-        _labelMap.DefineLabel(labelName, Word.FromInt(_addressCounter));
+        Listing.AddLabel(labelName);
+        _labelMap.DefineLabel(labelName, Word.FromInt(Listing.CurrentAddress));
     }
 
     public override void EnterData_instruction(Sigma16Parser.Data_instructionContext context)
     {
         var value = int.Parse(context.NUM().GetText());
         var code1 = Word.FromInt(value);
-        AddInstruction(code1, FindOriginalText(context));
+        Listing.AddInstruction(code1, FindOriginalText(context));
     }
 
     public override void EnterRrr_instruction(Sigma16Parser.Rrr_instructionContext context)
@@ -54,7 +44,7 @@ public class AssemblerListener : Sigma16BaseListener
         if (op == null || destReg == null || firstOpReg == null || secondOpReg == null) throw new Exception();
         
         var code = Word.FromInstruction((int)op, (int)destReg, (int)firstOpReg, (int)secondOpReg);
-        AddInstruction(code, FindOriginalText(context));
+        Listing.AddInstruction(code, FindOriginalText(context));
     }
 
     public override void EnterRx_instruction(Sigma16Parser.Rx_instructionContext context)
@@ -71,7 +61,7 @@ public class AssemblerListener : Sigma16BaseListener
         else displacementWord = _labelMap.GetAddress(displacement.label.Text);
 
         var code1 = Word.FromInstruction(RxExpansionOp, (int)destReg, (int)offsetReg, (int)op);
-        var line = AddInstruction(code1, FindOriginalText(context), displacementWord);
+        var line = Listing.AddInstruction(code1, FindOriginalText(context), displacementWord);
 
         if (displacementWord.Value == -1) _labelMap.RememberLineToPatch(displacement.GetText(), line);
     }
