@@ -4,13 +4,13 @@ grammar Sigma16;
 
 program : instruction*;
 
-instruction : label_def | rrr_instruction | rx_instruction | data_instruction ;
+instruction : rrr_instruction | rx_instruction | data_instruction ;
 
-rrr_instruction : RRR_COMMAND destinationReg=REG COMMA firstOperand=REG COMMA secondOperand=REG ;
-rx_instruction : RX_COMMAND destinationReg=REG COMMA displacement LBRACK offsetReg=REG RBRACK ;
-data_instruction : 'data' NUM ;
+rrr_instruction : label_def? RRR_COMMAND destinationReg=REG COMMA firstOperand=REG COMMA secondOperand=REG ;
+rx_instruction : label_def? RX_COMMAND destinationReg=REG COMMA displacement LBRACK offsetReg=REG RBRACK ;
+data_instruction : label_def? 'data' NUM ;
 
-label_def : LABEL EOL? ;
+label_def : LABEL;
 
 //reg : REG_PREFIX NUM;
 REG : 'R0'|'R1'|'R2'|'R3'|'R4'|'R5'|'R6'|'R7'|'R8'|'R9'|'R10'|'R11'|'R12'|'R13'|'R14'|'R15';

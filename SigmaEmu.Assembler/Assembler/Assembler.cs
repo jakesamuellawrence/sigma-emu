@@ -15,8 +15,18 @@ public static class Assembler
         {
             BuildParseTree = true
         };
+
+        var errorListener = new ErrorListener();
+        parser.RemoveErrorListeners();
+        parser.AddErrorListener(errorListener);
+
+        var tree = parser.program();
+        
+        var syntaxErrors = errorListener.Errors;
+        if (syntaxErrors.Count() != 0) return (new Listing(), syntaxErrors);
+
         var assembler = new AssemblerListener(stream);
-        ParseTreeWalker.Default.Walk(assembler, parser.program());
-        return (assembler.Listing, assembler.Errors);
+        ParseTreeWalker.Default.Walk(assembler, tree);
+        return (assembler.Listing, syntaxErrors.Concat(assembler.Errors).ToList());
     }
 }
