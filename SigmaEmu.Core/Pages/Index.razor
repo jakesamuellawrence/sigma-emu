@@ -13,7 +13,7 @@
         var (listing, errors) = Assembler.Assemble("start add R1,R7,R15  \n mul R2,R0,R1 \n lea R1,start[R0] \n testVar data 10 \n");
         foreach (var line in listing.Lines)
         {
-            Console.WriteLine($"{line.Address.ToHexString()} {line.Code1.ToHexString()} {line.Code2?.ToHexString()} {string.Join(" ", line.Labels)} {line.Source}");
+            Console.WriteLine($"{line.Address.ToHexString()} {line.Code1.ToHexString()} {line.Code2?.ToHexString()} {line.Source}");
         }
         foreach (var error in errors)
         {

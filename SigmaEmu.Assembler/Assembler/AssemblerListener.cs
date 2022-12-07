@@ -35,7 +35,6 @@ public class AssemblerListener : Sigma16BaseListener
             return;
         }
         
-        Listing.AddLabel(labelName);
         _labelMap.DefineLabel(labelName, Word.FromInt(Listing.CurrentAddress));
     }
 
