@@ -3,7 +3,7 @@
 @using SigmaEmu.Core.Models
 @using SigmaEmu.Models
 
-<Toolbar/>
+<Toolbar OnAssemble="AssembleSource"/>
 
 @if (_listing != null)
 {
@@ -23,7 +23,6 @@ else
     private async void LoadFile(IBrowserFile file)
     {
         _source = await Source.FromFileAsync(file);
-        AssembleSource();
         StateHasChanged();
     }
 
