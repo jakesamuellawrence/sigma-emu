@@ -7,7 +7,6 @@
 
     [Parameter]
     public EventCallback<IBrowserFile> ProcessFile { get; set; }
-    // public Func<IBrowserFile, Task>? ProcessFile { get; set; }
     private async Task LoadFileAsync(InputFileChangeEventArgs e)
     {
         await ProcessFile.InvokeAsync(e.File);
