@@ -21,7 +21,17 @@ public class Source
         {
             lines.Add(line);
         }
+        
+        if (!lines.Last().EndsWith("\n"))
+        {
+            lines.Add("\n");
+        }
 
         return new Source(lines);
+    }
+
+    public override string ToString()
+    {
+        return string.Join("\n", Lines);
     }
 }

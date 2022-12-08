@@ -1,0 +1,20 @@
+﻿@using SigmaEmu.Models
+
+<div class="w-100 h-100 bg-grey-main text-white p-2">
+    @if (Listing == null)
+    {
+        <p>No Listing provided</p>
+    }
+    else
+    {
+        @foreach (var line in Listing.Lines)
+        {
+            <pre class="m-0">@line.Format()</pre>
+        }
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public Listing? Listing { get; set; }
+}

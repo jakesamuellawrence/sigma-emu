@@ -19,5 +19,10 @@ public class ListingLine
         Code2 = code2;
         Source = source;
     }
+
+    public string Format()
+    {
+        return $"{Address.ToHexString()} \t {Code1.ToHexString()} {(Code2 != null ? Code2.ToHexString() : '\t')} \t {Source}";
+    }
     
 }

@@ -1,19 +1,36 @@
 ﻿@page "/"
 @using SigmaEmu.Assembler.Assembler
 @using SigmaEmu.Core.Models
+@using SigmaEmu.Models
 
 <Toolbar/>
 
-<ShowSource Source="_source" LoadFileEvent="LoadFile" />
+@if (_listing != null)
+{
+    <ListingDisplay Listing="_listing"/>
+}
+else
+{
+    <SourceDisplay Source="_source" LoadFileEvent="LoadFile" />
+}
 
 @code {
 
     private Source? _source;
+    private Listing? _listing;
+    private List<AssemblerError>? _assemblyErrors;
 
     private async void LoadFile(IBrowserFile file)
     {
         _source = await Source.FromFileAsync(file);
+        AssembleSource();
         StateHasChanged();
+    }
+
+    private void AssembleSource()
+    {
+        if (_source == null) return;
+        (_listing, _assemblyErrors) = Assembler.Assemble(_source.ToString());
     }
 
     public override Task SetParametersAsync(ParameterView parameters)
