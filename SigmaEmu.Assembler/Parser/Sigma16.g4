@@ -39,12 +39,13 @@ COMMA : ',';
 LBRACK : '[';
 RBRACK : ']';
 
+NUM : DIGIT+;
+LABEL : LETTER (LETTER | [_] | DIGIT)*;
+
 SPACE	:	(' ' | '\t')+  -> skip ;
 EOL     :	'\r'? '\n'          -> skip ;
 COMMENT :	';' ~('\r' | '\n')* '\r'? '\n' -> skip;
 
-NUM : DIGIT+;
-LABEL : LETTER (LETTER | [_] | DIGIT)*;
 
 fragment LETTER : 'a'..'z' | 'A'..'Z' ;
 fragment DIGIT  : '0'..'9' ;

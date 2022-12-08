@@ -37,8 +37,8 @@ public partial class Sigma16Parser : Parser {
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
 		T__0=1, REG=2, RRR_COMMAND=3, RX_COMMAND=4, ADD=5, SUB=6, MUL=7, DIV=8, 
-		TRAP=9, LEA=10, LOAD=11, STORE=12, COMMA=13, LBRACK=14, RBRACK=15, SPACE=16, 
-		EOL=17, COMMENT=18, NUM=19, LABEL=20;
+		TRAP=9, LEA=10, LOAD=11, STORE=12, COMMA=13, LBRACK=14, RBRACK=15, NUM=16, 
+		LABEL=17, SPACE=18, EOL=19, COMMENT=20;
 	public const int
 		RULE_program = 0, RULE_instruction = 1, RULE_rrr_instruction = 2, RULE_rx_instruction = 3, 
 		RULE_data_instruction = 4, RULE_label_def = 5, RULE_displacement = 6;
@@ -53,8 +53,8 @@ public partial class Sigma16Parser : Parser {
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, null, "REG", "RRR_COMMAND", "RX_COMMAND", "ADD", "SUB", "MUL", "DIV", 
-		"TRAP", "LEA", "LOAD", "STORE", "COMMA", "LBRACK", "RBRACK", "SPACE", 
-		"EOL", "COMMENT", "NUM", "LABEL"
+		"TRAP", "LEA", "LOAD", "STORE", "COMMA", "LBRACK", "RBRACK", "NUM", "LABEL", 
+		"SPACE", "EOL", "COMMENT"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -123,7 +123,7 @@ public partial class Sigma16Parser : Parser {
 			State = 17;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 1048602L) != 0) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 131098L) != 0) {
 				{
 				{
 				State = 14;
@@ -543,8 +543,8 @@ public partial class Sigma16Parser : Parser {
 		1,0,0,0,37,38,1,0,0,0,38,39,5,4,0,0,39,40,5,2,0,0,40,41,5,13,0,0,41,42,
 		3,12,6,0,42,43,5,14,0,0,43,44,5,2,0,0,44,45,5,15,0,0,45,7,1,0,0,0,46,48,
 		3,10,5,0,47,46,1,0,0,0,47,48,1,0,0,0,48,49,1,0,0,0,49,50,5,1,0,0,50,51,
-		5,19,0,0,51,9,1,0,0,0,52,53,5,20,0,0,53,11,1,0,0,0,54,57,5,19,0,0,55,57,
-		5,20,0,0,56,54,1,0,0,0,56,55,1,0,0,0,57,13,1,0,0,0,6,17,23,26,36,47,56
+		5,16,0,0,51,9,1,0,0,0,52,53,5,17,0,0,53,11,1,0,0,0,54,57,5,16,0,0,55,57,
+		5,17,0,0,56,54,1,0,0,0,56,55,1,0,0,0,57,13,1,0,0,0,6,17,23,26,36,47,56
 	};
 
 	public static readonly ATN _ATN =
