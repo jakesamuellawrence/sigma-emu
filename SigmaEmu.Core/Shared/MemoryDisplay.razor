@@ -1,0 +1,21 @@
+﻿@using SigmaEmu.Core.Models
+<div class="bg-grey-darkest rounded-2 text-text-main overflow-scroll h-50">
+    @if (MemoryArray == null)
+    {
+        <p>No memory block given</p>
+    }
+    else
+    {
+        @for (int i = 0; i < Memory.MaxMemory; i++)
+        {
+            <pre class="m-0">@($"{i:x4}") - @MemoryArray[i]</pre>
+        }
+    }
+</div>
+
+@code {
+    
+    [Parameter, EditorRequired]
+    public MemoryUnit[]? MemoryArray { get; set; }
+
+}

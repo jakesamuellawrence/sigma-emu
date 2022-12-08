@@ -5,6 +5,13 @@
     {
         <p>No Listing provided</p>
     }
+    else if (Listing.Errors.Count != 0)
+    {
+        @foreach (var error in Listing.Errors)
+        {
+            <pre class="text-danger">@error.Format()</pre>
+        }
+    }
     else
     {
         @foreach (var line in Listing.Lines)

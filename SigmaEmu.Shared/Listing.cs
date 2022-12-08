@@ -3,6 +3,7 @@
 public class Listing
 {
     public List<ListingLine> Lines { get; } = new();
+    public List<AssemblerError> Errors { get; init; } = new();
 
     private int _addressCounter = 0;
 

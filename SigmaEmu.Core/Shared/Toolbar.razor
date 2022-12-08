@@ -1,6 +1,6 @@
 ﻿<div class="bg-grey-lighter d-flex flex-row p-2 border-bottom border-2 border-dark">
     <button class="me-2" @onclick="OnAssemble">Assemble</button>
-    @* <button class="me-2">Load</button> *@
+    <button class="me-2" @onclick="OnLoad">Load</button>
     @* <button class="me-2">Save</button> *@
     @* <button class="me-2">Breakpoints</button> *@
 </div>
@@ -9,5 +9,8 @@
     
     [Parameter, EditorRequired]
     public EventCallback OnAssemble { get; set; }
+    
+    [Parameter, EditorRequired]
+    public EventCallback OnLoad { get; set; }
 
 }

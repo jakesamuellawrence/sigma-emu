@@ -6,7 +6,7 @@ public class Word
 
     public string ToHexString()
     {
-        return $"{Value:X4}";
+        return $"{Value:x4}";
     }
 
     public static Word FromInstruction(int b1, int b2, int b3, int b4)

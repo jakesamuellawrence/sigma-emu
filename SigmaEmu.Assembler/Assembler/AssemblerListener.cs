@@ -12,7 +12,6 @@ public class AssemblerListener : Sigma16BaseListener
     private readonly ICharStream _sourceStream;
 
     public Listing Listing { get; } = new();
-    public List<AssemblerError> Errors { get; } = new(); 
 
     private readonly LabelMap _labelMap = new();
 
@@ -27,7 +26,7 @@ public class AssemblerListener : Sigma16BaseListener
         
         if (_labelMap.HasLabel(labelName))
         {
-            Errors.Add(new AssemblerError()
+            Listing.Errors.Add(new AssemblerError()
             {
                 Message = $"Duplicate label '{labelName}'",
                 LineNumber = context.Start.Line
@@ -82,9 +81,9 @@ public class AssemblerListener : Sigma16BaseListener
     {
         if (_labelMap.HasLinesToPatch())
         {
-            Errors.Add(new AssemblerError()
+            Listing.Errors.Add(new AssemblerError()
             {
-                Message = $"Labels [{string.Join(", ", _labelMap.GetUndefinedLabels())}] were never defined"
+                Message = $"Labels [{string.Join(", ", _labelMap.GetUndefinedLabels())}] were never defined",
             });
         }
     }
