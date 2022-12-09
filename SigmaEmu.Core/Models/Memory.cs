@@ -4,7 +4,7 @@ namespace SigmaEmu.Core.Models;
 
 public class Memory
 {
-    public const int MaxMemory = 16383;
+    public const int MaxMemory = 64;
     
     public MemoryUnit[] MemoryArray { get; } = new MemoryUnit[MaxMemory];
 

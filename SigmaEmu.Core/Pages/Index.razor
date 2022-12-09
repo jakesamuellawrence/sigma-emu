@@ -3,18 +3,29 @@
 @using SigmaEmu.Core.Models
 @using SigmaEmu.Models
 
-<Toolbar OnAssemble="AssembleSource" OnLoad="LoadListing" />
+<div class="d-flex flex-column w-100 h-100">
+    <Toolbar OnAssemble="AssembleSource" OnLoad="LoadListing" />
+    <div class="d-flex flex-row flex-grow-1 flex-shrink-1 overflow-auto">
+        @if (_listing != null)
+        {
+            <ListingDisplay Listing="_listing"/>
+        }
+        else
+        {
+            <SourceDisplay Source="_source" LoadFileEvent="LoadFile" />
+        }
+        <Sidebar>
+            <h3>Memory</h3>
+            <div class="d-flex flex-row overflow-auto">
+                <MemoryDisplay MemoryArray="_memory.MemoryArray"/>
+                <div class="p-2"></div>
+                <MemoryDisplay MemoryArray="_memory.MemoryArray"/>
+            </div>
+        </Sidebar>
+    </div>
+</div>
 
-<MemoryDisplay MemoryArray="_memory.MemoryArray" />
 
-@if (_listing != null)
-{
-    <ListingDisplay Listing="_listing"/>
-}
-else
-{
-    <SourceDisplay Source="_source" LoadFileEvent="LoadFile" />
-}
 
 @code {
 

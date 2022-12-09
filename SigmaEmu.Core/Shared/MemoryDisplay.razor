@@ -1,5 +1,5 @@
 ﻿@using SigmaEmu.Core.Models
-<div class="bg-grey-darkest rounded-2 text-text-main overflow-scroll h-50">
+<div class="bg-grey-darkest rounded-2 text-text-main p-2 overflow-scroll">
     @if (MemoryArray == null)
     {
         <p>No memory block given</p>
@@ -8,7 +8,10 @@
     {
         @for (int i = 0; i < Memory.MaxMemory; i++)
         {
-            <pre class="m-0">@($"{i:x4}") - @MemoryArray[i]</pre>
+            <div class="d-flex flex-row p-0">
+                <p class="m-0 me-2 flex-grow-1">@($"{i:x4}")</p>
+                <p class="m-0 ">@MemoryArray[i]</p>
+            </div>
         }
     }
 </div>
