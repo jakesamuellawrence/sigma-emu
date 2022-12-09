@@ -14,14 +14,7 @@
         {
             <SourceDisplay Source="_source" LoadFileEvent="LoadFile" />
         }
-        <Sidebar>
-            <h3>Memory</h3>
-            <div class="d-flex flex-row overflow-auto">
-                <MemoryDisplay MemoryArray="_memory.MemoryArray"/>
-                <div class="p-2"></div>
-                <MemoryDisplay MemoryArray="_memory.MemoryArray"/>
-            </div>
-        </Sidebar>
+        <ProcessorStatus Processor="_processor" />
     </div>
 </div>
 
@@ -32,7 +25,7 @@
     private Source? _source;
     private Listing? _listing;
 
-    private Memory _memory = new Memory();
+    private Processor _processor = new Processor();
 
     private async void LoadFile(IBrowserFile file)
     {
@@ -49,7 +42,7 @@
     private void LoadListing()
     {
         if (_listing == null) return;
-        _memory.LoadListing(_listing);
+        _processor.LoadListing(_listing);
     }
     
 }
