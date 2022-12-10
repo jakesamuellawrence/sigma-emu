@@ -1,0 +1,23 @@
+﻿@using SigmaEmu.Core.Models
+
+@if (Processor == null)
+{
+    <p>Processor not given</p>
+}
+else
+{
+    <div class="bg-grey-darkest rounded-2 p-2 text-text-lighter">
+        <RegisterDisplayRow Label="pc" Register="Processor.ProgramCounter" />
+        <RegisterDisplayRow Label="ir" Register="Processor.InstructionRegister" />
+        <RegisterDisplayRow Label="addr" Register="Processor.AddressRegister" />
+        <RegisterDisplayRow Label="data" Register="Processor.DataRegister" />
+    </div>
+}
+
+
+@code {
+    
+    [Parameter, EditorRequired]
+    public Processor? Processor { get; set; }
+    
+}

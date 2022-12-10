@@ -1,0 +1,21 @@
+﻿@using SigmaEmu.Core.Models
+
+@if (Register == null || Label == null)
+{
+    <p>Missing parameters</p>
+}
+else
+{
+    <div class="d-flex flex-row">
+        <span class="me-2 flex-grow-1">@Label</span>
+        <span>@Register.Value.ToHexString()</span>
+    </div>
+}
+
+
+@code {
+    [Parameter, EditorRequired]
+    public string? Label { get; set; }
+    [Parameter, EditorRequired]
+    public Register? Register { get; set; }
+}

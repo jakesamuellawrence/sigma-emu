@@ -12,7 +12,7 @@ public class Listing
     public ListingLine AddInstruction(Word code1, string source, Word? code2 = null)
     {
         var addressWord = Word.FromInt(_addressCounter);
-        _addressCounter += code2 == null ? 1 : 2;
+        _addressCounter += code2 is null ? 1 : 2;
 
         var newLine = new ListingLine(addressWord, code1, source, code2);
         Lines.Add(newLine);

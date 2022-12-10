@@ -9,6 +9,21 @@ public class Word
         return $"{Value:x4}";
     }
 
+    public static Word Increment(Word a, int value = 1) => FromInt(a.Value + 1);
+
+    public static Word operator +(Word a, Word b) => Word.FromInt(a.Value + b.Value);
+    public static Word operator -(Word a, Word b) => Word.FromInt(a.Value - b.Value);
+    public static Word operator /(Word a, Word b) => Word.FromInt(a.Value / b.Value);
+    public static Word operator %(Word a, Word b) => Word.FromInt(a.Value % b.Value);
+    public static Word operator *(Word a, Word b) => Word.FromInt(a.Value * b.Value);
+    public static Word operator <(Word a, Word b) => Word.FromBool(a.Value < b.Value);
+    public static Word operator >(Word a, Word b) => Word.FromBool(a.Value > b.Value);
+    public static Word operator ==(Word a, Word b) => Word.FromBool(a.Value == b.Value);
+    public static Word operator !=(Word a, Word b) => Word.FromBool(a.Value != b.Value);
+    public static Word operator !(Word a) => Word.FromBool(a.Value == 0);
+    public static Word operator &(Word a, Word b) => Word.FromBool(a.Value != 0 && b.Value != 0);
+    public static Word operator |(Word a, Word b) => Word.FromBool(a.Value != 0 || b.Value != 0);
+
     public static Word FromInstruction(int b1, int b2, int b3, int b4)
     {
         var wordString = $"{b1:X1}{b2:X1}{b3:X1}{b4:X1}";
@@ -19,5 +34,10 @@ public class Word
     public static Word FromInt(int value)
     {
         return new Word() { Value = value };
+    }
+
+    public static Word FromBool(bool value)
+    {
+        return Word.FromInt(value ? 1 : 0);
     }
 }

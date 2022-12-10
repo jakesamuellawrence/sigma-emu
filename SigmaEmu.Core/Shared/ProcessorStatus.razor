@@ -1,12 +1,18 @@
 ﻿@using SigmaEmu.Core.Models
 <div class="bg-grey-darker h-100 flex-shrink-0 d-flex flex-column border-start border-2 border-dark p-3">
-    @if (Processor == null)
+    @if (Processor is null)
     {
         <p>No Processor given</p>
     }
     else
     {
-        <h3>Memory</h3>
+        <h3>Control</h3>
+        <button @onclick="Processor.Step">Step</button>
+        
+        <h3 class="mt-4">Registers</h3>
+        <RegisterDisplay Processor="Processor" />
+        
+        <h3 class="mt-4">Memory</h3>
         <div class="d-flex flex-row overflow-auto">
             <MemoryDisplay MemoryArray="Processor.Memory.MemoryArray"/>
             <div class="p-2"></div>

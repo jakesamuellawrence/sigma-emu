@@ -22,7 +22,7 @@ public class Memory
         foreach (var line in listing.Lines)
         {
             MemoryArray[i++].Write(line.Code1);
-            if (line.Code2 != null) MemoryArray[i++].Write(line.Code2);
+            if (line.Code2 is not null) MemoryArray[i++].Write(line.Code2);
         }
     }
 }

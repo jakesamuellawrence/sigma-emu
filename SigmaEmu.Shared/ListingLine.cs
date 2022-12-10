@@ -22,7 +22,7 @@ public class ListingLine
 
     public string Format()
     {
-        return $"{Address.ToHexString()} \t {Code1.ToHexString()} {(Code2 != null ? Code2.ToHexString() : '\t')} \t {Source}";
+        return $"{Address.ToHexString()} \t {Code1.ToHexString()} {(Code2 is not null ? Code2.ToHexString() : '\t')} \t {Source}";
     }
     
 }

@@ -25,7 +25,7 @@
     private Source? _source;
     private Listing? _listing;
 
-    private Processor _processor = new Processor();
+    private readonly Processor _processor = new Processor();
 
     private async void LoadFile(IBrowserFile file)
     {
