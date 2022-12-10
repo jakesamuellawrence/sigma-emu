@@ -4,15 +4,22 @@ namespace SigmaEmu.Core.Models;
 
 public class Processor
 {
+    public const int MaxRegisters = 16;
+    
     public Register ProgramCounter { get; } = new Register();
     public Register InstructionRegister { get; } = new Register();
     public Register AddressRegister { get; } = new Register();
     public Register DataRegister { get; } = new Register();
 
-    public Register[] RegisterFile { get; } = new Register[16];
+    public Register[] RegisterFile { get; } = new Register[MaxRegisters];
 
     public Memory Memory { get; } = new Memory();
 
+    public Processor()
+    {
+        for (var i = 0; i < MaxRegisters; i++) RegisterFile[i] = new Register();
+    }
+    
     public void LoadListing(Listing listing) => Memory.LoadListing(listing);
 
     public void Step()
