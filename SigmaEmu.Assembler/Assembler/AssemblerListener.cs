@@ -74,7 +74,7 @@ public class AssemblerListener : Sigma16BaseListener
         var code1 = Word.FromInstruction(RxExpansionOp, (int)destReg, (int)offsetReg, (int)op);
         var line = Listing.AddInstruction(code1, FindOriginalText(context), displacementWord);
 
-        if (displacementWord.Value == -1) _labelMap.RememberLineToPatch(displacement.GetText(), line);
+        if (displacementWord.AsInt() == -1) _labelMap.RememberLineToPatch(displacement.GetText(), line);
     }
 
     public override void ExitProgram(Sigma16Parser.ProgramContext context)

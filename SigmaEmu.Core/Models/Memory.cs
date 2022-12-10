@@ -16,6 +16,12 @@ public class Memory
         }
     }
 
+    public MemoryUnit this[int key]
+    {
+        get => MemoryArray[key];
+        set => MemoryArray[key] = value;
+    }
+
     public void LoadListing(Listing listing, int offset = 0)
     {
         var i = offset;

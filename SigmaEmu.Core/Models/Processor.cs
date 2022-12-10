@@ -17,6 +17,30 @@ public class Processor
 
     public void Step()
     {
+        // Read instruction
+        InstructionRegister.Value = Memory[ProgramCounter.Value.AsInt()].Read();
         ProgramCounter.Value = Word.Increment(ProgramCounter.Value);
+        
+        // Decode Instruction
+        var (opInt, destination, operandA, operandB) = InstructionRegister.Value.AsInstruction();
+        var op = (RrrInstruction)opInt;
+        if (op == RrrInstruction.ExpandToRx) 
+            RunRxInstruction((RxInstruction)operandB, RegisterFile[destination], RegisterFile[operandA]);
+        else
+            RunRrrInstruction(op, 
+                RegisterFile[destination], RegisterFile[operandA], RegisterFile[operandB]);
+    }
+
+    private void RunRxInstruction(RxInstruction op, Register destination, Register offset)
+    {
+        AddressRegister.Value = Memory[ProgramCounter.Value.AsInt()].Read();
+        ProgramCounter.Value = Word.Increment(ProgramCounter.Value);
+        
+        Console.WriteLine($"RxInstruction: {op}");
+    }
+
+    private void RunRrrInstruction(RrrInstruction op, Register destination, Register operandA, Register operandB)
+    {
+        Console.WriteLine($"RrrInstruction: {op}");
     }
 }

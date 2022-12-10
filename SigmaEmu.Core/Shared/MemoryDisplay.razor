@@ -1,16 +1,16 @@
 ﻿@using SigmaEmu.Core.Models
 <div class="bg-grey-darkest rounded-2 text-text-main p-2 overflow-scroll">
-    @if (MemoryArray == null)
+    @if (Memory == null)
     {
         <p>No memory block given</p>
     }
     else
     {
-        @for (int i = 0; i < Memory.MaxMemory; i++)
+        @for (var i = 0; i < Memory.MaxMemory; i++)
         {
             <div class="d-flex flex-row p-0">
                 <p class="m-0 me-2 flex-grow-1">@($"{i:x4}")</p>
-                <p class="m-0 ">@MemoryArray[i]</p>
+                <p class="m-0 ">@Memory[i]</p>
             </div>
         }
     }
@@ -19,6 +19,6 @@
 @code {
     
     [Parameter, EditorRequired]
-    public MemoryUnit[]? MemoryArray { get; set; }
+    public Memory? Memory { get; set; }
 
 }

@@ -2,11 +2,32 @@
 
 public class Word
 {
-    public int Value { get; init; } = 0;
+    private class BadWordFormat : Exception
+    {
+        public BadWordFormat(string message) : base(message)
+        {
+        }
+    }
 
-    public string ToHexString()
+    public int Value { private get; init; } = 0;
+
+    public string AsHexString()
     {
         return $"{Value:x4}";
+    }
+
+    public int AsInt()
+    {
+        return Value;
+    }
+
+    public (int, int, int, int) AsInstruction()
+    {
+        var hex = AsHexString();
+        if (hex.Length != 4) throw new BadWordFormat("Word did not have 4 characters");
+        
+        int FromHex(char value) => int.Parse(value.ToString(), System.Globalization.NumberStyles.HexNumber);
+        return (FromHex(hex[0]), FromHex(hex[1]), FromHex(hex[2]), FromHex(hex[3]));
     }
 
     public static Word Increment(Word a, int value = 1) => FromInt(a.Value + 1);
@@ -39,5 +60,23 @@ public class Word
     public static Word FromBool(bool value)
     {
         return Word.FromInt(value ? 1 : 0);
+    }
+    
+    protected bool Equals(Word other)
+    {
+        return Value == other.Value;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((Word)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return Value;
     }
 }

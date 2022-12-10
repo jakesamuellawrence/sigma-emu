@@ -18,6 +18,6 @@ public class MemoryUnit
 
     public override string ToString()
     {
-        return _value.ToHexString();
+        return _value.AsHexString();
     }
 }

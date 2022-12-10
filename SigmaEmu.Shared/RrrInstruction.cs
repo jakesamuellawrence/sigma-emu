@@ -7,4 +7,5 @@ public enum RrrInstruction
     Mul = 2,
     Div = 3,
     Trap = 13,
+    ExpandToRx = 15,
 }
