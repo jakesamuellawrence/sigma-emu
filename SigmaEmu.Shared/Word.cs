@@ -1,4 +1,4 @@
-﻿namespace SigmaEmu.Models;
+﻿namespace SigmaEmu.Shared;
 
 public class Word
 {
@@ -37,10 +37,10 @@ public class Word
     public static Word operator /(Word a, Word b) => Word.FromInt(a.Value / b.Value);
     public static Word operator %(Word a, Word b) => Word.FromInt(a.Value % b.Value);
     public static Word operator *(Word a, Word b) => Word.FromInt(a.Value * b.Value);
-    public static Word operator <(Word a, Word b) => Word.FromBool(a.Value < b.Value);
-    public static Word operator >(Word a, Word b) => Word.FromBool(a.Value > b.Value);
-    public static Word operator ==(Word a, Word b) => Word.FromBool(a.Value == b.Value);
-    public static Word operator !=(Word a, Word b) => Word.FromBool(a.Value != b.Value);
+    public static bool operator <(Word a, Word b) => a.Value < b.Value;
+    public static bool operator >(Word a, Word b) => a.Value > b.Value;
+    public static bool operator ==(Word a, Word b) => a.Value == b.Value;
+    public static bool operator !=(Word a, Word b) => a.Value != b.Value;
     public static Word operator !(Word a) => Word.FromBool(a.Value == 0);
     public static Word operator &(Word a, Word b) => Word.FromBool(a.Value != 0 && b.Value != 0);
     public static Word operator |(Word a, Word b) => Word.FromBool(a.Value != 0 || b.Value != 0);

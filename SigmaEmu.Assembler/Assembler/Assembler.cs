@@ -1,6 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using SigmaEmu.Models;
+using SigmaEmu.Shared;
 
 namespace SigmaEmu.Assembler.Assembler;
 
@@ -22,7 +22,7 @@ public static class Assembler
 
         var tree = parser.program();
         
-        var syntaxErrors = errorListener.Errors;
+        List<AssemblerError> syntaxErrors = errorListener.Errors;
         if (syntaxErrors.Count() != 0) return (new Listing() {Errors = syntaxErrors});
 
         var assembler = new AssemblerListener(stream);

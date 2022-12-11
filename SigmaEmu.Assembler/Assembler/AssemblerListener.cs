@@ -2,6 +2,7 @@
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using SigmaEmu.Models;
+using SigmaEmu.Shared;
 
 namespace SigmaEmu.Assembler.Assembler;
 

@@ -1,20 +1,20 @@
 ﻿@page "/"
 @using SigmaEmu.Assembler.Assembler
 @using SigmaEmu.Core.Models
-@using SigmaEmu.Models
+@using SigmaEmu.Shared
 
 <div class="d-flex flex-column w-100 h-100">
     <Toolbar OnAssemble="AssembleSource" OnLoad="LoadListing" />
     <div class="d-flex flex-row flex-grow-1 flex-shrink-1 overflow-auto">
         @if (_listing != null)
         {
-            <ListingDisplay Listing="_listing"/>
+            <ListingDisplay Listing="_listing" ProgramCounter="_processor.ProgramCounter" />
         }
         else
         {
             <SourceDisplay Source="_source" LoadFileEvent="LoadFile" />
         }
-        <ProcessorStatus Processor="_processor" />
+        <ProcessorStatus Processor="_processor" OnStep="_processor.Step" />
     </div>
 </div>
 

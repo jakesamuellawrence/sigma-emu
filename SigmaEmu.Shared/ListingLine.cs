@@ -1,4 +1,6 @@
-﻿namespace SigmaEmu.Models;
+﻿using SigmaEmu.Shared;
+
+namespace SigmaEmu.Models;
 
 public class ListingLine
 {

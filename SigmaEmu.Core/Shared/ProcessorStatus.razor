@@ -7,7 +7,7 @@
     else
     {
         <h3>Control</h3>
-        <button @onclick="Processor.Step">Step</button>
+        <button @onclick="OnStep">Step</button>
         
         <h3 class="mt-4">Registers</h3>
         <RegisterDisplay Processor="Processor" />
@@ -26,4 +26,7 @@
     [Parameter, EditorRequired]
     public Processor? Processor { get; set; }
     
+    [Parameter, EditorRequired]
+    public EventCallback OnStep { get; set; }
+
 }

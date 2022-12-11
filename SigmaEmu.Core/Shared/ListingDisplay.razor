@@ -1,9 +1,15 @@
-﻿@using SigmaEmu.Models
+﻿@using SigmaEmu.Shared
+@using Register = SigmaEmu.Core.Models.Register
+
 
 <div class="w-100 h-100 bg-grey-main text-white p-2">
-    @if (Listing == null)
+    @if (Listing is null)
     {
         <p>No Listing provided</p>
+    }
+    else if (ProgramCounter is null)
+    {
+        <p>No Program Counter given</p>
     }
     else if (Listing.Errors.Count != 0)
     {
@@ -16,6 +22,10 @@
     {
         @foreach (var line in Listing.Lines)
         {
+            @if (ProgramCounter.Value == line.Address)
+            {
+                <hr class="text-text-write my-0 border border-1 border-text-write"/>
+            }
             <pre class="m-0">@line.Format().Replace('\n', ' ')</pre>
         }
     }
@@ -24,4 +34,7 @@
 @code {
     [Parameter, EditorRequired]
     public Listing? Listing { get; set; }
+    
+    [Parameter, EditorRequired]
+    public Register? ProgramCounter { get; set; }
 }

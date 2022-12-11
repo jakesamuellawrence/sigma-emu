@@ -1,4 +1,4 @@
-﻿namespace SigmaEmu.Models;
+﻿namespace SigmaEmu.Assembler.Assembler;
 
 public class GrammarMismatchException : Exception
 {

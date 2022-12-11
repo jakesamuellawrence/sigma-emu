@@ -1,6 +1,7 @@
-﻿using System.Linq.Expressions;
+﻿using SigmaEmu.Models;
+using SigmaEmu.Shared;
 
-namespace SigmaEmu.Models;
+namespace SigmaEmu.Assembler.Assembler;
 
 public class LabelMap
 {
