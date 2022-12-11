@@ -34,11 +34,15 @@ public class Processor
     {
         if (ProcessorState == ProcessorRunningState.Stopped) return;
         
+        // Clear Address and data
+        AddressRegister.Value = Word.FromInt(0);
+        DataRegister.Value = Word.FromInt(0);
+        
         // Read instruction
         InstructionRegister.Value = Memory[ProgramCounter.Value].Read();
         ProgramCounter.Value = Word.Increment(ProgramCounter.Value);
         
-        // Decode Instruction
+        // Decode and run instruction
         var (opInt, destination, operandA, operandB) = InstructionRegister.Value.AsInstruction();
         var op = (RrrInstruction)opInt;
         if (op == RrrInstruction.ExpandToRx) 
@@ -53,7 +57,6 @@ public class Processor
         AddressRegister.Value = Memory[ProgramCounter.Value].Read();
         ProgramCounter.Value = Word.Increment(ProgramCounter.Value);
         
-        Console.WriteLine($"RxInstruction: {op}");
         switch (op)
         {
             case RxInstruction.Lea:
@@ -75,7 +78,6 @@ public class Processor
 
     private void RunRrrInstruction(RrrInstruction op, Register destination, Register operandA, Register operandB)
     {
-        Console.WriteLine($"RrrInstruction: {op}");
         switch (op)
         {
             case RrrInstruction.Add:

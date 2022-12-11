@@ -16,7 +16,7 @@
     {
         @foreach (var line in Listing.Lines)
         {
-            <pre class="m-0">@line.Format()</pre>
+            <pre class="m-0">@line.Format().Replace('\n', ' ')</pre>
         }
     }
 </div>
