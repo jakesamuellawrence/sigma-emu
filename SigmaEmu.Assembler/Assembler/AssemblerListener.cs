@@ -37,14 +37,14 @@ public class AssemblerListener : Sigma16BaseListener
         _labelMap.DefineLabel(labelName, Word.FromInt(Listing.CurrentAddress));
     }
 
-    public override void EnterData_instruction(Sigma16Parser.Data_instructionContext context)
+    public override void ExitData_instruction(Sigma16Parser.Data_instructionContext context)
     {
         var value = int.Parse(context.NUM().GetText());
         var code1 = Word.FromInt(value);
         Listing.AddInstruction(code1, FindOriginalText(context));
     }
 
-    public override void EnterRrr_instruction(Sigma16Parser.Rrr_instructionContext context)
+    public override void ExitRrr_instruction(Sigma16Parser.Rrr_instructionContext context)
     {
         var op = TryParseEnum<RrrInstruction>(context.RRR_COMMAND().GetText());
         var destReg = TryParseEnum<Register>(context.destinationReg.Text);
@@ -58,7 +58,7 @@ public class AssemblerListener : Sigma16BaseListener
         Listing.AddInstruction(code, FindOriginalText(context));
     }
 
-    public override void EnterRx_instruction(Sigma16Parser.Rx_instructionContext context)
+    public override void ExitRx_instruction(Sigma16Parser.Rx_instructionContext context)
     {
         var op = TryParseEnum<RxInstruction>(context.RX_COMMAND().GetText());
         var destReg = TryParseEnum<Register>(context.destinationReg.Text);

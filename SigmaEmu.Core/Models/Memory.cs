@@ -22,6 +22,12 @@ public class Memory
         set => MemoryArray[key] = value;
     }
 
+    public MemoryUnit this[Word key]
+    {
+        get => MemoryArray[key.AsInt()];
+        set => MemoryArray[key.AsInt()] = value;
+    }
+
     public void LoadListing(Listing listing, int offset = 0)
     {
         var i = offset;
