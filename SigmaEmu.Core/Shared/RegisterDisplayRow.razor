@@ -1,25 +1,25 @@
 ﻿@using SigmaEmu.Core.Models
-
-
 @if (Register is null)
 {
     <p>Null Register given</p>
 }
 else
 {
-    <div class="d-flex flex-row gap-2">
+    <div class="d-flex flex-row gap-2 align-items-center">
         <span class="flex-grow-1">@Label</span>
-        <span class="m-0">@Register.Value.AsHexString()</span>
+        <WordStoreDisplay WordStore="Register"/>
     </div>
 }
 
 
 @code {
 
-    [Parameter, EditorRequired]
+    [Parameter]
+    [EditorRequired]
     public string Label { get; set; } = "Missing label";
 
-    [Parameter, EditorRequired]
+    [Parameter]
+    [EditorRequired]
     public Register? Register { get; set; }
 
 }

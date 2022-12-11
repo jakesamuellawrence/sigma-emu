@@ -3,7 +3,6 @@ using SigmaEmu.Shared;
 
 namespace SigmaEmu.Core.Models;
 
-public class Register
+public class Register : WordStore
 {
-    public Word Value { get; set; } = Word.FromInt(0);
 }

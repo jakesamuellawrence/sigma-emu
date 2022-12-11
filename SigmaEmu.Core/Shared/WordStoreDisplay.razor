@@ -1,0 +1,23 @@
+﻿@using SigmaEmu.Core.Models
+<div class="bg-grey-lighter rounded-2 d-inline-flex align-content-center justify-content-center p-0 px-2">
+    @if (WordStore is null)
+    {
+        <p>No word store given</p>
+    }
+    else
+    {
+        var textColour = "text-lighter";
+        if (WordStore.WasWrittenTo && WordStore.WasReadFrom) textColour = "text-read-write";
+        else if (WordStore.WasReadFrom) textColour = "text-read";
+        else if (WordStore.WasWrittenTo) textColour = "text-write";
+        <span class="text-@textColour">@WordStore.DisplayString</span>
+    }
+</div>
+
+@code {
+
+    [Parameter]
+    [EditorRequired]
+    public WordStore? WordStore { get; set; }
+
+}

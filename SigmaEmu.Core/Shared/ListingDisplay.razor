@@ -1,7 +1,5 @@
 ﻿@using SigmaEmu.Shared
-@using Register = SigmaEmu.Core.Models.Register
-
-
+@using SigmaEmu.Core.Models
 <div class="w-100 h-100 bg-grey-main text-white p-2">
     @if (Listing is null)
     {
@@ -22,7 +20,7 @@
     {
         @foreach (var line in Listing.Lines)
         {
-            @if (ProgramCounter.Value == line.Address)
+            @if (ProgramCounter.GetValueWithoutReading() == line.Address)
             {
                 <hr class="text-text-write my-0 border border-1 border-text-write"/>
             }
@@ -32,9 +30,13 @@
 </div>
 
 @code {
-    [Parameter, EditorRequired]
+
+    [Parameter]
+    [EditorRequired]
     public Listing? Listing { get; set; }
-    
-    [Parameter, EditorRequired]
+
+    [Parameter]
+    [EditorRequired]
     public Register? ProgramCounter { get; set; }
+
 }

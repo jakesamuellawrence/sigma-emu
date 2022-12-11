@@ -5,16 +5,13 @@ namespace SigmaEmu.Core.Models;
 public class Memory
 {
     public const int MaxMemory = 64;
-    
-    public MemoryUnit[] MemoryArray { get; } = new MemoryUnit[MaxMemory];
 
     public Memory()
     {
-        for (var i = 0; i < MaxMemory; i++)
-        {
-            MemoryArray[i] = new MemoryUnit();
-        }
+        for (var i = 0; i < MaxMemory; i++) MemoryArray[i] = new MemoryUnit();
     }
+
+    private MemoryUnit[] MemoryArray { get; } = new MemoryUnit[MaxMemory];
 
     public MemoryUnit this[int key]
     {
@@ -33,8 +30,13 @@ public class Memory
         var i = offset;
         foreach (var line in listing.Lines)
         {
-            MemoryArray[i++].Write(line.Code1);
-            if (line.Code2 is not null) MemoryArray[i++].Write(line.Code2);
+            MemoryArray[i++].Value = line.Code1;
+            if (line.Code2 is not null) MemoryArray[i++].Value = line.Code2;
         }
+    }
+
+    public void ResetReadWrite()
+    {
+        foreach (var unit in MemoryArray) unit.ResetReadWrite();
     }
 }

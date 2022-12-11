@@ -1,5 +1,4 @@
 ﻿@using SigmaEmu.Core.Models
-
 @if (RegisterFile is null)
 {
     <p>No Register File given</p>
@@ -7,12 +6,12 @@
 else
 {
     <div class="bg-grey-darkest rounded-2 p-2 text-text-lighter d-flex flex-row justify-content-between gap-3">
-        @for (var i = 0; i < Processor.MaxRegisters; i += 4)
+        @for (var i = 0; i < RegisterFile.Length; i += 4)
         {
-            <div class="">
-                @for (var j = i; j < i + 4 && j < Processor.MaxRegisters; j++)
+            <div class="d-flex flex-column gap-2">
+                @for (var j = i; j < i + 4 && j < RegisterFile.Length; j++)
                 {
-                    <RegisterDisplayRow Label="@($"R{j}")" Register="RegisterFile[j]" />
+                    <RegisterDisplayRow Label="@($"R{j}")" Register="RegisterFile[j]"/>
                 }
             </div>
         }
@@ -21,6 +20,9 @@ else
 
 
 @code {
-    [Parameter, EditorRequired]
+
+    [Parameter]
+    [EditorRequired]
     public Register[]? RegisterFile { get; set; }
+
 }
