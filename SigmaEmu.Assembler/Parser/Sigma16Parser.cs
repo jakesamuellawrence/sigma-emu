@@ -37,8 +37,9 @@ public partial class Sigma16Parser : Parser {
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
 		T__0=1, REG=2, RRR_COMMAND=3, RX_COMMAND=4, ADD=5, SUB=6, MUL=7, DIV=8, 
-		TRAP=9, LEA=10, LOAD=11, STORE=12, COMMA=13, LBRACK=14, RBRACK=15, NUM=16, 
-		LABEL=17, SPACE=18, EOL=19, COMMENT=20;
+		CMPLT=9, CMPEQ=10, CMPGT=11, INV=12, AND=13, OR=14, XOR=15, TRAP=16, LEA=17, 
+		LOAD=18, STORE=19, COMMA=20, LBRACK=21, RBRACK=22, NUM=23, LABEL=24, SPACE=25, 
+		EOL=26, COMMENT=27;
 	public const int
 		RULE_program = 0, RULE_instruction = 1, RULE_rrr_instruction = 2, RULE_rx_instruction = 3, 
 		RULE_data_instruction = 4, RULE_label_def = 5, RULE_displacement = 6;
@@ -49,12 +50,14 @@ public partial class Sigma16Parser : Parser {
 
 	private static readonly string[] _LiteralNames = {
 		null, "'data'", null, null, null, "'add'", "'sub'", "'mul'", "'div'", 
-		"'trap'", "'lea'", "'load'", "'store'", "','", "'['", "']'"
+		"'cmplt'", "'cmpeq'", "'cmpgt'", "'inv'", "'and'", "'or'", "'xor'", "'trap'", 
+		"'lea'", "'load'", "'store'", "','", "'['", "']'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, null, "REG", "RRR_COMMAND", "RX_COMMAND", "ADD", "SUB", "MUL", "DIV", 
-		"TRAP", "LEA", "LOAD", "STORE", "COMMA", "LBRACK", "RBRACK", "NUM", "LABEL", 
-		"SPACE", "EOL", "COMMENT"
+		"CMPLT", "CMPEQ", "CMPGT", "INV", "AND", "OR", "XOR", "TRAP", "LEA", "LOAD", 
+		"STORE", "COMMA", "LBRACK", "RBRACK", "NUM", "LABEL", "SPACE", "EOL", 
+		"COMMENT"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -123,7 +126,7 @@ public partial class Sigma16Parser : Parser {
 			State = 17;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 131098L) != 0) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 16777242L) != 0) {
 				{
 				{
 				State = 14;
@@ -529,7 +532,7 @@ public partial class Sigma16Parser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,20,59,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,1,0,
+		4,1,27,59,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,1,0,
 		5,0,16,8,0,10,0,12,0,19,9,0,1,1,1,1,1,1,3,1,24,8,1,1,2,3,2,27,8,2,1,2,
 		1,2,1,2,1,2,1,2,1,2,1,2,1,3,3,3,37,8,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,
 		1,4,3,4,48,8,4,1,4,1,4,1,4,1,5,1,5,1,6,1,6,3,6,57,8,6,1,6,0,0,7,0,2,4,
@@ -538,13 +541,13 @@ public partial class Sigma16Parser : Parser {
 		19,1,0,0,0,17,15,1,0,0,0,17,18,1,0,0,0,18,1,1,0,0,0,19,17,1,0,0,0,20,24,
 		3,4,2,0,21,24,3,6,3,0,22,24,3,8,4,0,23,20,1,0,0,0,23,21,1,0,0,0,23,22,
 		1,0,0,0,24,3,1,0,0,0,25,27,3,10,5,0,26,25,1,0,0,0,26,27,1,0,0,0,27,28,
-		1,0,0,0,28,29,5,3,0,0,29,30,5,2,0,0,30,31,5,13,0,0,31,32,5,2,0,0,32,33,
-		5,13,0,0,33,34,5,2,0,0,34,5,1,0,0,0,35,37,3,10,5,0,36,35,1,0,0,0,36,37,
-		1,0,0,0,37,38,1,0,0,0,38,39,5,4,0,0,39,40,5,2,0,0,40,41,5,13,0,0,41,42,
-		3,12,6,0,42,43,5,14,0,0,43,44,5,2,0,0,44,45,5,15,0,0,45,7,1,0,0,0,46,48,
+		1,0,0,0,28,29,5,3,0,0,29,30,5,2,0,0,30,31,5,20,0,0,31,32,5,2,0,0,32,33,
+		5,20,0,0,33,34,5,2,0,0,34,5,1,0,0,0,35,37,3,10,5,0,36,35,1,0,0,0,36,37,
+		1,0,0,0,37,38,1,0,0,0,38,39,5,4,0,0,39,40,5,2,0,0,40,41,5,20,0,0,41,42,
+		3,12,6,0,42,43,5,21,0,0,43,44,5,2,0,0,44,45,5,22,0,0,45,7,1,0,0,0,46,48,
 		3,10,5,0,47,46,1,0,0,0,47,48,1,0,0,0,48,49,1,0,0,0,49,50,5,1,0,0,50,51,
-		5,16,0,0,51,9,1,0,0,0,52,53,5,17,0,0,53,11,1,0,0,0,54,57,5,16,0,0,55,57,
-		5,17,0,0,56,54,1,0,0,0,56,55,1,0,0,0,57,13,1,0,0,0,6,17,23,26,36,47,56
+		5,23,0,0,51,9,1,0,0,0,52,53,5,24,0,0,53,11,1,0,0,0,54,57,5,23,0,0,55,57,
+		5,24,0,0,56,54,1,0,0,0,56,55,1,0,0,0,57,13,1,0,0,0,6,17,23,26,36,47,56
 	};
 
 	public static readonly ATN _ATN =

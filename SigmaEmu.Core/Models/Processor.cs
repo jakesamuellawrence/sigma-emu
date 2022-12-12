@@ -116,6 +116,27 @@ public class Processor
                 destination.Value = operandA.Value / operandB.Value;
                 RegisterFile[RemainderRegister].Value = operandA.Value % operandB.Value;
                 break;
+            case RrrInstruction.CmpLt:
+                destination.Value = Word.FromBool(operandA.Value < operandB.Value);
+                break;
+            case RrrInstruction.CmpEq:
+                destination.Value = Word.FromBool(operandA.Value == operandB.Value);
+                break;
+            case RrrInstruction.CmpGt:
+                destination.Value = Word.FromBool(operandA.Value > operandB.Value);
+                break;
+            case RrrInstruction.Inv:
+                destination.Value = !operandA.Value;
+                break;
+            case RrrInstruction.And:
+                destination.Value = operandA.Value & operandB.Value;
+                break;
+            case RrrInstruction.Or:
+                destination.Value = operandA.Value | operandB.Value;
+                break;
+            case RrrInstruction.Xor:
+                destination.Value = (operandA.Value | operandB.Value) & (!operandA.Value | !operandB.Value);
+                break;
             case RrrInstruction.Trap:
                 Halt();
                 break;

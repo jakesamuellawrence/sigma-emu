@@ -1,0 +1,17 @@
+lea R1,1[R0]
+lea R2,2[R0]
+lea R3,1[R0]
+
+cmplt R5,R1,R2
+cmplt R5,R2,R1
+cmplt R5,R1,R1
+
+cmpeq R6,R1,R1
+cmpeq R6,R1,R3
+cmpeq R6,R1,R2
+
+cmpgt R7,R2,R1
+cmpgt R7,R1,R2
+cmpgt R7,R2,R2
+
+trap R0,R0,R0

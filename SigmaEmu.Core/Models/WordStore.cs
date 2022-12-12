@@ -25,8 +25,6 @@ public class WordStore
         }
     }
 
-    public string DisplayString => _value.AsHexString();
-
     public Word GetValueWithoutReading()
     {
         return _value;

@@ -1,0 +1,21 @@
+lea R1,1[R0]
+
+inv R2,R1,R0
+inv R3,R0,R0
+
+and R4,R0,R0
+and R5,R0,R1
+and R6,R1,R0
+and R7,R1,R1
+
+or R8,R0,R0
+or R9,R0,R1
+or R10,R1,R0
+or R11,R1,R1
+
+xor R12,R0,R0
+xor R13,R0,R1
+xor R14,R1,R0
+xor R15,R1,R1
+
+trap R0,R0,R0
