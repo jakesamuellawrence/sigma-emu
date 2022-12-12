@@ -92,7 +92,7 @@ public class Processor
                 break;
             case RxInstruction.Store:
                 DataRegister.Value = destination.Value;
-                Memory[AddressRegister.Value].Value = DataRegister.Value;
+                Memory[AddressRegister.Value + offset.Value].Value = DataRegister.Value;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(op), op, null);
@@ -136,6 +136,12 @@ public class Processor
                 break;
             case RrrInstruction.Xor:
                 destination.Value = (operandA.Value | operandB.Value) & (!operandA.Value | !operandB.Value);
+                break;
+            case RrrInstruction.ShiftL:
+                destination.Value = operandA.Value << operandB.Value;
+                break;
+            case RrrInstruction.ShiftR:
+                destination.Value = operandA.Value >> operandB.Value;
                 break;
             case RrrInstruction.Trap:
                 Halt();

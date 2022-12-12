@@ -1,0 +1,14 @@
+lea R1,1[R0]
+lea R2,1[R1]
+
+load R3,array[R2]
+add R3,R3,R2
+store R3,array[R1]
+
+trap R0,R0,R0
+
+array data 1
+data 2 
+data 3
+data 4
+data 5

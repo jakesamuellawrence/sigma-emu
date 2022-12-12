@@ -1,0 +1,7 @@
+lea R1,200[R0]
+lea R2,2[R0]
+
+shiftl R3,R1,R2
+shiftr R4,R1,R2
+
+trap R0,R0,R0

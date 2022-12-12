@@ -79,6 +79,7 @@ public class Word
         return a.Value != b.Value;
     }
 
+
     public static Word operator !(Word a)
     {
         return FromBool(a.Value == 0);
@@ -92,6 +93,16 @@ public class Word
     public static Word operator |(Word a, Word b)
     {
         return FromBool(a.Value != 0 || b.Value != 0);
+    }
+
+    public static Word operator >> (Word a, Word b)
+    {
+        return FromInt(a.Value >> b.Value);
+    }
+
+    public static Word operator <<(Word a, Word b)
+    {
+        return FromInt(a.Value << b.Value);
     }
 
     public static Word FromInstruction(int b1, int b2, int b3, int b4)

@@ -13,6 +13,8 @@ public enum RrrInstruction
     And = 8,
     Or = 9,
     Xor = 10,
+    ShiftL = 11,
+    ShiftR = 12,
     Trap = 13,
     ExpandToRx = 15
 }
