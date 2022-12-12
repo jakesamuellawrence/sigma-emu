@@ -1,25 +1,28 @@
 ﻿@using SigmaEmu.Core.Models
-
 @if (Source == null)
 {
     <div class="w-100 h-100 bg-grey-darkest d-flex justify-content-around align-items-center">
-        <FileUpload ProcessFile="LoadFileEvent" />
+        <FileUpload ProcessFile="LoadFileEvent"/>
     </div>
 }
 else
 {
-    <div class="w-100 h-100 bg-grey-main text-white p-2">
+    <div class="w-100 h-100 bg-grey-main text-white p-2 d-flex flex-column" style="white-space: pre">
         @foreach (var line in Source.Lines)
         {
-            <pre class="m-0">@line</pre>
+            <span class="font-monospace">@line</span>
         }
     </div>
 }
 
 @code {
-    
-    [Parameter, EditorRequired]
+
+    [Parameter]
+    [EditorRequired]
     public Source? Source { get; set; }
-    [Parameter, EditorRequired]
+
+    [Parameter]
+    [EditorRequired]
     public EventCallback<IBrowserFile> LoadFileEvent { get; set; }
+
 }

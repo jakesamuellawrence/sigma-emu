@@ -10,7 +10,7 @@
         if (WordStore.WasWrittenTo && WordStore.WasReadFrom) textColour = "text-read-write";
         else if (WordStore.WasReadFrom) textColour = "text-read";
         else if (WordStore.WasWrittenTo) textColour = "text-write";
-        <span class="text-@textColour">@WordStore.DisplayString</span>
+        <span class="text-@textColour font-monospace">@WordStore.DisplayString</span>
     }
 </div>
 

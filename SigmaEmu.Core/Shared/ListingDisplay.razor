@@ -18,14 +18,29 @@
     }
     else
     {
-        @foreach (var line in Listing.Lines)
-        {
-            @if (ProgramCounter.GetValueWithoutReading() == line.Address)
+        <div class="d-flex flex-column font-monospace">
+            <div class="d-flex flex-row gap-4 fw-bold">
+                <span class="col-1">Address</span>
+                <span class="col-1">Code</span>
+                <span class="col-12">Source</span>
+            </div>
+            @foreach (var line in Listing.Lines)
             {
-                <hr class="text-text-write my-0 border border-1 border-text-write"/>
+                @if (ProgramCounter.GetValueWithoutReading() == line.Address)
+                {
+                    <hr class="text-text-write my-0 border border-1 border-text-write"/>
+                }
+                <div class="d-flex flex-row gap-4">
+                    <span class="col-1">@line.Address.AsHexString()</span>
+                    <span class="col-1">
+                        @line.Code1.AsHexString()
+                        @(line.Code2 is null ? "" : line.Code2.AsHexString())
+                    </span>
+                    <span class="col-12">@line.Source</span>
+                </div>
+                @* <span class="font-monospace">@line.Format().Replace('\n', ' ')</span> *@
             }
-            <pre class="m-0">@line.Format().Replace('\n', ' ')</pre>
-        }
+        </div>
     }
 </div>
 

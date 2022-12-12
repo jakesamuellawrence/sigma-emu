@@ -8,14 +8,14 @@
     {
         <div class="d-flex flex-column w-100 gap-2">
             <div class="d-flex flex-row gap-2">
-                <span class="col text-center">Address</span>
-                <spam class="col text-center">Value</spam>
+                <span class="col text-center fw-bold">Address</span>
+                <spam class="col text-center fw-bold">Value</spam>
             </div>
             @* <p class="m-0 fw-bold">Address</p> *@
             @for (var i = 0; i < Memory.MaxMemory; i++)
             {
                 <div class="d-flex flex-row gap-2 align-items-center">
-                    <span class="col text-center">@($"{i:x4}")</span>
+                    <span class="col text-center font-monospace">@($"{i:x4}")</span>
                     <span class="col d-flex flex-row justify-content-center">
                         <WordStoreDisplay WordStore="Memory[i]"/>
                     </span>
