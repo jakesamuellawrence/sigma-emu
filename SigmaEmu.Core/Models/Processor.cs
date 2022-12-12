@@ -9,9 +9,56 @@ public class Processor
 
     private const int RemainderRegister = 15;
 
+    private readonly Dictionary<RrrInstruction, Action<Register, Register, Register>> _rrrMap;
+    private readonly Dictionary<RxInstruction, Action<Register, Register>> _rxMap;
+
     public Processor()
     {
         for (var i = 0; i < MaxRegisters; i++) RegisterFile[i] = new Register();
+
+        _rrrMap = new Dictionary<RrrInstruction, Action<Register, Register, Register>>
+        {
+            { RrrInstruction.Add, (d, a, b) => d.Value = a.Value + b.Value },
+            { RrrInstruction.Sub, (d, a, b) => d.Value = a.Value - b.Value },
+            { RrrInstruction.Mul, (d, a, b) => d.Value = a.Value * b.Value },
+            {
+                RrrInstruction.Div,
+                (d, a, b) =>
+                {
+                    d.Value = a.Value / b.Value;
+                    RegisterFile[RemainderRegister].Value = a.Value % b.Value;
+                }
+            },
+            { RrrInstruction.CmpLt, (d, a, b) => d.Value = Word.FromBool(a.Value < b.Value) },
+            { RrrInstruction.CmpEq, (d, a, b) => d.Value = Word.FromBool(a.Value == b.Value) },
+            { RrrInstruction.CmpGt, (d, a, b) => d.Value = Word.FromBool(a.Value > b.Value) },
+            { RrrInstruction.Inv, (d, a, b) => d.Value = !a.Value },
+            { RrrInstruction.And, (d, a, b) => d.Value = a.Value & b.Value },
+            { RrrInstruction.Or, (d, a, b) => d.Value = a.Value | b.Value },
+            { RrrInstruction.Xor, (d, a, b) => d.Value = (a.Value | b.Value) & (!a.Value | !b.Value) },
+            { RrrInstruction.ShiftL, (d, a, b) => d.Value = a.Value << b.Value },
+            { RrrInstruction.ShiftR, (d, a, b) => d.Value = a.Value >> b.Value },
+            { RrrInstruction.Trap, (d, a, b) => Halt() }
+        };
+
+        _rxMap = new Dictionary<RxInstruction, Action<Register, Register>>
+        {
+            { RxInstruction.Lea, (d, a) => d.Value = AddressRegister.Value + a.Value },
+            {
+                RxInstruction.Load, (d, a) =>
+                {
+                    DataRegister.Value = Memory[AddressRegister.Value + a.Value].Value;
+                    d.Value = DataRegister.Value;
+                }
+            },
+            {
+                RxInstruction.Store, (d, a) =>
+                {
+                    DataRegister.Value = d.Value;
+                    Memory[AddressRegister.Value + a.Value].Value = DataRegister.Value;
+                }
+            }
+        };
     }
 
     public ProcessorRunningState ProcessorState { get; private set; } = ProcessorRunningState.Stopped;
@@ -81,75 +128,20 @@ public class Processor
         AddressRegister.Value = Memory[ProgramCounter.Value].Value;
         ProgramCounter.Value = Word.Increment(ProgramCounter.Value);
 
-        switch (op)
-        {
-            case RxInstruction.Lea:
-                destination.Value = AddressRegister.Value + offset.Value;
-                break;
-            case RxInstruction.Load:
-                DataRegister.Value = Memory[AddressRegister.Value + offset.Value].Value;
-                destination.Value = DataRegister.Value;
-                break;
-            case RxInstruction.Store:
-                DataRegister.Value = destination.Value;
-                Memory[AddressRegister.Value + offset.Value].Value = DataRegister.Value;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(op), op, null);
-        }
+        if (!_rxMap.ContainsKey(op)) throw new UnimplementedInstructionException(op.ToString());
+        _rxMap[op](destination, offset);
     }
 
     private void RunRrrInstruction(RrrInstruction op, Register destination, Register operandA, Register operandB)
     {
-        switch (op)
+        if (!_rrrMap.ContainsKey(op)) throw new UnimplementedInstructionException(op.ToString());
+        _rrrMap[op](destination, operandA, operandB);
+    }
+
+    private class UnimplementedInstructionException : Exception
+    {
+        public UnimplementedInstructionException(string instruction) : base($"{instruction} was not implemented")
         {
-            case RrrInstruction.Add:
-                destination.Value = operandA.Value + operandB.Value;
-                break;
-            case RrrInstruction.Sub:
-                destination.Value = operandA.Value - operandB.Value;
-                break;
-            case RrrInstruction.Mul:
-                destination.Value = operandA.Value * operandB.Value;
-                break;
-            case RrrInstruction.Div:
-                destination.Value = operandA.Value / operandB.Value;
-                RegisterFile[RemainderRegister].Value = operandA.Value % operandB.Value;
-                break;
-            case RrrInstruction.CmpLt:
-                destination.Value = Word.FromBool(operandA.Value < operandB.Value);
-                break;
-            case RrrInstruction.CmpEq:
-                destination.Value = Word.FromBool(operandA.Value == operandB.Value);
-                break;
-            case RrrInstruction.CmpGt:
-                destination.Value = Word.FromBool(operandA.Value > operandB.Value);
-                break;
-            case RrrInstruction.Inv:
-                destination.Value = !operandA.Value;
-                break;
-            case RrrInstruction.And:
-                destination.Value = operandA.Value & operandB.Value;
-                break;
-            case RrrInstruction.Or:
-                destination.Value = operandA.Value | operandB.Value;
-                break;
-            case RrrInstruction.Xor:
-                destination.Value = (operandA.Value | operandB.Value) & (!operandA.Value | !operandB.Value);
-                break;
-            case RrrInstruction.ShiftL:
-                destination.Value = operandA.Value << operandB.Value;
-                break;
-            case RrrInstruction.ShiftR:
-                destination.Value = operandA.Value >> operandB.Value;
-                break;
-            case RrrInstruction.Trap:
-                Halt();
-                break;
-            case RrrInstruction.ExpandToRx:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(op), op, null);
         }
     }
 }
