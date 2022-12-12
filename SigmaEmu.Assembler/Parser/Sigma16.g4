@@ -4,10 +4,11 @@ grammar Sigma16;
 
 program : instruction*;
 
-instruction : rrr_instruction | rx_instruction | data_instruction ;
+instruction : rrr_instruction | rx_instruction | x_instruction | data_instruction ;
 
 rrr_instruction : label_def? RRR_COMMAND destinationReg=REG COMMA firstOperand=REG COMMA secondOperand=REG ;
 rx_instruction : label_def? RX_COMMAND destinationReg=REG COMMA displacement LBRACK offsetReg=REG RBRACK ;
+x_instruction : label_def? X_COMMAND displacement LBRACK offsetReg=REG RBRACK ;
 data_instruction : label_def? 'data' NUM ;
 
 label_def : LABEL;
@@ -19,6 +20,7 @@ displacement : num=NUM | label=LABEL ;
 
 RRR_COMMAND : ADD | SUB | MUL | DIV | CMPLT | CMPEQ | CMPGT | INV | AND | OR | XOR | SHIFTL | SHIFTR | TRAP ;
 RX_COMMAND : LEA | LOAD | STORE;
+X_COMMAND : JUMP;
 
 // RRR commands
 ADD : 'add';
@@ -40,6 +42,9 @@ TRAP : 'trap';
 LEA : 'lea';
 LOAD : 'load';
 STORE : 'store';
+
+// X commands
+JUMP : 'jump' ;
 
 //LABEL : ('a'.. 'z' | 'A'.. 'Q' | 'S'..'Z') (LETTER | [_-] | DIGIT)*;
 //LEGAL_LABEL_START : ~('R'|','|'['|']'|'\r'|'\n') ;

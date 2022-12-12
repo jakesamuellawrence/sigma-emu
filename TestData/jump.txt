@@ -1,0 +1,12 @@
+lea R1,someLabel[R0]
+lea R2,57[R0]
+lea R3,100[R0]
+jump goto[R0]
+
+someLabel 
+add R1,R2,R3
+trap R1,R1,R1
+
+goto
+sub R1,R2,R3
+trap R1,R1,R1

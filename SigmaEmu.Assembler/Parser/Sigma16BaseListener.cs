@@ -84,6 +84,18 @@ public partial class Sigma16BaseListener : ISigma16Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitRx_instruction([NotNull] Sigma16Parser.Rx_instructionContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.x_instruction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterX_instruction([NotNull] Sigma16Parser.X_instructionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.x_instruction"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitX_instruction([NotNull] Sigma16Parser.X_instructionContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Sigma16Parser.data_instruction"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

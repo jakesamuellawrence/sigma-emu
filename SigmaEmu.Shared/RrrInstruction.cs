@@ -16,5 +16,6 @@ public enum RrrInstruction
     ShiftL = 11,
     ShiftR = 12,
     Trap = 13,
+    ExpandToX = 14,
     ExpandToRx = 15
 }

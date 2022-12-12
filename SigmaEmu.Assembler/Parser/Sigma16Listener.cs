@@ -71,6 +71,16 @@ public interface ISigma16Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitRx_instruction([NotNull] Sigma16Parser.Rx_instructionContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.x_instruction"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterX_instruction([NotNull] Sigma16Parser.X_instructionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.x_instruction"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitX_instruction([NotNull] Sigma16Parser.X_instructionContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Sigma16Parser.data_instruction"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

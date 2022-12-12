@@ -11,6 +11,7 @@ public class Processor
 
     private readonly Dictionary<RrrInstruction, Action<Register, Register, Register>> _rrrMap;
     private readonly Dictionary<RxInstruction, Action<Register, Register>> _rxMap;
+    private readonly Dictionary<XInstruction, Action<Register>> _xMap;
 
     public Processor()
     {
@@ -58,6 +59,11 @@ public class Processor
                     Memory[AddressRegister.Value + a.Value].Value = DataRegister.Value;
                 }
             }
+        };
+
+        _xMap = new Dictionary<XInstruction, Action<Register>>
+        {
+            { XInstruction.Jump, offset => ProgramCounter.Value = AddressRegister.Value + offset.Value }
         };
     }
 
@@ -118,6 +124,8 @@ public class Processor
         var op = (RrrInstruction)opInt;
         if (op == RrrInstruction.ExpandToRx)
             RunRxInstruction((RxInstruction)operandB, RegisterFile[destination], RegisterFile[operandA]);
+        else if (op == RrrInstruction.ExpandToX)
+            RunXInstruction((XInstruction)operandB, RegisterFile[operandA]);
         else
             RunRrrInstruction(op,
                 RegisterFile[destination], RegisterFile[operandA], RegisterFile[operandB]);
@@ -130,6 +138,15 @@ public class Processor
 
         if (!_rxMap.ContainsKey(op)) throw new UnimplementedInstructionException(op.ToString());
         _rxMap[op](destination, offset);
+    }
+
+    private void RunXInstruction(XInstruction op, Register offset)
+    {
+        AddressRegister.Value = Memory[ProgramCounter.Value].Value;
+        ProgramCounter.Value = Word.Increment(ProgramCounter.Value);
+
+        if (!_xMap.ContainsKey(op)) throw new UnimplementedInstructionException(op.ToString());
+        _xMap[op](offset);
     }
 
     private void RunRrrInstruction(RrrInstruction op, Register destination, Register operandA, Register operandB)
