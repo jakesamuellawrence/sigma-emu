@@ -19,7 +19,7 @@ REG : 'R0'|'R1'|'R2'|'R3'|'R4'|'R5'|'R6'|'R7'|'R8'|'R9'|'R10'|'R11'|'R12'|'R13'|
 displacement : num=NUM | label=LABEL ;
 
 RRR_COMMAND : ADD | SUB | MUL | DIV | CMPLT | CMPEQ | CMPGT | INV | AND | OR | XOR | SHIFTL | SHIFTR | TRAP ;
-RX_COMMAND : LEA | LOAD | STORE;
+RX_COMMAND : LEA | LOAD | STORE | JUMPF | JUMPT | JAL ;
 X_COMMAND : JUMP;
 
 // RRR commands
@@ -42,6 +42,9 @@ TRAP : 'trap';
 LEA : 'lea';
 LOAD : 'load';
 STORE : 'store';
+JUMPF : 'jumpf';
+JUMPT : 'jumpt';
+JAL : 'jal';
 
 // X commands
 JUMP : 'jump' ;

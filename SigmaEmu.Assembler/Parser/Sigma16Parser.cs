@@ -38,8 +38,9 @@ public partial class Sigma16Parser : Parser {
 	public const int
 		T__0=1, REG=2, RRR_COMMAND=3, RX_COMMAND=4, X_COMMAND=5, ADD=6, SUB=7, 
 		MUL=8, DIV=9, CMPLT=10, CMPEQ=11, CMPGT=12, INV=13, AND=14, OR=15, XOR=16, 
-		SHIFTL=17, SHIFTR=18, TRAP=19, LEA=20, LOAD=21, STORE=22, JUMP=23, COMMA=24, 
-		LBRACK=25, RBRACK=26, NUM=27, LABEL=28, SPACE=29, EOL=30, COMMENT=31;
+		SHIFTL=17, SHIFTR=18, TRAP=19, LEA=20, LOAD=21, STORE=22, JUMPF=23, JUMPT=24, 
+		JAL=25, JUMP=26, COMMA=27, LBRACK=28, RBRACK=29, NUM=30, LABEL=31, SPACE=32, 
+		EOL=33, COMMENT=34;
 	public const int
 		RULE_program = 0, RULE_instruction = 1, RULE_rrr_instruction = 2, RULE_rx_instruction = 3, 
 		RULE_x_instruction = 4, RULE_data_instruction = 5, RULE_label_def = 6, 
@@ -52,14 +53,14 @@ public partial class Sigma16Parser : Parser {
 	private static readonly string[] _LiteralNames = {
 		null, "'data'", null, null, null, null, "'add'", "'sub'", "'mul'", "'div'", 
 		"'cmplt'", "'cmpeq'", "'cmpgt'", "'inv'", "'and'", "'or'", "'xor'", "'shiftl'", 
-		"'shiftr'", "'trap'", "'lea'", "'load'", "'store'", "'jump'", "','", "'['", 
-		"']'"
+		"'shiftr'", "'trap'", "'lea'", "'load'", "'store'", "'jumpf'", "'jumpt'", 
+		"'jal'", "'jump'", "','", "'['", "']'"
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, null, "REG", "RRR_COMMAND", "RX_COMMAND", "X_COMMAND", "ADD", "SUB", 
 		"MUL", "DIV", "CMPLT", "CMPEQ", "CMPGT", "INV", "AND", "OR", "XOR", "SHIFTL", 
-		"SHIFTR", "TRAP", "LEA", "LOAD", "STORE", "JUMP", "COMMA", "LBRACK", "RBRACK", 
-		"NUM", "LABEL", "SPACE", "EOL", "COMMENT"
+		"SHIFTR", "TRAP", "LEA", "LOAD", "STORE", "JUMPF", "JUMPT", "JAL", "JUMP", 
+		"COMMA", "LBRACK", "RBRACK", "NUM", "LABEL", "SPACE", "EOL", "COMMENT"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -128,7 +129,7 @@ public partial class Sigma16Parser : Parser {
 			State = 19;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 268435514L) != 0) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 2147483706L) != 0) {
 				{
 				{
 				State = 16;
@@ -614,7 +615,7 @@ public partial class Sigma16Parser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,31,71,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,34,71,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,1,0,5,0,18,8,0,10,0,12,0,21,9,0,1,1,1,1,1,1,1,1,3,1,27,8,1,1,2,3,2,
 		30,8,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,3,3,3,40,8,3,1,3,1,3,1,3,1,3,1,3,
 		1,3,1,3,1,3,1,4,3,4,51,8,4,1,4,1,4,1,4,1,4,1,4,1,4,1,5,3,5,60,8,5,1,5,
@@ -625,14 +626,14 @@ public partial class Sigma16Parser : Parser {
 		4,2,0,23,27,3,6,3,0,24,27,3,8,4,0,25,27,3,10,5,0,26,22,1,0,0,0,26,23,1,
 		0,0,0,26,24,1,0,0,0,26,25,1,0,0,0,27,3,1,0,0,0,28,30,3,12,6,0,29,28,1,
 		0,0,0,29,30,1,0,0,0,30,31,1,0,0,0,31,32,5,3,0,0,32,33,5,2,0,0,33,34,5,
-		24,0,0,34,35,5,2,0,0,35,36,5,24,0,0,36,37,5,2,0,0,37,5,1,0,0,0,38,40,3,
+		27,0,0,34,35,5,2,0,0,35,36,5,27,0,0,36,37,5,2,0,0,37,5,1,0,0,0,38,40,3,
 		12,6,0,39,38,1,0,0,0,39,40,1,0,0,0,40,41,1,0,0,0,41,42,5,4,0,0,42,43,5,
-		2,0,0,43,44,5,24,0,0,44,45,3,14,7,0,45,46,5,25,0,0,46,47,5,2,0,0,47,48,
-		5,26,0,0,48,7,1,0,0,0,49,51,3,12,6,0,50,49,1,0,0,0,50,51,1,0,0,0,51,52,
-		1,0,0,0,52,53,5,5,0,0,53,54,3,14,7,0,54,55,5,25,0,0,55,56,5,2,0,0,56,57,
-		5,26,0,0,57,9,1,0,0,0,58,60,3,12,6,0,59,58,1,0,0,0,59,60,1,0,0,0,60,61,
-		1,0,0,0,61,62,5,1,0,0,62,63,5,27,0,0,63,11,1,0,0,0,64,65,5,28,0,0,65,13,
-		1,0,0,0,66,69,5,27,0,0,67,69,5,28,0,0,68,66,1,0,0,0,68,67,1,0,0,0,69,15,
+		2,0,0,43,44,5,27,0,0,44,45,3,14,7,0,45,46,5,28,0,0,46,47,5,2,0,0,47,48,
+		5,29,0,0,48,7,1,0,0,0,49,51,3,12,6,0,50,49,1,0,0,0,50,51,1,0,0,0,51,52,
+		1,0,0,0,52,53,5,5,0,0,53,54,3,14,7,0,54,55,5,28,0,0,55,56,5,2,0,0,56,57,
+		5,29,0,0,57,9,1,0,0,0,58,60,3,12,6,0,59,58,1,0,0,0,59,60,1,0,0,0,60,61,
+		1,0,0,0,61,62,5,1,0,0,62,63,5,30,0,0,63,11,1,0,0,0,64,65,5,31,0,0,65,13,
+		1,0,0,0,66,69,5,30,0,0,67,69,5,31,0,0,68,66,1,0,0,0,68,67,1,0,0,0,69,15,
 		1,0,0,0,7,19,26,29,39,50,59,68
 	};
 

@@ -21,12 +21,17 @@ public class Word
         var hex = AsHexString();
         if (hex.Length != 4) throw new BadWordFormat("Word did not have 4 characters");
 
-        int FromHex(char value)
+        int HexCharToInt(char value)
         {
             return int.Parse(value.ToString(), NumberStyles.HexNumber);
         }
 
-        return (FromHex(hex[0]), FromHex(hex[1]), FromHex(hex[2]), FromHex(hex[3]));
+        return (HexCharToInt(hex[0]), HexCharToInt(hex[1]), HexCharToInt(hex[2]), HexCharToInt(hex[3]));
+    }
+
+    public bool AsBool()
+    {
+        return Value != 0;
     }
 
     public static Word Increment(Word a, int value = 1)

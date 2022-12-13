@@ -58,6 +58,25 @@ public class Processor
                     DataRegister.Value = d.Value;
                     Memory[AddressRegister.Value + a.Value].Value = DataRegister.Value;
                 }
+            },
+            {
+                RxInstruction.Jumpf, (d, a) =>
+                {
+                    if (!d.Value.AsBool()) ProgramCounter.Value = AddressRegister.Value + a.Value;
+                }
+            },
+            {
+                RxInstruction.Jumpt, (d, a) =>
+                {
+                    if (d.Value.AsBool()) ProgramCounter.Value = AddressRegister.Value + a.Value;
+                }
+            },
+            {
+                RxInstruction.Jal, (d, a) =>
+                {
+                    d.Value = ProgramCounter.Value;
+                    ProgramCounter.Value = AddressRegister.Value + a.Value;
+                }
             }
         };
 
