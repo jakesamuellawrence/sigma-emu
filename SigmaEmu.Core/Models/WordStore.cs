@@ -13,13 +13,11 @@ public class WordStore
     {
         get
         {
-            Console.WriteLine("Value read");
             WasReadFrom = true;
             return _value;
         }
         set
         {
-            Console.WriteLine("Value written");
             WasWrittenTo = true;
             _value = value;
         }
