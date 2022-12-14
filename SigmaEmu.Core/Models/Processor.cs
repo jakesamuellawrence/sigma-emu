@@ -25,6 +25,12 @@ public class Processor
                 RrrInstruction.Div,
                 (d, a, b) =>
                 {
+                    if (b.Value == Word.FromInt(0))
+                    {
+                        Halt();
+                        return;
+                    }
+
                     d.Value = a.Value / b.Value;
                     RegisterFile[RemainderRegister].Value = a.Value % b.Value;
                 }
