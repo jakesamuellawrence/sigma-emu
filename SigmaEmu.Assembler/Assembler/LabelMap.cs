@@ -27,9 +27,9 @@ public class LabelMap
         foreach (var line in lines) line.PatchRxDisplacement(address);
     }
 
-    public Word GetAddress(string label)
+    public Word? GetAddress(string label)
     {
-        return AddressMap.ContainsKey(label) ? AddressMap[label] : Word.FromInt(-1);
+        return AddressMap.ContainsKey(label) ? AddressMap[label] : null;
     }
 
     public void RememberLineToPatch(string label, ListingLine line)

@@ -69,12 +69,12 @@ public class AssemblerListener : Sigma16BaseListener
         var displacementWord = GetWordFromDisplacement(context.displacement());
 
         var code1 = Word.FromInstruction(RxExpansionOp, (int)destReg, (int)offsetReg, (int)op);
-        var line = Listing.AddInstruction(code1, FindOriginalText(context), displacementWord);
+        var line = Listing.AddInstruction(code1, FindOriginalText(context), displacementWord ?? Word.FromInt(-1));
 
-        if (displacementWord.AsInt() == -1) _labelMap.RememberLineToPatch(context.displacement().GetText(), line);
+        if (displacementWord is null) _labelMap.RememberLineToPatch(context.displacement().GetText(), line);
     }
 
-    private Word GetWordFromDisplacement(Sigma16Parser.DisplacementContext displacement)
+    private Word? GetWordFromDisplacement(Sigma16Parser.DisplacementContext displacement)
     {
         if (displacement.num != null) return Word.FromInt(int.Parse(displacement.num.Text));
         return _labelMap.GetAddress(displacement.label.Text);
@@ -90,9 +90,9 @@ public class AssemblerListener : Sigma16BaseListener
         var displacementWord = GetWordFromDisplacement(context.displacement());
 
         var code1 = Word.FromInstruction(XExpansionOp, 0, (int)offsetReg, (int)op);
-        var line = Listing.AddInstruction(code1, FindOriginalText(context), displacementWord);
+        var line = Listing.AddInstruction(code1, FindOriginalText(context), displacementWord ?? Word.FromInt(-1));
 
-        if (displacementWord.AsInt() == -1) _labelMap.RememberLineToPatch(context.displacement().GetText(), line);
+        if (displacementWord is null) _labelMap.RememberLineToPatch(context.displacement().GetText(), line);
     }
 
     public override void ExitProgram(Sigma16Parser.ProgramContext context)
