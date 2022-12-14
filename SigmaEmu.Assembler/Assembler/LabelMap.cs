@@ -1,5 +1,4 @@
-﻿using SigmaEmu.Models;
-using SigmaEmu.Shared;
+﻿using SigmaEmu.Shared;
 
 namespace SigmaEmu.Assembler.Assembler;
 
@@ -25,10 +24,7 @@ public class LabelMap
 
     private void PatchAll(List<ListingLine> lines, Word address)
     {
-        foreach (var line in lines)
-        {
-            line.PatchRxDisplacement(address);
-        }
+        foreach (var line in lines) line.PatchRxDisplacement(address);
     }
 
     public Word GetAddress(string label)
@@ -51,5 +47,4 @@ public class LabelMap
     {
         return ToPatch.Keys.ToList();
     }
-    
 }

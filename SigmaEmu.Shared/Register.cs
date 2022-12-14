@@ -1,4 +1,4 @@
-﻿namespace SigmaEmu.Models;
+﻿namespace SigmaEmu.Shared;
 
 public enum Register
 {

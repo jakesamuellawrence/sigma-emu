@@ -4,7 +4,7 @@ namespace SigmaEmu.Shared;
 
 public class Word
 {
-    public int Value { private get; init; }
+    private ushort Value { get; init; }
 
     public string AsHexString()
     {
@@ -114,12 +114,12 @@ public class Word
     {
         var wordString = $"{b1:X1}{b2:X1}{b3:X1}{b4:X1}";
         var wordValue = int.Parse(wordString, NumberStyles.HexNumber);
-        return new Word { Value = wordValue };
+        return FromInt(wordValue);
     }
 
     public static Word FromInt(int value)
     {
-        return new Word { Value = value };
+        return new Word { Value = (ushort)value };
     }
 
     public static Word FromBool(bool value)

@@ -49,9 +49,6 @@ JAL : 'jal';
 // X commands
 JUMP : 'jump' ;
 
-//LABEL : ('a'.. 'z' | 'A'.. 'Q' | 'S'..'Z') (LETTER | [_-] | DIGIT)*;
-//LEGAL_LABEL_START : ~('R'|','|'['|']'|'\r'|'\n') ;
-
 COMMA : ',';
 LBRACK : '[';
 RBRACK : ']';
