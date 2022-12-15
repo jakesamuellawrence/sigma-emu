@@ -41,6 +41,16 @@ public interface ISigma16Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitProgram([NotNull] Sigma16Parser.ProgramContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.line"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLine([NotNull] Sigma16Parser.LineContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.line"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLine([NotNull] Sigma16Parser.LineContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Sigma16Parser.instruction"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -101,6 +111,16 @@ public interface ISigma16Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitLabel_def([NotNull] Sigma16Parser.Label_defContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.label"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLabel([NotNull] Sigma16Parser.LabelContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.label"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLabel([NotNull] Sigma16Parser.LabelContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Sigma16Parser.displacement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -110,4 +130,44 @@ public interface ISigma16Listener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitDisplacement([NotNull] Sigma16Parser.DisplacementContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.command"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterCommand([NotNull] Sigma16Parser.CommandContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.command"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitCommand([NotNull] Sigma16Parser.CommandContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.rrr_command"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterRrr_command([NotNull] Sigma16Parser.Rrr_commandContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.rrr_command"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitRrr_command([NotNull] Sigma16Parser.Rrr_commandContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.rx_command"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterRx_command([NotNull] Sigma16Parser.Rx_commandContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.rx_command"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitRx_command([NotNull] Sigma16Parser.Rx_commandContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.x_command"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterX_command([NotNull] Sigma16Parser.X_commandContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.x_command"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitX_command([NotNull] Sigma16Parser.X_commandContext context);
 }

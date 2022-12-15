@@ -46,7 +46,7 @@ public class AssemblerListener : Sigma16BaseListener
 
     public override void ExitRrr_instruction(Sigma16Parser.Rrr_instructionContext context)
     {
-        var op = TryParseEnum<RrrInstruction>(context.RRR_COMMAND().GetText());
+        var op = TryParseEnum<RrrInstruction>(context.mnemonic.GetText());
         var destReg = TryParseEnum<Register>(context.destinationReg.Text);
         var firstOpReg = TryParseEnum<Register>(context.firstOperand.Text);
         var secondOpReg = TryParseEnum<Register>(context.secondOperand.Text);
@@ -60,7 +60,7 @@ public class AssemblerListener : Sigma16BaseListener
 
     public override void ExitRx_instruction(Sigma16Parser.Rx_instructionContext context)
     {
-        var op = TryParseEnum<RxInstruction>(context.RX_COMMAND().GetText());
+        var op = TryParseEnum<RxInstruction>(context.mnemonic.GetText());
         var destReg = TryParseEnum<Register>(context.destinationReg.Text);
         var offsetReg = TryParseEnum<Register>(context.offsetReg.Text);
 
@@ -77,15 +77,15 @@ public class AssemblerListener : Sigma16BaseListener
     private Word? GetWordFromDisplacement(Sigma16Parser.DisplacementContext displacement)
     {
         if (displacement.num != null) return Word.FromInt(int.Parse(displacement.num.Text));
-        return _labelMap.GetAddress(displacement.label.Text);
+        return _labelMap.GetAddress(displacement.label().GetText());
     }
 
     public override void ExitX_instruction(Sigma16Parser.X_instructionContext context)
     {
-        var op = TryParseEnum<XInstruction>(context.X_COMMAND().GetText());
+        var op = TryParseEnum<XInstruction>(context.mnemonic.GetText());
         var offsetReg = TryParseEnum<Register>(context.offsetReg.Text);
 
-        if (op == null || offsetReg == null) throw new GrammarMismatchException();
+        if (op == null || offsetReg == null) return;
 
         var displacementWord = GetWordFromDisplacement(context.displacement());
 
@@ -104,9 +104,10 @@ public class AssemblerListener : Sigma16BaseListener
             });
     }
 
-    private static T? TryParseEnum<T>(string name) where T : struct, Enum
+    private static T? TryParseEnum<T>(string text) where T : struct, Enum
     {
-        var success = Enum.TryParse(name, true, out T parsed);
+        var success = Enum.TryParse(text, true, out T parsed);
+
         return success ? parsed : null;
     }
 

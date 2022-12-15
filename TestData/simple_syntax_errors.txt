@@ -3,11 +3,11 @@
 
 ; Calculate result := 6 * x, where x = 7
 start
-     lear   R1,6[R0]       ; R1 := 6
-     load   RR2,x[R0]       ; R2 := x (variable initialized to 7)
-     mul    R3,R1,R2   ; R3 := 6 * x = 42 (hex 002a)
-     store  R3,result[R0]  ; result := 6 * x
-     store  R3,nonExistantVar[R0] ; not a real variable
+     lea   R1,6x[R0]       ; R1 := 6
+     load   R22,x[R0]       ; R2 := x (variable initialized to 7)
+     mult    R3,R1,R2   ; R3 := 6 * x = 42 (hex 002a)
+     store  R3,resultR0]  ; result := 6 * x
+     store  R3,nonExistantVar[R0 ; not a real variable
      trap   R0,R0,R0   ; halt
 
 ; When the program halts, we should see the following:
@@ -19,4 +19,4 @@ start
 
 ; Variables are defined  after the program
 x         data   7         ; initial value of x = 7
-result    data   0         ; initial value of result = 0
+result       0         ; initial value of result = 0

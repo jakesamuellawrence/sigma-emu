@@ -1,0 +1,8 @@
+LEA R1,7[R0]
+lEa R2,12[R0]
+jump add[R0]
+
+trap R0,R0,R0
+
+add add R3,R1,R2
+trap R0,R0,R0

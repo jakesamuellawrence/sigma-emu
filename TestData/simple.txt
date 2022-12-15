@@ -3,9 +3,9 @@
 
 ; Calculate result := 6 * x, where x = 7
 
-start
-	lea    R1,6[R0]       ; R1 := 6
-	load   R2,x[R0]       ; R2 := x (variable initialized to 7)
+start 
+lea    R1,6[R0]      
+load   R2,x[R0]       ; R2 := x (variable initialized to 7)
 add    R3,R1,R2
 sub    R4,R3,R2
 mul    R5,R3,R2   ; R3 := 6 * x = 42 (hex 002a)
