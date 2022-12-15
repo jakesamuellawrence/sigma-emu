@@ -1,23 +1,22 @@
 ﻿@page "/"
-@using SigmaEmu.Assembler.Assembler
-@using SigmaEmu.Core.Models
 @using SigmaEmu.Shared
+@using SigmaEmu.Core.Models
+@using SigmaEmu.Assembler.Assembler
 
 <div class="d-flex flex-column w-100 h-100">
-    <Toolbar OnAssemble="AssembleSource" OnLoad="LoadListing" />
+    <Toolbar OnAssemble="AssembleSource" OnLoad="LoadListing"/>
     <div class="d-flex flex-row flex-grow-1 flex-shrink-1 overflow-auto">
         @if (_listing != null)
         {
-            <ListingDisplay Listing="_listing" ProgramCounter="_processor.ProgramCounter" />
+            <ListingDisplay Listing="_listing" ProgramCounter="_processor.ProgramCounter"/>
         }
         else
         {
-            <SourceDisplay Source="_source" LoadFileEvent="LoadFile" />
+            <SourceDisplay Source="_source" LoadFileEvent="LoadFile"/>
         }
-        <ProcessorStatus Processor="_processor" OnStep="_processor.Step" />
+        <ProcessorStatus Processor="_processor" OnStep="_processor.Step"/>
     </div>
 </div>
-
 
 
 @code {
@@ -25,18 +24,19 @@
     private Source? _source;
     private Listing? _listing;
 
-    private readonly Processor _processor = new Processor();
+    private readonly Processor _processor = new();
 
     private async void LoadFile(IBrowserFile file)
     {
-        _source = await Source.FromFileAsync(file);
+        var fileStream = file.OpenReadStream();
+        _source = await Assembler.ParseAsync(fileStream);
         StateHasChanged();
     }
 
     private void AssembleSource()
     {
-        if (_source == null) return;
-        _listing = Assembler.Assemble(_source.ToString());
+        if (_source is null || _source.HasErrors()) return;
+        _listing = Assembler.Assemble(_source.Tree);
     }
 
     private void LoadListing()
@@ -45,5 +45,5 @@
         _processor.LoadListing(_listing);
         _processor.Ready();
     }
-    
+
 }

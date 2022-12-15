@@ -3,7 +3,7 @@
 public class Listing
 {
     public List<ListingLine> Lines { get; } = new();
-    public List<AssemblerError> Errors { get; init; } = new();
+    public List<Error> Errors { get; init; } = new();
 
     public int CurrentAddress { get; private set; }
 

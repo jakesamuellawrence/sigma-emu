@@ -11,13 +11,6 @@ public class AssemblerListener : Sigma16BaseListener
 
     private readonly LabelMap _labelMap = new();
 
-    private readonly ICharStream _sourceStream;
-
-    public AssemblerListener(ICharStream sourceStream)
-    {
-        _sourceStream = sourceStream;
-    }
-
     public Listing Listing { get; } = new();
 
     public override void EnterLabel_def(Sigma16Parser.Label_defContext context)
@@ -26,7 +19,7 @@ public class AssemblerListener : Sigma16BaseListener
 
         if (_labelMap.HasLabel(labelName))
         {
-            Listing.Errors.Add(new AssemblerError
+            Listing.Errors.Add(new Error
             {
                 Message = $"Duplicate label '{labelName}'",
                 LineNumber = context.Start.Line
@@ -98,7 +91,7 @@ public class AssemblerListener : Sigma16BaseListener
     public override void ExitProgram(Sigma16Parser.ProgramContext context)
     {
         if (_labelMap.HasLinesToPatch())
-            Listing.Errors.Add(new AssemblerError
+            Listing.Errors.Add(new Error
             {
                 Message = $"Labels [{string.Join(", ", _labelMap.GetUndefinedLabels())}] were never defined"
             });
@@ -111,9 +104,9 @@ public class AssemblerListener : Sigma16BaseListener
         return success ? parsed : null;
     }
 
-    private string FindOriginalText(ParserRuleContext context)
+    private static string FindOriginalText(ParserRuleContext context)
     {
         var interval = new Interval(context.Start.StartIndex, context.Stop.StopIndex);
-        return _sourceStream.GetText(interval);
+        return context.Start.InputStream.GetText(interval);
     }
 }

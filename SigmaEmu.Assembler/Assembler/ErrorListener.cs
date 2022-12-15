@@ -6,9 +6,10 @@ namespace SigmaEmu.Assembler.Assembler;
 
 public class ErrorListener : BaseErrorListener
 {
-    public List<AssemblerError> Errors { get; } = new();
+    public List<SourceError> Errors { get; } = new();
 
-    public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine,
+    public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line,
+        int charPositionInLine,
         string msg, RecognitionException e)
     {
         // Console.WriteLine(string.Join(", ",e.GetExpectedTokens().ToList()));
@@ -16,7 +17,7 @@ public class ErrorListener : BaseErrorListener
         // var expectedTokens = GetTokenNames(e.GetExpectedTokens(), recognizer.Vocabulary);
         // // expectedTokens.ToList().Remove()
         // var actualToken = GetTokenName(offendingSymbol, recognizer.Vocabulary);
-        Errors.Add(new AssemblerError()
+        Errors.Add(new SourceError
         {
             // Message = $"{msg} - Error on '{offendingSymbol.Text}' - Encountered {actualToken}, expecting one of [{string.Join(", ", expectedTokens)}]",
             Message = msg,

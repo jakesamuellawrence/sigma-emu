@@ -1,6 +1,6 @@
 ﻿namespace SigmaEmu.Shared;
 
-public class AssemblerError
+public class Error
 {
     public string? Message { get; init; }
     public int? LineNumber { get; init; }

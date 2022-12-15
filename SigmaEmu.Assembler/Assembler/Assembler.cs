@@ -6,9 +6,11 @@ namespace SigmaEmu.Assembler.Assembler;
 
 public static class Assembler
 {
-    public static Listing Assemble(string input)
+    public static async Task<Source> ParseAsync(Stream fileStream)
     {
-        var stream = CharStreams.fromString(input);
+        var source = await Source.FromFileStreamAsync(fileStream);
+
+        var stream = CharStreams.fromString(source.ToString());
         var lexer = new Sigma16Lexer(stream);
         var tokens = new CommonTokenStream(lexer);
         var parser = new Sigma16Parser(tokens)
@@ -21,13 +23,18 @@ public static class Assembler
         parser.AddErrorListener(errorListener);
 
         var tree = parser.program();
-        
-        List<AssemblerError> syntaxErrors = errorListener.Errors;
-        if (syntaxErrors.Count() != 0) return (new Listing() {Errors = syntaxErrors});
 
-        var assembler = new AssemblerListener(stream);
+        var syntaxErrors = errorListener.Errors;
+        source.AddErrors(syntaxErrors);
+        source.Tree = tree;
+
+        return source;
+    }
+
+    public static Listing Assemble(Sigma16Parser.ProgramContext tree)
+    {
+        var assembler = new AssemblerListener();
         ParseTreeWalker.Default.Walk(assembler, tree);
-        assembler.Listing.Errors.AddRange(syntaxErrors);
         return assembler.Listing;
     }
 }
