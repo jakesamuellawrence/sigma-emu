@@ -15,7 +15,7 @@ public class AssemblerListener : Sigma16BaseListener
 
     public override void EnterLabel_def(Sigma16Parser.Label_defContext context)
     {
-        var labelName = context.GetText();
+        var labelName = context.label().GetText();
 
         if (_labelMap.HasLabel(labelName))
         {
