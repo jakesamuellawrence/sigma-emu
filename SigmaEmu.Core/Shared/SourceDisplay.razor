@@ -7,10 +7,14 @@
 }
 else
 {
-    <div class="w-100 h-100 bg-grey-main text-white p-2 d-flex flex-column" style="white-space: pre">
+    <div class="w-100 h-100 bg-grey-main text-white p-2 d-flex flex-column overflow-auto" style="white-space: pre">
         @foreach (var line in Source.Lines)
         {
             <span class="font-monospace">@line</span>
+            @foreach (var error in line.Errors)
+            {
+                <span class="font-monospace text-text-write">@error.Format()</span>
+            }
         }
     </div>
 }
