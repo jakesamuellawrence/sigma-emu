@@ -19,8 +19,6 @@ public class AssemblerListener : Sigma16BaseListener
     public override void EnterLabel_def(Sigma16Parser.Label_defContext context)
     {
         var labelName = context.label().GetText();
-        Console.WriteLine($"Entering label def for '{labelName}'");
-        // Console.WriteLine($"Is defined? {}");
 
         if (_listing.HasLabelBeenDefined(labelName))
         {
@@ -28,7 +26,6 @@ public class AssemblerListener : Sigma16BaseListener
             return;
         }
 
-        Console.WriteLine($"Defining {labelName}");
         _listing.DefineLabel(labelName, context.Start.Line);
     }
 

@@ -6,7 +6,7 @@ public class Label
     {
         Name = name;
         Address = address;
-        definedOn = definedOn;
+        DefinedOn = definedOn;
     }
 
     public string Name { get; }

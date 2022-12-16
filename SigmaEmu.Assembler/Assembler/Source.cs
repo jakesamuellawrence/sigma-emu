@@ -33,7 +33,10 @@ public class Source
 
         string? line;
         while ((line = await fileReader.ReadLineAsync()) != null)
+        {
+            Console.WriteLine(line);
             lines.Add(new SourceLine(line));
+        }
 
         return new Source(lines.ToArray());
     }

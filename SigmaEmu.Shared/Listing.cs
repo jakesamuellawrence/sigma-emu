@@ -18,7 +18,6 @@ public class Listing
     {
         if (!LabelMap.ContainsKey(label))
         {
-            Console.WriteLine($"Defining label with address {_latestAddress}");
             LabelMap.Add(label, new Label(label, _latestAddress, lineNumber));
             return;
         }
@@ -48,7 +47,7 @@ public class Listing
 
     public void AddSourceOnLine(int lineNumber, string source)
     {
-        Lines[lineNumber - 1].Source = source;
+        Lines[lineNumber - 1].Source = source.TrimEnd();
     }
 
     public void UpdateAddresses()

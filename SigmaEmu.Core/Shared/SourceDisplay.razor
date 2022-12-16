@@ -7,13 +7,17 @@
 }
 else
 {
-    <div class="w-100 h-100 bg-grey-main text-white p-2 d-flex flex-column overflow-auto" style="white-space: pre">
-        @foreach (var line in Source.Lines)
+    <div class="w-100 h-100 bg-grey-main text-white p-2 d-flex flex-column overflow-auto font-monospace" style="white-space: pre">
+        @for (var i = 1; i <= Source.Lines.Length; i++)
         {
-            <span class="font-monospace">@line</span>
+            var line = Source.Lines[i - 1];
+            <div class="d-flex flex-row gap-2">
+                <span class="col-1">@i</span>
+                <span class="col">@line</span>
+            </div>
             @foreach (var error in line.Errors)
             {
-                <span class="font-monospace text-text-write">@error.Format()</span>
+                <span class="text-text-write">@error.Format()</span>
             }
         }
     </div>
