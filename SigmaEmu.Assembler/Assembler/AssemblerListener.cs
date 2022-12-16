@@ -9,32 +9,34 @@ public class AssemblerListener : Sigma16BaseListener
     private const int RxExpansionOp = 15;
     private const int XExpansionOp = 14;
 
-    private readonly LabelMap _labelMap = new();
+    private readonly Listing _listing;
 
-    public Listing Listing { get; } = new();
+    public AssemblerListener(Listing listing)
+    {
+        _listing = listing;
+    }
 
     public override void EnterLabel_def(Sigma16Parser.Label_defContext context)
     {
         var labelName = context.label().GetText();
+        Console.WriteLine($"Entering label def for '{labelName}'");
+        // Console.WriteLine($"Is defined? {}");
 
-        if (_labelMap.HasLabel(labelName))
+        if (_listing.HasLabelBeenDefined(labelName))
         {
-            Listing.Errors.Add(new Error
-            {
-                Message = $"Duplicate label '{labelName}'",
-                LineNumber = context.Start.Line
-            });
+            _listing.AddError($"duplicate definition of label '{labelName}'", context.Start.Line);
             return;
         }
 
-        _labelMap.DefineLabel(labelName, Word.FromInt(Listing.CurrentAddress));
+        Console.WriteLine($"Defining {labelName}");
+        _listing.DefineLabel(labelName, context.Start.Line);
     }
 
     public override void ExitData_instruction(Sigma16Parser.Data_instructionContext context)
     {
         var value = int.Parse(context.NUM().GetText());
         var code1 = Word.FromInt(value);
-        Listing.AddInstruction(code1, FindOriginalText(context));
+        _listing.AddInstruction(context.Start.Line, code1);
     }
 
     public override void ExitRrr_instruction(Sigma16Parser.Rrr_instructionContext context)
@@ -48,7 +50,7 @@ public class AssemblerListener : Sigma16BaseListener
             throw new GrammarMismatchException();
 
         var code = Word.FromInstruction((int)op, (int)destReg, (int)firstOpReg, (int)secondOpReg);
-        Listing.AddInstruction(code, FindOriginalText(context));
+        _listing.AddInstruction(context.Start.Line, code);
     }
 
     public override void ExitRx_instruction(Sigma16Parser.Rx_instructionContext context)
@@ -62,16 +64,9 @@ public class AssemblerListener : Sigma16BaseListener
         var displacementWord = GetWordFromDisplacement(context.displacement());
 
         var code1 = Word.FromInstruction(RxExpansionOp, (int)destReg, (int)offsetReg, (int)op);
-        var line = Listing.AddInstruction(code1, FindOriginalText(context), displacementWord ?? Word.FromInt(-1));
-
-        if (displacementWord is null) _labelMap.RememberLineToPatch(context.displacement().GetText(), line);
+        _listing.AddInstruction(context.Start.Line, code1, displacementWord);
     }
 
-    private Word? GetWordFromDisplacement(Sigma16Parser.DisplacementContext displacement)
-    {
-        if (displacement.num != null) return Word.FromInt(int.Parse(displacement.num.Text));
-        return _labelMap.GetAddress(displacement.label().GetText());
-    }
 
     public override void ExitX_instruction(Sigma16Parser.X_instructionContext context)
     {
@@ -83,18 +78,22 @@ public class AssemblerListener : Sigma16BaseListener
         var displacementWord = GetWordFromDisplacement(context.displacement());
 
         var code1 = Word.FromInstruction(XExpansionOp, 0, (int)offsetReg, (int)op);
-        var line = Listing.AddInstruction(code1, FindOriginalText(context), displacementWord ?? Word.FromInt(-1));
+        _listing.AddInstruction(context.Start.Line, code1, displacementWord);
+    }
 
-        if (displacementWord is null) _labelMap.RememberLineToPatch(context.displacement().GetText(), line);
+    private Word GetWordFromDisplacement(Sigma16Parser.DisplacementContext displacement)
+    {
+        if (displacement.num != null) return Word.FromInt(int.Parse(displacement.num.Text));
+
+        var label = displacement.label().GetText();
+        _listing.UseLabel(label, displacement.Start.Line);
+        return _listing.LookupLabel(label);
     }
 
     public override void ExitProgram(Sigma16Parser.ProgramContext context)
     {
-        if (_labelMap.HasLinesToPatch())
-            Listing.Errors.Add(new Error
-            {
-                Message = $"Labels [{string.Join(", ", _labelMap.GetUndefinedLabels())}] were never defined"
-            });
+        foreach (var label in _listing.LabelMap.Values.Where(label => label.Address is null))
+            _listing.AddError($"label '{label.Name}' was never defined");
     }
 
     private static T? TryParseEnum<T>(string text) where T : struct, Enum

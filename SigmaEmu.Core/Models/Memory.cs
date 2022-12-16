@@ -30,7 +30,7 @@ public class Memory
         var i = offset;
         foreach (var line in listing.Lines)
         {
-            MemoryArray[i++].Value = line.Code1;
+            if (line.Code1 is not null) MemoryArray[i++].Value = line.Code1;
             if (line.Code2 is not null) MemoryArray[i++].Value = line.Code2;
         }
     }

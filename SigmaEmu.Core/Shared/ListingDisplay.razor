@@ -26,14 +26,14 @@
             </div>
             @foreach (var line in Listing.Lines)
             {
-                @if (ProgramCounter.GetValueWithoutReading() == line.Address)
+                @if (ProgramCounter.GetValueWithoutReading() == (line.Address ?? Word.FromInt(-1)) && line.Code1 is not null)
                 {
                     <hr class="text-text-write my-0 border border-1 border-text-write"/>
                 }
                 <div class="d-flex flex-row gap-4">
-                    <span class="col-1">@line.Address.AsHexString()</span>
+                    <span class="col-1">@(line.Address is null ? "" : line.Address.AsHexString())</span>
                     <span class="col-1">
-                        @line.Code1.AsHexString()
+                        @(line.Code1 is null ? "" : line.Code1.AsHexString())
                         @(line.Code2 is null ? "" : line.Code2.AsHexString())
                     </span>
                     <span class="col-12">@line.Source</span>

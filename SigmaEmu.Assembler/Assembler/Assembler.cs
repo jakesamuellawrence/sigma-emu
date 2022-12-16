@@ -31,10 +31,16 @@ public static class Assembler
         return source;
     }
 
-    public static Listing Assemble(Sigma16Parser.ProgramContext tree)
+    public static Listing Assemble(Source source)
     {
-        var assembler = new AssemblerListener();
-        ParseTreeWalker.Default.Walk(assembler, tree);
-        return assembler.Listing;
+        var listing = new Listing(source.Lines.Length);
+
+        var assembler = new AssemblerListener(listing);
+        ParseTreeWalker.Default.Walk(assembler, source.Tree);
+
+        for (var i = 1; i <= source.Lines.Length; i++) listing.AddSourceOnLine(i, source.Lines[i - 1].Text);
+        listing.UpdateAddresses();
+
+        return listing;
     }
 }
