@@ -1,6 +1,6 @@
 ﻿@using SigmaEmu.Shared
 @using Register = SigmaEmu.Core.Models.Register
-<div class="w-100 h-100 bg-grey-main text-white p-2">
+<div class="w-100 h-100 bg-grey-main text-white p-2 overflow-auto">
     @if (Listing is null)
     {
         <p>No Listing provided</p>
@@ -22,7 +22,7 @@
             <div class="d-flex flex-row gap-4 fw-bold">
                 <span class="col-1">Address</span>
                 <span class="col-1">Code</span>
-                <span class="col-12">Source</span>
+                <span class="col">Source</span>
             </div>
             @foreach (var line in Listing.Lines)
             {
@@ -36,7 +36,7 @@
                         @(line.Code1 is null ? "" : line.Code1.AsHexString())
                         @(line.Code2 is null ? "" : line.Code2.AsHexString())
                     </span>
-                    <span class="col-12">@line.Source</span>
+                    <span class="col">@line.Source</span>
                 </div>
                 @* <span class="font-monospace">@line.Format().Replace('\n', ' ')</span> *@
             }

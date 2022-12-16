@@ -41,14 +41,14 @@ public partial class Sigma16Parser : Parser {
 		LOAD=18, STORE=19, JUMPF=20, JUMPT=21, JAL=22, JUMP=23, COMMA=24, LBRACK=25, 
 		RBRACK=26, NUM=27, ID=28, SPACE=29, EOL=30, COMMENT=31, ANY=32;
 	public const int
-		RULE_program = 0, RULE_line = 1, RULE_instruction = 2, RULE_rrr_instruction = 3, 
-		RULE_rx_instruction = 4, RULE_x_instruction = 5, RULE_data_instruction = 6, 
-		RULE_label_def = 7, RULE_label = 8, RULE_displacement = 9, RULE_command = 10, 
-		RULE_rrr_command = 11, RULE_rx_command = 12, RULE_x_command = 13;
+		RULE_program = 0, RULE_instruction = 1, RULE_rrr_instruction = 2, RULE_rx_instruction = 3, 
+		RULE_x_instruction = 4, RULE_data_instruction = 5, RULE_label_def = 6, 
+		RULE_label = 7, RULE_displacement = 8, RULE_command = 9, RULE_rrr_command = 10, 
+		RULE_rx_command = 11, RULE_x_command = 12;
 	public static readonly string[] ruleNames = {
-		"program", "line", "instruction", "rrr_instruction", "rx_instruction", 
-		"x_instruction", "data_instruction", "label_def", "label", "displacement", 
-		"command", "rrr_command", "rx_command", "x_command"
+		"program", "instruction", "rrr_instruction", "rx_instruction", "x_instruction", 
+		"data_instruction", "label_def", "label", "displacement", "command", "rrr_command", 
+		"rx_command", "x_command"
 	};
 
 	private static readonly string[] _LiteralNames = {
@@ -97,11 +97,11 @@ public partial class Sigma16Parser : Parser {
 
 	public partial class ProgramContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Eof() { return GetToken(Sigma16Parser.Eof, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public LineContext[] line() {
-			return GetRuleContexts<LineContext>();
+		[System.Diagnostics.DebuggerNonUserCode] public InstructionContext[] instruction() {
+			return GetRuleContexts<InstructionContext>();
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public LineContext line(int i) {
-			return GetRuleContext<LineContext>(i);
+		[System.Diagnostics.DebuggerNonUserCode] public InstructionContext instruction(int i) {
+			return GetRuleContext<InstructionContext>(i);
 		}
 		public ProgramContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -128,85 +128,22 @@ public partial class Sigma16Parser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 29;
+			State = 27;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			do {
 				{
 				{
-				State = 28;
-				line();
-				}
-				}
-				State = 31;
-				ErrorHandler.Sync(this);
-				_la = TokenStream.LA(1);
-			} while ( ((_la) & ~0x3f) == 0 && ((1L << _la) & 3506438140L) != 0 );
-			State = 33;
-			Match(Eof);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class LineContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode COMMENT() { return GetToken(Sigma16Parser.COMMENT, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode EOL() { return GetToken(Sigma16Parser.EOL, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public InstructionContext instruction() {
-			return GetRuleContext<InstructionContext>(0);
-		}
-		public LineContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_line; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ISigma16Listener typedListener = listener as ISigma16Listener;
-			if (typedListener != null) typedListener.EnterLine(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ISigma16Listener typedListener = listener as ISigma16Listener;
-			if (typedListener != null) typedListener.ExitLine(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public LineContext line() {
-		LineContext _localctx = new LineContext(Context, State);
-		EnterRule(_localctx, 2, RULE_line);
-		int _la;
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 36;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (((_la) & ~0x3f) == 0 && ((1L << _la) & 285212668L) != 0) {
-				{
-				State = 35;
+				State = 26;
 				instruction();
 				}
-			}
-
-			State = 38;
-			_la = TokenStream.LA(1);
-			if ( !(_la==EOL || _la==COMMENT) ) {
-			ErrorHandler.RecoverInline(this);
-			}
-			else {
-				ErrorHandler.ReportMatch(this);
-			    Consume();
-			}
+				}
+				State = 29;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
+			} while ( ((_la) & ~0x3f) == 0 && ((1L << _la) & 285212668L) != 0 );
+			State = 31;
+			Match(Eof);
 			}
 		}
 		catch (RecognitionException re) {
@@ -233,8 +170,11 @@ public partial class Sigma16Parser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public Data_instructionContext data_instruction() {
 			return GetRuleContext<Data_instructionContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public Label_defContext label_def() {
-			return GetRuleContext<Label_defContext>(0);
+		[System.Diagnostics.DebuggerNonUserCode] public Label_defContext[] label_def() {
+			return GetRuleContexts<Label_defContext>();
+		}
+		[System.Diagnostics.DebuggerNonUserCode] public Label_defContext label_def(int i) {
+			return GetRuleContext<Label_defContext>(i);
 		}
 		public InstructionContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
@@ -256,22 +196,26 @@ public partial class Sigma16Parser : Parser {
 	[RuleVersion(0)]
 	public InstructionContext instruction() {
 		InstructionContext _localctx = new InstructionContext(Context, State);
-		EnterRule(_localctx, 4, RULE_instruction);
+		EnterRule(_localctx, 2, RULE_instruction);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 41;
+			State = 36;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if (_la==ID) {
+			while (_la==ID) {
 				{
-				State = 40;
+				{
+				State = 33;
 				label_def();
 				}
+				}
+				State = 38;
+				ErrorHandler.Sync(this);
+				_la = TokenStream.LA(1);
 			}
-
-			State = 47;
+			State = 43;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case ADD:
@@ -289,7 +233,7 @@ public partial class Sigma16Parser : Parser {
 			case SHIFTR:
 			case TRAP:
 				{
-				State = 43;
+				State = 39;
 				rrr_instruction();
 				}
 				break;
@@ -300,19 +244,19 @@ public partial class Sigma16Parser : Parser {
 			case JUMPT:
 			case JAL:
 				{
-				State = 44;
+				State = 40;
 				rx_instruction();
 				}
 				break;
 			case JUMP:
 				{
-				State = 45;
+				State = 41;
 				x_instruction();
 				}
 				break;
 			case DATA:
 				{
-				State = 46;
+				State = 42;
 				data_instruction();
 				}
 				break;
@@ -368,21 +312,21 @@ public partial class Sigma16Parser : Parser {
 	[RuleVersion(0)]
 	public Rrr_instructionContext rrr_instruction() {
 		Rrr_instructionContext _localctx = new Rrr_instructionContext(Context, State);
-		EnterRule(_localctx, 6, RULE_rrr_instruction);
+		EnterRule(_localctx, 4, RULE_rrr_instruction);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 49;
+			State = 45;
 			_localctx.mnemonic = rrr_command();
-			State = 50;
+			State = 46;
 			_localctx.destinationReg = Match(REG);
-			State = 51;
+			State = 47;
 			Match(COMMA);
-			State = 52;
+			State = 48;
 			_localctx.firstOperand = Match(REG);
-			State = 53;
+			State = 49;
 			Match(COMMA);
-			State = 54;
+			State = 50;
 			_localctx.secondOperand = Match(REG);
 			}
 		}
@@ -434,23 +378,23 @@ public partial class Sigma16Parser : Parser {
 	[RuleVersion(0)]
 	public Rx_instructionContext rx_instruction() {
 		Rx_instructionContext _localctx = new Rx_instructionContext(Context, State);
-		EnterRule(_localctx, 8, RULE_rx_instruction);
+		EnterRule(_localctx, 6, RULE_rx_instruction);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 56;
+			State = 52;
 			_localctx.mnemonic = rx_command();
-			State = 57;
+			State = 53;
 			_localctx.destinationReg = Match(REG);
-			State = 58;
+			State = 54;
 			Match(COMMA);
-			State = 59;
+			State = 55;
 			displacement();
-			State = 60;
+			State = 56;
 			Match(LBRACK);
-			State = 61;
+			State = 57;
 			_localctx.offsetReg = Match(REG);
-			State = 62;
+			State = 58;
 			Match(RBRACK);
 			}
 		}
@@ -497,19 +441,19 @@ public partial class Sigma16Parser : Parser {
 	[RuleVersion(0)]
 	public X_instructionContext x_instruction() {
 		X_instructionContext _localctx = new X_instructionContext(Context, State);
-		EnterRule(_localctx, 10, RULE_x_instruction);
+		EnterRule(_localctx, 8, RULE_x_instruction);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 64;
+			State = 60;
 			_localctx.mnemonic = x_command();
-			State = 65;
+			State = 61;
 			displacement();
-			State = 66;
+			State = 62;
 			Match(LBRACK);
-			State = 67;
+			State = 63;
 			_localctx.offsetReg = Match(REG);
-			State = 68;
+			State = 64;
 			Match(RBRACK);
 			}
 		}
@@ -547,13 +491,13 @@ public partial class Sigma16Parser : Parser {
 	[RuleVersion(0)]
 	public Data_instructionContext data_instruction() {
 		Data_instructionContext _localctx = new Data_instructionContext(Context, State);
-		EnterRule(_localctx, 12, RULE_data_instruction);
+		EnterRule(_localctx, 10, RULE_data_instruction);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 70;
+			State = 66;
 			Match(DATA);
-			State = 71;
+			State = 67;
 			Match(NUM);
 			}
 		}
@@ -572,7 +516,6 @@ public partial class Sigma16Parser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public LabelContext label() {
 			return GetRuleContext<LabelContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode EOL() { return GetToken(Sigma16Parser.EOL, 0); }
 		public Label_defContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -593,23 +536,12 @@ public partial class Sigma16Parser : Parser {
 	[RuleVersion(0)]
 	public Label_defContext label_def() {
 		Label_defContext _localctx = new Label_defContext(Context, State);
-		EnterRule(_localctx, 14, RULE_label_def);
-		int _la;
+		EnterRule(_localctx, 12, RULE_label_def);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 73;
+			State = 69;
 			label();
-			State = 75;
-			ErrorHandler.Sync(this);
-			_la = TokenStream.LA(1);
-			if (_la==EOL) {
-				{
-				State = 74;
-				Match(EOL);
-				}
-			}
-
 			}
 		}
 		catch (RecognitionException re) {
@@ -645,11 +577,11 @@ public partial class Sigma16Parser : Parser {
 	[RuleVersion(0)]
 	public LabelContext label() {
 		LabelContext _localctx = new LabelContext(Context, State);
-		EnterRule(_localctx, 16, RULE_label);
+		EnterRule(_localctx, 14, RULE_label);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 77;
+			State = 71;
 			Match(ID);
 			}
 		}
@@ -690,22 +622,22 @@ public partial class Sigma16Parser : Parser {
 	[RuleVersion(0)]
 	public DisplacementContext displacement() {
 		DisplacementContext _localctx = new DisplacementContext(Context, State);
-		EnterRule(_localctx, 18, RULE_displacement);
+		EnterRule(_localctx, 16, RULE_displacement);
 		try {
-			State = 81;
+			State = 75;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case NUM:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 79;
+				State = 73;
 				_localctx.num = Match(NUM);
 				}
 				break;
 			case ID:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 80;
+				State = 74;
 				label();
 				}
 				break;
@@ -754,9 +686,9 @@ public partial class Sigma16Parser : Parser {
 	[RuleVersion(0)]
 	public CommandContext command() {
 		CommandContext _localctx = new CommandContext(Context, State);
-		EnterRule(_localctx, 20, RULE_command);
+		EnterRule(_localctx, 18, RULE_command);
 		try {
-			State = 86;
+			State = 80;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case ADD:
@@ -775,7 +707,7 @@ public partial class Sigma16Parser : Parser {
 			case TRAP:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 83;
+				State = 77;
 				rrr_command();
 				}
 				break;
@@ -787,14 +719,14 @@ public partial class Sigma16Parser : Parser {
 			case JAL:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 84;
+				State = 78;
 				rx_command();
 				}
 				break;
 			case JUMP:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 85;
+				State = 79;
 				x_command();
 				}
 				break;
@@ -848,12 +780,12 @@ public partial class Sigma16Parser : Parser {
 	[RuleVersion(0)]
 	public Rrr_commandContext rrr_command() {
 		Rrr_commandContext _localctx = new Rrr_commandContext(Context, State);
-		EnterRule(_localctx, 22, RULE_rrr_command);
+		EnterRule(_localctx, 20, RULE_rrr_command);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 88;
+			State = 82;
 			_la = TokenStream.LA(1);
 			if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 131064L) != 0) ) {
 			ErrorHandler.RecoverInline(this);
@@ -902,12 +834,12 @@ public partial class Sigma16Parser : Parser {
 	[RuleVersion(0)]
 	public Rx_commandContext rx_command() {
 		Rx_commandContext _localctx = new Rx_commandContext(Context, State);
-		EnterRule(_localctx, 24, RULE_rx_command);
+		EnterRule(_localctx, 22, RULE_rx_command);
 		int _la;
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 90;
+			State = 84;
 			_la = TokenStream.LA(1);
 			if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 8257536L) != 0) ) {
 			ErrorHandler.RecoverInline(this);
@@ -951,11 +883,11 @@ public partial class Sigma16Parser : Parser {
 	[RuleVersion(0)]
 	public X_commandContext x_command() {
 		X_commandContext _localctx = new X_commandContext(Context, State);
-		EnterRule(_localctx, 26, RULE_x_command);
+		EnterRule(_localctx, 24, RULE_x_command);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 92;
+			State = 86;
 			Match(JUMP);
 			}
 		}
@@ -971,32 +903,30 @@ public partial class Sigma16Parser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,32,95,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
-		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,1,0,4,0,30,
-		8,0,11,0,12,0,31,1,0,1,0,1,1,3,1,37,8,1,1,1,1,1,1,2,3,2,42,8,2,1,2,1,2,
-		1,2,1,2,3,2,48,8,2,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,4,1,4,1,4,1,4,1,4,1,4,
-		1,4,1,4,1,5,1,5,1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,7,1,7,3,7,76,8,7,1,8,1,8,
-		1,9,1,9,3,9,82,8,9,1,10,1,10,1,10,3,10,87,8,10,1,11,1,11,1,12,1,12,1,13,
-		1,13,1,13,0,0,14,0,2,4,6,8,10,12,14,16,18,20,22,24,26,0,3,1,0,30,31,1,
-		0,3,16,1,0,17,22,90,0,29,1,0,0,0,2,36,1,0,0,0,4,41,1,0,0,0,6,49,1,0,0,
-		0,8,56,1,0,0,0,10,64,1,0,0,0,12,70,1,0,0,0,14,73,1,0,0,0,16,77,1,0,0,0,
-		18,81,1,0,0,0,20,86,1,0,0,0,22,88,1,0,0,0,24,90,1,0,0,0,26,92,1,0,0,0,
-		28,30,3,2,1,0,29,28,1,0,0,0,30,31,1,0,0,0,31,29,1,0,0,0,31,32,1,0,0,0,
-		32,33,1,0,0,0,33,34,5,0,0,1,34,1,1,0,0,0,35,37,3,4,2,0,36,35,1,0,0,0,36,
-		37,1,0,0,0,37,38,1,0,0,0,38,39,7,0,0,0,39,3,1,0,0,0,40,42,3,14,7,0,41,
-		40,1,0,0,0,41,42,1,0,0,0,42,47,1,0,0,0,43,48,3,6,3,0,44,48,3,8,4,0,45,
-		48,3,10,5,0,46,48,3,12,6,0,47,43,1,0,0,0,47,44,1,0,0,0,47,45,1,0,0,0,47,
-		46,1,0,0,0,48,5,1,0,0,0,49,50,3,22,11,0,50,51,5,1,0,0,51,52,5,24,0,0,52,
-		53,5,1,0,0,53,54,5,24,0,0,54,55,5,1,0,0,55,7,1,0,0,0,56,57,3,24,12,0,57,
-		58,5,1,0,0,58,59,5,24,0,0,59,60,3,18,9,0,60,61,5,25,0,0,61,62,5,1,0,0,
-		62,63,5,26,0,0,63,9,1,0,0,0,64,65,3,26,13,0,65,66,3,18,9,0,66,67,5,25,
-		0,0,67,68,5,1,0,0,68,69,5,26,0,0,69,11,1,0,0,0,70,71,5,2,0,0,71,72,5,27,
-		0,0,72,13,1,0,0,0,73,75,3,16,8,0,74,76,5,30,0,0,75,74,1,0,0,0,75,76,1,
-		0,0,0,76,15,1,0,0,0,77,78,5,28,0,0,78,17,1,0,0,0,79,82,5,27,0,0,80,82,
-		3,16,8,0,81,79,1,0,0,0,81,80,1,0,0,0,82,19,1,0,0,0,83,87,3,22,11,0,84,
-		87,3,24,12,0,85,87,3,26,13,0,86,83,1,0,0,0,86,84,1,0,0,0,86,85,1,0,0,0,
-		87,21,1,0,0,0,88,89,7,1,0,0,89,23,1,0,0,0,90,91,7,2,0,0,91,25,1,0,0,0,
-		92,93,5,23,0,0,93,27,1,0,0,0,7,31,36,41,47,75,81,86
+		4,1,32,89,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,1,0,4,0,28,8,0,11,0,
+		12,0,29,1,0,1,0,1,1,5,1,35,8,1,10,1,12,1,38,9,1,1,1,1,1,1,1,1,1,3,1,44,
+		8,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,3,1,4,1,
+		4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,6,1,6,1,7,1,7,1,8,1,8,3,8,76,8,8,1,9,1,
+		9,1,9,3,9,81,8,9,1,10,1,10,1,11,1,11,1,12,1,12,1,12,0,0,13,0,2,4,6,8,10,
+		12,14,16,18,20,22,24,0,2,1,0,3,16,1,0,17,22,83,0,27,1,0,0,0,2,36,1,0,0,
+		0,4,45,1,0,0,0,6,52,1,0,0,0,8,60,1,0,0,0,10,66,1,0,0,0,12,69,1,0,0,0,14,
+		71,1,0,0,0,16,75,1,0,0,0,18,80,1,0,0,0,20,82,1,0,0,0,22,84,1,0,0,0,24,
+		86,1,0,0,0,26,28,3,2,1,0,27,26,1,0,0,0,28,29,1,0,0,0,29,27,1,0,0,0,29,
+		30,1,0,0,0,30,31,1,0,0,0,31,32,5,0,0,1,32,1,1,0,0,0,33,35,3,12,6,0,34,
+		33,1,0,0,0,35,38,1,0,0,0,36,34,1,0,0,0,36,37,1,0,0,0,37,43,1,0,0,0,38,
+		36,1,0,0,0,39,44,3,4,2,0,40,44,3,6,3,0,41,44,3,8,4,0,42,44,3,10,5,0,43,
+		39,1,0,0,0,43,40,1,0,0,0,43,41,1,0,0,0,43,42,1,0,0,0,44,3,1,0,0,0,45,46,
+		3,20,10,0,46,47,5,1,0,0,47,48,5,24,0,0,48,49,5,1,0,0,49,50,5,24,0,0,50,
+		51,5,1,0,0,51,5,1,0,0,0,52,53,3,22,11,0,53,54,5,1,0,0,54,55,5,24,0,0,55,
+		56,3,16,8,0,56,57,5,25,0,0,57,58,5,1,0,0,58,59,5,26,0,0,59,7,1,0,0,0,60,
+		61,3,24,12,0,61,62,3,16,8,0,62,63,5,25,0,0,63,64,5,1,0,0,64,65,5,26,0,
+		0,65,9,1,0,0,0,66,67,5,2,0,0,67,68,5,27,0,0,68,11,1,0,0,0,69,70,3,14,7,
+		0,70,13,1,0,0,0,71,72,5,28,0,0,72,15,1,0,0,0,73,76,5,27,0,0,74,76,3,14,
+		7,0,75,73,1,0,0,0,75,74,1,0,0,0,76,17,1,0,0,0,77,81,3,20,10,0,78,81,3,
+		22,11,0,79,81,3,24,12,0,80,77,1,0,0,0,80,78,1,0,0,0,80,79,1,0,0,0,81,19,
+		1,0,0,0,82,83,7,0,0,0,83,21,1,0,0,0,84,85,7,1,0,0,85,23,1,0,0,0,86,87,
+		5,23,0,0,87,25,1,0,0,0,5,29,36,43,75,80
 	};
 
 	public static readonly ATN _ATN =

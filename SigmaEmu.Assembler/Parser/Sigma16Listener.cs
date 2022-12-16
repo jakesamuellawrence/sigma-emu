@@ -41,16 +41,6 @@ public interface ISigma16Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitProgram([NotNull] Sigma16Parser.ProgramContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="Sigma16Parser.line"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterLine([NotNull] Sigma16Parser.LineContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="Sigma16Parser.line"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitLine([NotNull] Sigma16Parser.LineContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="Sigma16Parser.instruction"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -1,17 +1,15 @@
 grammar Sigma16;
 
-program : line+ EOF;
+program : instruction+ EOF;
 
-line : instruction? (COMMENT | EOL);
-
-instruction : label_def? (rrr_instruction | rx_instruction | x_instruction | data_instruction);
+instruction : label_def* (rrr_instruction | rx_instruction | x_instruction | data_instruction);
 
 rrr_instruction : mnemonic=rrr_command destinationReg=REG COMMA firstOperand=REG COMMA secondOperand=REG ;
 rx_instruction : mnemonic=rx_command destinationReg=REG COMMA displacement LBRACK offsetReg=REG RBRACK ;
 x_instruction : mnemonic=x_command displacement LBRACK offsetReg=REG RBRACK ;
 data_instruction :  DATA NUM ;
 
-label_def : label EOL? ;
+label_def : label ;
 
 label : ID ;
 
@@ -65,8 +63,8 @@ NUM : DIGIT+;
 ID : LETTER (LETTER | [_] | DIGIT)*;
 
 SPACE	:	(' ' | '\t')+  -> skip ;
-EOL     :	'\r'? '\n' ;
-COMMENT :	';' ~('\r' | '\n')* (EOL | EOF) ;
+EOL     :	'\r'? '\n' -> skip;
+COMMENT :	';' ~('\r' | '\n')* (EOL | EOF) -> skip ;
 
 ANY : . ;
 
