@@ -11,7 +11,7 @@
         if (WordStore.WasWrittenTo && WordStore.WasReadFrom) textColour = "text-read-write";
         else if (WordStore.WasReadFrom) textColour = "text-read";
         else if (WordStore.WasWrittenTo) textColour = "text-write";
-        <input class="text-@textColour font-monospace bg-grey-lighter border-0" size="4" @bind="Input"/>
+        <input class="text-@textColour font-monospace bg-grey-lighter border-0 text-center" size="4" @bind="Input"/>
     }
 </div>
 
