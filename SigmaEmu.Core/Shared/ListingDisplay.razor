@@ -9,15 +9,13 @@
     {
         <p>No Program Counter given</p>
     }
-    else if (Listing.Errors.Count != 0)
-    {
-        @foreach (var error in Listing.Errors)
-        {
-            <pre class="text-danger">@error.Format()</pre>
-        }
-    }
     else
     {
+        @foreach (var error in Listing.Errors.Where(error => error.LineNumber is null))
+        {
+            <span class="text-text-write">@error.Format()</span>
+        }
+
         <div class="d-flex flex-column font-monospace">
             <div class="d-flex flex-row gap-4 fw-bold">
                 <span class="col-1">Line</span>
@@ -41,7 +39,10 @@
                     </span>
                     <span class="col" style="white-space: pre">@line.Source</span>
                 </div>
-                @* <span class="font-monospace">@line.Format().Replace('\n', ' ')</span> *@
+                @foreach (var error in Listing.Errors.Where(error => error.LineNumber == i))
+                {
+                    <span class="text-text-write">@error.Format()</span>
+                }
             }
             <div class="d-flex flex-row gap-4 fw-bold mt-4">
                 <span class="col-1">Address</span>
