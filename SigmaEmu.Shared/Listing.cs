@@ -77,4 +77,9 @@ public class Listing
             LineNumber = lineNumber
         });
     }
+
+    public bool HasErrors()
+    {
+        return Errors.Count != 0;
+    }
 }

@@ -41,7 +41,7 @@
 
     private void LoadListing()
     {
-        if (_listing == null) return;
+        if (_listing == null || _listing.HasErrors()) return;
         _processor.LoadListing(_listing);
         _processor.Ready();
     }
