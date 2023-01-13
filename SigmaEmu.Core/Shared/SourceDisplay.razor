@@ -8,11 +8,11 @@
 else
 {
     <div class="w-100 h-100 bg-grey-main text-white p-2 d-flex flex-column overflow-auto font-monospace" style="white-space: pre">
-        @for (var i = 1; i <= Source.Lines.Length; i++)
+        @for (var lineNumber = 1; lineNumber <= Source.NumLines; lineNumber++)
         {
-            var line = Source.Lines[i - 1];
+            var line = Source.GetLine(lineNumber);
             <div class="d-flex flex-row gap-2">
-                <span class="col-1">@i</span>
+                <span class="col-1">@lineNumber</span>
                 <span class="col">@line</span>
             </div>
             @foreach (var error in line.Errors)

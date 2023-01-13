@@ -4,18 +4,26 @@ namespace SigmaEmu.Assembler.Assembler;
 
 public class Source
 {
+    private readonly SourceLine[] _lines;
+
     private Source(SourceLine[] lines)
     {
-        Lines = lines;
+        _lines = lines;
     }
 
-    public SourceLine[] Lines { get; init; }
     public Sigma16Parser.ProgramContext? Tree { get; set; }
+
+    public int NumLines => _lines.Length;
+
+    public SourceLine GetLine(int lineNumber)
+    {
+        return _lines[lineNumber - 1];
+    }
 
     public void AddError(SourceError error)
     {
-        if (error.LineNumber >= Lines.Length) return;
-        Lines[error.LineNumber - 1].AddError(error);
+        if (error.LineNumber >= _lines.Length) return;
+        _lines[error.LineNumber - 1].AddError(error);
     }
 
     public void AddErrors(IEnumerable<SourceError> errors)
@@ -25,7 +33,7 @@ public class Source
 
     public bool HasErrors()
     {
-        return Lines.Any(line => line.HasError());
+        return _lines.Any(line => line.HasError());
     }
 
     public static async Task<Source> FromFileStreamAsync(Stream fileStream)
@@ -45,7 +53,7 @@ public class Source
 
     public override string ToString()
     {
-        var strings = Lines.Select(line => line.Text);
+        var strings = _lines.Select(line => line.Text);
         return string.Join("\n", strings);
     }
 }

@@ -33,12 +33,13 @@ public static class Assembler
 
     public static Listing Assemble(Source source)
     {
-        var listing = new Listing(source.Lines.Length);
+        var listing = new Listing(source.NumLines);
 
         var assembler = new AssemblerListener(listing);
         ParseTreeWalker.Default.Walk(assembler, source.Tree);
 
-        for (var i = 1; i <= source.Lines.Length; i++) listing.AddSourceOnLine(i, source.Lines[i - 1].Text);
+        for (var lineNumber = 1; lineNumber <= source.NumLines; lineNumber++)
+            listing.AddSourceOnLine(lineNumber, source.GetLine(lineNumber).Text);
         listing.UpdateAddresses();
 
         return listing;
