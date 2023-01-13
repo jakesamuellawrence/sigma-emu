@@ -2,76 +2,101 @@
 
 public class Listing
 {
+    private readonly List<Error> _errors = new();
+    private readonly Dictionary<string, Label> _labelMap = new();
+    private readonly ListingLine[] _lines;
     private Word _latestAddress = Word.FromInt(0);
 
     public Listing(int nLines)
     {
-        Lines = new ListingLine[nLines];
-        for (var i = 0; i < nLines; i++) Lines[i] = new ListingLine();
+        _lines = new ListingLine[nLines];
+        for (var i = 0; i < nLines; i++) _lines[i] = new ListingLine();
     }
 
-    public ListingLine[] Lines { get; }
-    public Dictionary<string, Label> LabelMap { get; } = new();
-    public List<Error> Errors { get; init; } = new();
+    public IEnumerable<Label> Labels => _labelMap.Values;
+    public IEnumerable<ListingLine> Lines => _lines;
+    public IEnumerable<Error> Errors => _errors;
+
+    public int NumLines => _lines.Length;
+
+    public IEnumerable<Error> GetLinelessErrors()
+    {
+        return _errors.Where(error => error.LineNumber is null);
+    }
+
+    public IEnumerable<Error> GetErrorsForLine(int lineNumber)
+    {
+        return _errors.Where(error => error.LineNumber == lineNumber);
+    }
+
+    public ListingLine GetLine(int lineNumber)
+    {
+        return _lines[lineNumber - 1];
+    }
 
     public void DefineLabel(string label, int lineNumber)
     {
-        if (!LabelMap.ContainsKey(label))
+        if (!_labelMap.ContainsKey(label))
         {
-            LabelMap.Add(label, new Label(label, _latestAddress, lineNumber));
+            _labelMap.Add(label, new Label(label, _latestAddress, lineNumber));
             return;
         }
 
-        LabelMap[label].Define(_latestAddress, lineNumber);
-        foreach (var usageLine in LabelMap[label].UsedOn)
-            Lines[usageLine - 1].PatchRxDisplacement(_latestAddress);
+        _labelMap[label].Define(_latestAddress, lineNumber);
+        foreach (var usageLine in _labelMap[label].UsedOn)
+            _lines[usageLine - 1].PatchRxDisplacement(_latestAddress);
     }
 
     public void UseLabel(string label, int lineNumber)
     {
-        if (!LabelMap.ContainsKey(label)) LabelMap.Add(label, new Label(label));
+        if (!_labelMap.ContainsKey(label)) _labelMap.Add(label, new Label(label));
 
-        LabelMap[label].AddUsage(lineNumber);
+        _labelMap[label].AddUsage(lineNumber);
+    }
+
+    public IEnumerable<Label> GetUndefinedLabels()
+    {
+        return _labelMap.Values.Where(label => label.DefinedOn is null);
     }
 
     public Word LookupLabel(string label)
     {
-        if (!LabelMap.ContainsKey(label)) return Word.FromInt(-1);
-        return LabelMap[label].Address ?? Word.FromInt(-1);
+        if (!_labelMap.ContainsKey(label)) return Word.FromInt(-1);
+        return _labelMap[label].Address ?? Word.FromInt(-1);
     }
 
     public bool HasLabelBeenDefined(string label)
     {
-        return LabelMap.ContainsKey(label) && LabelMap[label].Address is not null;
+        return _labelMap.ContainsKey(label) && _labelMap[label].Address is not null;
     }
 
     public void AddSourceOnLine(int lineNumber, string source)
     {
-        Lines[lineNumber - 1].Source = source.TrimEnd();
+        _lines[lineNumber - 1].Source = source.TrimEnd();
     }
 
     public void UpdateAddresses()
     {
         var lastAddress = 0;
-        foreach (var line in Lines)
+        foreach (var line in _lines)
             if (line.Address is not null) lastAddress = line.Address.AsInt();
             else line.Address = Word.FromInt(lastAddress);
     }
 
     public void AddInstruction(int lineNumber, Word code1, Word? code2 = null)
     {
-        Lines[lineNumber - 1].Address = _latestAddress;
+        _lines[lineNumber - 1].Address = _latestAddress;
 
         _latestAddress = Word.Increment(_latestAddress);
         if (code2 is not null) _latestAddress = Word.Increment(_latestAddress);
 
-        Lines[lineNumber - 1].Code1 = code1;
-        Lines[lineNumber - 1].Code2 = code2;
+        _lines[lineNumber - 1].Code1 = code1;
+        _lines[lineNumber - 1].Code2 = code2;
     }
 
     public void AddError(string message, int? lineNumber = null)
     {
-        Errors.Add(new Error
+        _errors.Add(new Error
         {
             Message = message,
             LineNumber = lineNumber
@@ -80,6 +105,6 @@ public class Listing
 
     public bool HasErrors()
     {
-        return Errors.Count != 0;
+        return _errors.Count != 0;
     }
 }

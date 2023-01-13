@@ -1,4 +1,6 @@
-﻿namespace SigmaEmu.Shared;
+﻿using SigmaEmu.Shared;
+
+namespace SigmaEmu.Assembler.Assembler;
 
 public class Source
 {
@@ -8,7 +10,7 @@ public class Source
     }
 
     public SourceLine[] Lines { get; init; }
-    public Sigma16Parser.ProgramContext Tree { get; set; }
+    public Sigma16Parser.ProgramContext? Tree { get; set; }
 
     public void AddError(SourceError error)
     {

@@ -2,5 +2,5 @@
 
 public class SourceError : Error
 {
-    public new int LineNumber { get; set; }
+    public new int LineNumber { get; init; }
 }

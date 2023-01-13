@@ -89,7 +89,7 @@ public class AssemblerListener : Sigma16BaseListener
 
     public override void ExitProgram(Sigma16Parser.ProgramContext context)
     {
-        foreach (var label in _listing.LabelMap.Values.Where(label => label.Address is null))
+        foreach (var label in _listing.GetUndefinedLabels())
             _listing.AddError($"label '{label.Name}' was never defined");
     }
 

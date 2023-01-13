@@ -11,27 +11,26 @@
     }
     else
     {
-        @foreach (var error in Listing.Errors.Where(error => error.LineNumber is null))
-        {
-            <span class="text-text-write">@error.Format()</span>
-        }
-
         <div class="d-flex flex-column font-monospace">
+            @foreach (var error in Listing.Errors)
+            {
+                <span class="text-text-write">@error.Format()</span>
+            }
             <div class="d-flex flex-row gap-4 fw-bold">
                 <span class="col-1">Line</span>
                 <span class="col-1">Address</span>
                 <span class="col-1">Code</span>
                 <span class="col">Source</span>
             </div>
-            @for (var i = 1; i <= Listing.Lines.Length; i++)
+            @for (var lineNumber = 1; lineNumber <= Listing.NumLines; lineNumber++)
             {
-                var line = Listing.Lines[i - 1];
+                var line = Listing.GetLine(lineNumber);
                 @if (ProgramCounter.GetValueWithoutReading() == (line.Address ?? Word.FromInt(-1)) && line.Code1 is not null)
                 {
                     <hr class="text-text-write my-0 border border-1 border-text-write"/>
                 }
                 <div class="d-flex flex-row gap-4">
-                    <span class="col-1">@i</span>
+                    <span class="col-1">@lineNumber</span>
                     <span class="col-1">@(line.Address is null ? "" : line.Address.AsHexString())</span>
                     <span class="col-1">
                         @(line.Code1 is null ? "" : line.Code1.AsHexString())
@@ -39,9 +38,9 @@
                     </span>
                     <span class="col" style="white-space: pre">@line.Source</span>
                 </div>
-                @foreach (var error in Listing.Errors.Where(error => error.LineNumber == i))
+                @foreach (var error in Listing.GetErrorsForLine(lineNumber))
                 {
-                    <span class="text-text-write">@error.Format()</span>
+                    <span class="text-text-write">@error.Message</span>
                 }
             }
             <div class="d-flex flex-row gap-4 fw-bold mt-4">
@@ -50,7 +49,7 @@
                 <span class="col-1">Defined on</span>
                 <span class="col-1">Used on</span>
             </div>
-            @foreach (var label in Listing.LabelMap.Values)
+            @foreach (var label in Listing.Labels)
             {
                 <div class="d-flex flex-row gap-4">
                     <span class="col-1">@(label.Address?.AsHexString() ?? "")</span>
