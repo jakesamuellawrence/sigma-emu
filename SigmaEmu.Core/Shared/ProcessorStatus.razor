@@ -8,10 +8,10 @@
     {
         <h3>Control</h3>
         <button @onclick="OnStep">Step</button>
-        
+
         <h3 class="mt-4">Registers</h3>
-        <RegisterDisplay Processor="Processor" />
-        
+        <RegisterDisplay Processor="Processor" OnPcEdited="OnPcEdited"/>
+
         <h3 class="mt-4">Memory</h3>
         <div class="d-flex flex-row overflow-auto">
             <MemoryDisplay Memory="Processor.Memory"/>
@@ -23,10 +23,16 @@
 
 @code {
 
-    [Parameter, EditorRequired]
+    [Parameter]
+    [EditorRequired]
     public Processor? Processor { get; set; }
-    
-    [Parameter, EditorRequired]
+
+    [Parameter]
+    [EditorRequired]
     public EventCallback OnStep { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback<WordStore> OnPcEdited { get; set; }
 
 }

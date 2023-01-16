@@ -7,7 +7,7 @@ else
 {
     <div class="d-flex flex-row gap-2 align-items-center">
         <span class="flex-grow-1">@Label</span>
-        <WordStoreDisplay WordStore="Register"/>
+        <WordStoreDisplay WordStore="Register" OnValueEdited="OnRegisterEdited"/>
     </div>
 }
 
@@ -21,5 +21,8 @@ else
     [Parameter]
     [EditorRequired]
     public Register? Register { get; set; }
+
+    [Parameter]
+    public EventCallback<WordStore>? OnRegisterEdited { get; set; }
 
 }

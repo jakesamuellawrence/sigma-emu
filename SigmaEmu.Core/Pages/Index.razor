@@ -1,7 +1,7 @@
 ﻿@page "/"
+@using SigmaEmu.Assembler.Assembler
 @using SigmaEmu.Shared
 @using SigmaEmu.Core.Models
-@using SigmaEmu.Assembler.Assembler
 
 <div class="d-flex flex-column w-100 h-100">
     <Toolbar OnAssemble="AssembleSource" OnLoad="LoadListing"/>
@@ -14,7 +14,7 @@
         {
             <SourceDisplay Source="_source" LoadFileEvent="LoadFile"/>
         }
-        <ProcessorStatus Processor="_processor" OnStep="_processor.Step"/>
+        <ProcessorStatus Processor="_processor" OnStep="_processor.Step" OnPcEdited="StateHasChanged"/>
     </div>
 </div>
 

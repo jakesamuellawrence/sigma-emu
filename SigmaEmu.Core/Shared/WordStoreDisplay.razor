@@ -21,6 +21,9 @@
     [EditorRequired]
     public WordStore? WordStore { get; set; }
 
+    [Parameter]
+    public EventCallback<WordStore>? OnValueEdited { get; set; }
+
     private string Input
     {
         get => WordStore?.GetValueWithoutReading().AsHexString() ?? "WordStore not provided";
@@ -30,6 +33,7 @@
             try
             {
                 WordStore.Value = Word.FromHex(value);
+                OnValueEdited?.InvokeAsync(WordStore);
             }
             catch (FormatException)
             {
