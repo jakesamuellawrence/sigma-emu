@@ -146,6 +146,8 @@ public class Processor
         Memory.Reset();
 
         ProcessorState = ProcessorRunningState.Stopped;
+
+        ResetReadWrite();
     }
 
     public void LoadListing(Listing listing)
