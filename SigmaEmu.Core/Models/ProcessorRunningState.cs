@@ -2,6 +2,7 @@
 
 public enum ProcessorRunningState
 {
+    Playing,
     Stopped,
-    Paused,
+    Paused
 }

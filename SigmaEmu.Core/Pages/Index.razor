@@ -14,7 +14,9 @@
         {
             <SourceDisplay Source="_source" LoadFileEvent="LoadFile"/>
         }
-        <ProcessorStatus Processor="_processor" OnStep="_processor.Step" OnReset="Reset" OnPcEdited="StateHasChanged"/>
+        <ProcessorStatus Processor="_processor" OnPcEdited="StateHasChanged" OnPlay="_processor.Play"
+                         OnStep="_processor.Step" OnReset="_processor.Reset" OnPause="_processor.Pause"
+                         OnStop="_processor.Stop"/>
     </div>
 </div>
 
@@ -25,6 +27,11 @@
     private Listing? _listing;
 
     private readonly Processor _processor = new();
+
+    protected override void OnInitialized()
+    {
+        _processor.OnTick += StateHasChanged;
+    }
 
     private void Reset()
     {

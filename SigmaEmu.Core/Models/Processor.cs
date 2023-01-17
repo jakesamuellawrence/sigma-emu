@@ -1,4 +1,5 @@
 ﻿using SigmaEmu.Shared;
+using Timer = System.Timers.Timer;
 
 namespace SigmaEmu.Core.Models;
 
@@ -7,6 +8,9 @@ public class Processor
     public const int MaxRegisters = 16;
 
     private const int RemainderRegister = 15;
+    private const int BaseClockTickTime = 1000;
+
+    private readonly Timer _clock;
 
     private readonly Dictionary<RrrInstruction, Action<Register, Register, Register>> _rrrMap;
     private readonly Dictionary<RxInstruction, Action<Register, Register>> _rxMap;
@@ -14,6 +18,14 @@ public class Processor
 
     public Processor()
     {
+        _clock = new Timer(BaseClockTickTime);
+        _clock.Elapsed += (sender, args) =>
+        {
+            Step();
+            OnTick?.Invoke();
+        };
+        _clock.Stop();
+
         for (var i = 0; i < MaxRegisters; i++) RegisterFile[i] = new Register();
 
         _rrrMap = new Dictionary<RrrInstruction, Action<Register, Register, Register>>
@@ -27,7 +39,7 @@ public class Processor
                 {
                     if (b.Value == Word.FromInt(0))
                     {
-                        Halt();
+                        Stop();
                         return;
                     }
 
@@ -44,7 +56,7 @@ public class Processor
             { RrrInstruction.Xor, (d, a, b) => d.Value = (a.Value | b.Value) & (!a.Value | !b.Value) },
             { RrrInstruction.ShiftL, (d, a, b) => d.Value = a.Value << b.Value },
             { RrrInstruction.ShiftR, (d, a, b) => d.Value = a.Value >> b.Value },
-            { RrrInstruction.Trap, (d, a, b) => Halt() }
+            { RrrInstruction.Trap, (d, a, b) => Stop() }
         };
 
         _rxMap = new Dictionary<RxInstruction, Action<Register, Register>>
@@ -102,6 +114,26 @@ public class Processor
 
     public Memory Memory { get; } = new();
 
+    public event Action? OnTick;
+
+    public void Play()
+    {
+        ProcessorState = ProcessorRunningState.Playing;
+        _clock.Start();
+    }
+
+    public void Pause()
+    {
+        ProcessorState = ProcessorRunningState.Paused;
+        _clock.Stop();
+    }
+
+    public void Stop()
+    {
+        ProcessorState = ProcessorRunningState.Stopped;
+        _clock.Stop();
+    }
+
     public void Reset()
     {
         var zero = Word.FromInt(0);
@@ -126,11 +158,6 @@ public class Processor
         ProcessorState = ProcessorRunningState.Paused;
     }
 
-    public void Halt()
-    {
-        ProcessorState = ProcessorRunningState.Stopped;
-    }
-
     private void ResetReadWrite()
     {
         ProgramCounter.ResetReadWrite();
@@ -145,6 +172,8 @@ public class Processor
 
     public void Step()
     {
+        Console.WriteLine("Stepping");
+
         if (ProcessorState == ProcessorRunningState.Stopped) return;
 
         ResetReadWrite();

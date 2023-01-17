@@ -7,7 +7,12 @@
     else
     {
         <h3>Control</h3>
+        <span class="mb-1">State: @Processor.ProcessorState</span>
         <div class="w-100 d-flex flex-row justify-content-center gap-2">
+            <button class="flex-grow-1" @onclick="OnPlay">Play</button>
+            <button class="flex-grow-1" @onclick="OnPause">Pause</button>
+            <button class="flex-grow-1" @onclick="OnStop">Stop</button>
+            <span>|</span>
             <button class="flex-grow-1" @onclick="OnStep">Step</button>
             <button class="flex-grow-1" @onclick="OnReset">Reset</button>
         </div>
@@ -37,6 +42,18 @@
     [Parameter]
     [EditorRequired]
     public EventCallback OnReset { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback OnPlay { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback OnPause { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback OnStop { get; set; }
 
     [Parameter]
     [EditorRequired]
