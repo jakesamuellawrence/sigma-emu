@@ -35,6 +35,8 @@
     {
         var fileStream = file.OpenReadStream();
         _source = await Assembler.ParseAsync(fileStream);
+        _listing = null;
+        Reset();
         StateHasChanged();
     }
 
