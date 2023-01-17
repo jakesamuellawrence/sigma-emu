@@ -25,6 +25,12 @@ public class Memory
         set => MemoryArray[key.AsInt()] = value;
     }
 
+    public void Reset()
+    {
+        var zero = Word.FromInt(0);
+        foreach (var unit in MemoryArray) unit.Value = zero;
+    }
+
     public void LoadListing(Listing listing, int offset = 0)
     {
         var i = offset;

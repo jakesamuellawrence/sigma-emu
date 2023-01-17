@@ -14,7 +14,7 @@
         {
             <SourceDisplay Source="_source" LoadFileEvent="LoadFile"/>
         }
-        <ProcessorStatus Processor="_processor" OnStep="_processor.Step" OnPcEdited="StateHasChanged"/>
+        <ProcessorStatus Processor="_processor" OnStep="_processor.Step" OnReset="Reset" OnPcEdited="StateHasChanged"/>
     </div>
 </div>
 
@@ -25,6 +25,11 @@
     private Listing? _listing;
 
     private readonly Processor _processor = new();
+
+    private void Reset()
+    {
+        _processor.Reset();
+    }
 
     private async void LoadFile(IBrowserFile file)
     {

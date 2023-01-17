@@ -102,6 +102,20 @@ public class Processor
 
     public Memory Memory { get; } = new();
 
+    public void Reset()
+    {
+        var zero = Word.FromInt(0);
+        ProgramCounter.Value = zero;
+        InstructionRegister.Value = zero;
+        AddressRegister.Value = zero;
+        DataRegister.Value = zero;
+        foreach (var register in RegisterFile) register.Value = zero;
+
+        Memory.Reset();
+
+        ProcessorState = ProcessorRunningState.Stopped;
+    }
+
     public void LoadListing(Listing listing)
     {
         Memory.LoadListing(listing);
