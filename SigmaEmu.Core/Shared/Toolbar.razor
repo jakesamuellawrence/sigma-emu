@@ -1,4 +1,7 @@
 ﻿<div class="bg-grey-darker d-flex flex-row p-2 border-bottom border-2 border-dark">
+    <FileUpload ProcessFile="OnOpen">
+        <button class="me-2 pe-none">Open</button>
+    </FileUpload>
     <button class="me-2" @onclick="OnAssemble">Assemble</button>
     <button class="me-2" @onclick="OnLoad">Load</button>
     @* <button class="me-2">Save</button> *@
@@ -6,11 +9,17 @@
 </div>
 
 @code {
-    
-    [Parameter, EditorRequired]
+
+    [Parameter]
+    [EditorRequired]
     public EventCallback OnAssemble { get; set; }
-    
-    [Parameter, EditorRequired]
+
+    [Parameter]
+    [EditorRequired]
     public EventCallback OnLoad { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback<IBrowserFile> OnOpen { get; set; }
 
 }
