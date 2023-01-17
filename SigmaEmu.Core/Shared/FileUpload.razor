@@ -1,16 +1,16 @@
-﻿<div class="bg-grey-main text-text-lighter p-3 d-inline-block rounded-2 flex-grow-0">
-    <p>No file currently open. Please select a file</p>
-    <InputFile OnChange="@LoadFileAsync" id="fileinput" class="d-none"/>
-    <label role="button" class="w-100 " for="fileinput">
-        <div class="d-flex flex-row justify-content-center w-100 ">
-            <div class="bg-grey-lighter border border-2 border-dark rounded-1 px-4">
-                Browse
-            </div>
-        </div>
-    </label>
-</div>
+﻿<InputFile OnChange="@LoadFileAsync" id="fileinput" class="d-none"/>
+<label role="button" for="fileinput" @attributes="UnmatchedAttributes">
+    @ChildContent
+</label>
+
 
 @code {
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? UnmatchedAttributes { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
     public EventCallback<IBrowserFile> ProcessFile { get; set; }
