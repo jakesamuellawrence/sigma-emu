@@ -12,25 +12,13 @@ public class ErrorListener : BaseErrorListener
         int charPositionInLine,
         string msg, RecognitionException e)
     {
-        // Console.WriteLine(string.Join(", ",e.GetExpectedTokens().ToList()));
-        // Console.WriteLine(recognizer.Vocabulary.GetDisplayName(1));
-        // var expectedTokens = GetTokenNames(e.GetExpectedTokens(), recognizer.Vocabulary);
-        // // expectedTokens.ToList().Remove()
-        // var actualToken = GetTokenName(offendingSymbol, recognizer.Vocabulary);
+        Console.WriteLine($"found an error, {msg}");
         Errors.Add(new SourceError
         {
-            // Message = $"{msg} - Error on '{offendingSymbol.Text}' - Encountered {actualToken}, expecting one of [{string.Join(", ", expectedTokens)}]",
             Message = msg,
             LineNumber = line
         });
     }
-
-    // private string TranslateExpectedTokens(List<string> tokens)
-    // {
-    //     
-    // }
-    //
-    // private string TranslateFoundToken()
 
     private IEnumerable<string> GetTokenNames(IIntSet set, IVocabulary vocabulary)
     {

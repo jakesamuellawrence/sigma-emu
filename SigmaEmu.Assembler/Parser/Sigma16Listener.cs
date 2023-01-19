@@ -121,16 +121,6 @@ public interface ISigma16Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitDisplacement([NotNull] Sigma16Parser.DisplacementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="Sigma16Parser.command"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterCommand([NotNull] Sigma16Parser.CommandContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="Sigma16Parser.command"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitCommand([NotNull] Sigma16Parser.CommandContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="Sigma16Parser.rrr_command"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

@@ -42,11 +42,7 @@ public class Source
         var fileReader = new StreamReader(fileStream);
 
         string? line;
-        while ((line = await fileReader.ReadLineAsync()) != null)
-        {
-            Console.WriteLine(line);
-            lines.Add(new SourceLine(line));
-        }
+        while ((line = await fileReader.ReadLineAsync()) != null) lines.Add(new SourceLine(line));
 
         return new Source(lines.ToArray());
     }

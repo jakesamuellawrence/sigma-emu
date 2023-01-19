@@ -15,45 +15,44 @@ label : ID ;
 
 displacement : num=NUM | label ;
 
-//reg : REG_PREFIX NUM;
-//REG : 'R' NUM; 
 
-command : rrr_command | rx_command | x_command ;
+//command : rrr_command | rx_command | x_command ;
 
 rrr_command : ADD | SUB | MUL | DIV | CMPLT | CMPEQ | CMPGT | INV | AND | OR | XOR | SHIFTL | SHIFTR | TRAP ;
 rx_command : LEA | LOAD | STORE | JUMPF | JUMPT | JAL ;
 x_command : JUMP;
 
-REG : 'R0'|'R1'|'R2'|'R3'|'R4'|'R5'|'R6'|'R7'|'R8'|'R9'|'R10'|'R11'|'R12'|'R13'|'R14'|'R15';
+//REG : R NUM; 
+REG : R'0'|R'1'|R'2'|R'3'|R'4'|R'5'|R'6'|R'7'|R'8'|R'9'|R'10'|R'11'|R'12'|R'13'|R'14'|R'15';
 
-DATA : 'data' ;
+DATA : D A T A ;
 
 // RRR commands
-ADD : 'add';
-SUB : 'sub';
-MUL : 'mul';
-DIV : 'div';
-CMPLT : 'cmplt';
-CMPEQ : 'cmpeq'; 
-CMPGT : 'cmpgt';
-INV : 'inv';
-AND : 'and';
-OR : 'or';
-XOR : 'xor';
-SHIFTL : 'shiftl';
-SHIFTR : 'shiftr';
-TRAP : 'trap';
+ADD : A D D ;
+SUB : S U B;
+MUL : M U L;
+DIV : D I V;
+CMPLT : C M P L T;
+CMPEQ : C M P E Q; 
+CMPGT : C M P G T;
+INV : I N V;
+AND : A N D;
+OR : O R;
+XOR : X O R;
+SHIFTL : S H I F T L;
+SHIFTR : S H I F T R;
+TRAP : T R A P;
 
 // RX commands
-LEA : 'lea';
-LOAD : 'load';
-STORE : 'store';
-JUMPF : 'jumpf';
-JUMPT : 'jumpt';
-JAL : 'jal';
+LEA : L E A;
+LOAD : L O A D;
+STORE : S T O R E;
+JUMPF : J U M P F;
+JUMPT : J U M P T;
+JAL : J A L;
 
 // X commands
-JUMP : 'jump' ;
+JUMP : J U M P ;
 
 COMMA : ',';
 LBRACK : '[';
