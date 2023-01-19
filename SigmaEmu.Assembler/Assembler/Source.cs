@@ -22,8 +22,8 @@ public class Source
 
     public void AddError(SourceError error)
     {
-        if (error.LineNumber >= _lines.Length) return;
-        _lines[error.LineNumber - 1].AddError(error);
+        if (error.LineNumber > NumLines) return;
+        GetLine(error.LineNumber).AddError(error);
     }
 
     public void AddErrors(IEnumerable<SourceError> errors)
