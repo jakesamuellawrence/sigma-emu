@@ -43,7 +43,6 @@
         var fileStream = file.OpenReadStream();
         _source = await Assembler.ParseAsync(fileStream);
         _listing = null;
-        Reset();
         StateHasChanged();
     }
 
@@ -51,6 +50,7 @@
     {
         if (_source is null || _source.HasErrors()) return;
         _listing = Assembler.Assemble(_source);
+        Reset();
     }
 
     private void LoadListing()
