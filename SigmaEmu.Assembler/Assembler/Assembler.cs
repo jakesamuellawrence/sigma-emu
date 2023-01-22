@@ -25,9 +25,7 @@ public static class Assembler
         var tree = parser.program();
 
         var syntaxErrors = errorListener.Errors;
-        Console.WriteLine(syntaxErrors.Count);
         source.AddErrors(syntaxErrors);
-        Console.WriteLine(source.HasErrors());
         source.Tree = tree;
 
         return source;

@@ -12,7 +12,6 @@ public class ErrorListener : BaseErrorListener
         int charPositionInLine,
         string msg, RecognitionException e)
     {
-        Console.WriteLine($"found an error, {msg}");
         Errors.Add(new SourceError
         {
             Message = msg,

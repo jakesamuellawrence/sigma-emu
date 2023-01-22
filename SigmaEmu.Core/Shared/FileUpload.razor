@@ -17,7 +17,6 @@
 
     private async Task LoadFileAsync(InputFileChangeEventArgs e)
     {
-    // Console.WriteLine(e.Value);
         await ProcessFile.InvokeAsync(e.File);
     }
 

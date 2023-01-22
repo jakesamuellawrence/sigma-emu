@@ -174,8 +174,6 @@ public class Processor
 
     public void Step()
     {
-        Console.WriteLine("Stepping");
-
         if (ProcessorState == ProcessorRunningState.Stopped) return;
 
         ResetReadWrite();
