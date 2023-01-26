@@ -1,0 +1,42 @@
+﻿@inject HttpClient HttpClient;
+
+@{
+    string colour;
+    if (Active) colour = "white";
+    else if (Enabled) colour = "text-darker";
+    else colour = "text-darkest";
+
+    var classText = $"text-{colour} {Unmatched?.GetValueOrDefault("class")} d-flex flex-column gap-1";
+}
+
+<div role="@(Enabled && !Active ? "button" : "")" @attributes="Unmatched" class="@classText"
+     @onclick="() => { if (Enabled) OnClick.InvokeAsync(); }">
+    @ChildContent
+    @if (Label is not null)
+    {
+        <span class="text-center">@Label</span>
+    }
+</div>
+
+@code {
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? Unmatched { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback OnClick { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public bool Enabled { get; set; } = true;
+
+    [Parameter]
+    public bool Active { get; set; }
+
+}

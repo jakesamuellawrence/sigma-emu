@@ -55,6 +55,7 @@
 
     private void LoadListing()
     {
+        Console.WriteLine("Loading Listing");
         if (_listing == null || _listing.HasErrors()) return;
         _processor.LoadListing(_listing);
         _processor.Ready();

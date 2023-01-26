@@ -8,13 +8,36 @@
     {
         <h3>Control</h3>
         <span class="mb-1">State: @Processor.ProcessorState</span>
-        <div class="w-100 d-flex flex-row justify-content-center gap-2">
-            <button class="flex-grow-1" @onclick="OnPlay">Play</button>
-            <button class="flex-grow-1" @onclick="OnPause">Pause</button>
-            <button class="flex-grow-1" @onclick="OnStop">Stop</button>
+        <div class="w-100 d-flex flex-row justify-content-around gap-2 bg-grey-darkest rounded-2 p-2 pt-3">
+            <SvgButton OnClick="OnPlay" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
+                       Active="Processor.ProcessorState == ProcessorRunningState.Playing"
+                       Label="Play">
+                <Icons.Play Height="30px"/>
+            </SvgButton>
+            @* <button class="flex-grow-1" @onclick="OnPlay">Play</button> *@
+            <SvgButton OnClick="OnPause" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
+                       Active="Processor.ProcessorState == ProcessorRunningState.Paused"
+                       Label="Pause">
+                <Icons.Pause Height="30px"/>
+            </SvgButton>
+            @* <button @onclick="OnPause">Pause</button> *@
+            <SvgButton OnClick="OnStop" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
+                       Active="Processor.ProcessorState == ProcessorRunningState.Stopped"
+                       Label="Stop">
+                <Icons.Stop Height="30px"/>
+            </SvgButton>
+            @* <button @onclick="OnStop">Stop</button> *@
             <span>|</span>
-            <button class="flex-grow-1" @onclick="OnStep">Step</button>
-            <button class="flex-grow-1" @onclick="OnReset">Reset</button>
+            <SvgButton OnClick="OnStep" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
+                       Label="Step">
+                <Icons.Step Height="30px"/>
+            </SvgButton>
+            @* <button @onclick="OnStep">Step</button> *@
+            <SvgButton OnClick="OnReset" Enabled="true"
+                       Label="Reset">
+                <Icons.Reload Height="30px"/>
+            </SvgButton>
+            @* <button @onclick="OnReset">Reset</button> *@
         </div>
 
         <h3 class="mt-4">Registers</h3>
