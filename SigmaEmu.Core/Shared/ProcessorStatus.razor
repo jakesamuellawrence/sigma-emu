@@ -7,29 +7,24 @@
     else
     {
         <h3>Control &#x2022 @Processor.ProcessorState</h3>
-        <div class="w-100 d-flex flex-row justify-content-around gap-2 bg-grey-darkest rounded-2 p-2 pt-3">
+        <div class="w-100 d-flex flex-row justify-content-around gap-4 align-items-center bg-grey-darkest rounded-2 p-2">
             <SvgButton OnClick="OnPlay" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
-                       Active="Processor.ProcessorState == ProcessorRunningState.Playing"
-                       Label="Play">
+                       Active="Processor.ProcessorState == ProcessorRunningState.Playing">
                 <Icons.Play Height="30px"/>
             </SvgButton>
             <SvgButton OnClick="OnPause" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
-                       Active="Processor.ProcessorState == ProcessorRunningState.Paused"
-                       Label="Pause">
+                       Active="Processor.ProcessorState == ProcessorRunningState.Paused">
                 <Icons.Pause Height="30px"/>
             </SvgButton>
             <SvgButton OnClick="OnStop" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
-                       Active="Processor.ProcessorState == ProcessorRunningState.Stopped"
-                       Label="Stop">
+                       Active="Processor.ProcessorState == ProcessorRunningState.Stopped">
                 <Icons.Stop Height="30px"/>
             </SvgButton>
-            <span>|</span>
-            <SvgButton OnClick="OnStep" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
-                       Label="Step">
+            <div class="border-start border-2 border-text-main " style="height: 80%"></div>
+            <SvgButton OnClick="OnStep" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped">
                 <Icons.Step Height="30px"/>
             </SvgButton>
-            <SvgButton OnClick="OnReset" Enabled="true"
-                       Label="Reset">
+            <SvgButton OnClick="OnReset" Enabled="true">
                 <Icons.Reload Height="30px"/>
             </SvgButton>
         </div>
