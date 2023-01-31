@@ -1,14 +1,40 @@
-﻿<div class="bg-grey-darker d-flex flex-row p-2 border-bottom border-2 border-dark">
+﻿<div class="bg-grey-darker d-flex flex-row align-items-center p-2 ps-3 border-bottom border-2 border-dark gap-4">
     <FileUpload ProcessFile="OnOpen">
-        <button class="me-2 pe-none">Open</button>
+        <SvgButton Label="Open" Enabled="@CanOpen">
+            <Icons.Folder Height="@Height"/>
+        </SvgButton>
     </FileUpload>
-    <button class="me-2" @onclick="OnAssemble">Assemble</button>
-    <button class="me-2" @onclick="OnLoad">Load</button>
+    <SvgButton Enabled="CanAssemble">
+        <Icons.RightArrow Height="@Height"/>
+    </SvgButton>
+    <SvgButton OnClick="@OnAssemble" Enabled="@CanAssemble" Label="Assemble">
+        <Icons.Tools Height="@Height"/>
+    </SvgButton>
+    <SvgButton Enabled="CanLoad">
+        <Icons.RightArrow Height="@Height"/>
+    </SvgButton>
+    <SvgButton OnClick="@OnLoad" Enabled="@CanLoad" Label="Load">
+        <Icons.CPU Height="@Height"/>
+    </SvgButton>
+    @* <button class="me-2" @onclick="OnAssemble">Assemble</button> *@
+    @* <button class="me-2" @onclick="OnLoad">Load</button> *@
     @* <button class="me-2">Save</button> *@
     @* <button class="me-2">Breakpoints</button> *@
 </div>
 
 @code {
+
+    [Parameter]
+    public string? Height { get; set; }
+
+    [Parameter]
+    public bool CanOpen { get; set; }
+
+    [Parameter]
+    public bool CanAssemble { get; set; }
+
+    [Parameter]
+    public bool CanLoad { get; set; }
 
     [Parameter]
     [EditorRequired]

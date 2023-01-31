@@ -4,7 +4,8 @@
 @using SigmaEmu.Core.Models
 
 <div class="d-flex flex-column w-100 h-100">
-    <Toolbar OnOpen="LoadFile" OnAssemble="AssembleSource" OnLoad="LoadListing"/>
+    <Toolbar OnOpen="LoadFile" OnAssemble="AssembleSource" OnLoad="LoadListing"
+             Height="40px" CanOpen="true" CanAssemble="@(_source is not null)" CanLoad="@(_listing is not null)"/>
     <div class="d-flex flex-row flex-grow-1 flex-shrink-1 overflow-auto">
         @if (_listing != null)
         {

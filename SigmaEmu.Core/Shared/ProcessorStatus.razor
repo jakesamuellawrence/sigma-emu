@@ -16,8 +16,7 @@
                        Active="Processor.ProcessorState == ProcessorRunningState.Paused">
                 <Icons.Pause Height="30px"/>
             </SvgButton>
-            <SvgButton OnClick="OnStop" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
-                       Active="Processor.ProcessorState == ProcessorRunningState.Stopped">
+            <SvgButton OnClick="OnStop" Enabled="true">
                 <Icons.Stop Height="30px"/>
             </SvgButton>
             <div class="border-start border-2 border-text-main " style="height: 80%"></div>

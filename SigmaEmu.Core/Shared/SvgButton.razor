@@ -3,8 +3,8 @@
 @{
     string colour;
     if (Active) colour = "white";
-    else if (Enabled) colour = "text-darker";
-    else colour = "text-darkest";
+    else if (Enabled) colour = "text-main";
+    else colour = "text-darker";
 
     var classText = $"text-{colour} {Unmatched?.GetValueOrDefault("class")} d-flex flex-column gap-1";
 }
