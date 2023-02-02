@@ -144,6 +144,18 @@ public partial class Sigma16BaseListener : ISigma16Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitDisplacement([NotNull] Sigma16Parser.DisplacementContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Sigma16Parser.number_literal"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNumber_literal([NotNull] Sigma16Parser.Number_literalContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Sigma16Parser.number_literal"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNumber_literal([NotNull] Sigma16Parser.Number_literalContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Sigma16Parser.rrr_command"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

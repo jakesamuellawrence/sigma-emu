@@ -9,8 +9,8 @@
     var classText = $"text-{colour} {Unmatched?.GetValueOrDefault("class")} d-flex flex-column gap-1";
 }
 
-<div role="@(Enabled && !Active ? "button" : "")" @attributes="Unmatched" class="@classText"
-     @onclick="() => { if (Enabled) OnClick.InvokeAsync(); }">
+<div role="@(Enabled && !Active && OnClick is not null ? "button" : "")" @attributes="Unmatched" class="@classText"
+     @onclick="() => { if (Enabled) OnClick?.InvokeAsync(); }">
     @ChildContent
     @if (Label is not null)
     {
@@ -27,8 +27,7 @@
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    [EditorRequired]
-    public EventCallback OnClick { get; set; }
+    public EventCallback? OnClick { get; set; }
 
     [Parameter]
     public string? Label { get; set; }

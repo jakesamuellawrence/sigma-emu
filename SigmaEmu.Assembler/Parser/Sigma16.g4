@@ -2,19 +2,20 @@ grammar Sigma16;
 
 program : instruction+ EOF;
 
-instruction : label_def* (rrr_instruction | rx_instruction | x_instruction | data_instruction);
+instruction : label_def+ | (label_def* (rrr_instruction | rx_instruction | x_instruction | data_instruction));
 
 rrr_instruction : mnemonic=rrr_command destinationReg=REG COMMA firstOperand=REG COMMA secondOperand=REG ;
 rx_instruction : mnemonic=rx_command destinationReg=REG COMMA displacement LBRACK offsetReg=REG RBRACK ;
 x_instruction : mnemonic=x_command displacement LBRACK offsetReg=REG RBRACK ;
-data_instruction :  DATA NUM ;
+data_instruction :  DATA number_literal ;
 
 label_def : label ;
 
 label : ID ;
 
-displacement : num=NUM | label ;
+displacement : num=number_literal | label ;
 
+number_literal : NUM | HEXNUM ;
 
 //command : rrr_command | rx_command | x_command ;
 
@@ -57,8 +58,12 @@ JUMP : J U M P ;
 COMMA : ',';
 LBRACK : '[';
 RBRACK : ']';
+DOLLAR: '$';
 
+HEXNUM : DOLLAR HEXDIGIT HEXDIGIT HEXDIGIT HEXDIGIT; 
+INVALID_HEXNUM: DOLLAR (HEXDIGIT | LETTER)* ; 
 NUM : DIGIT+;
+INVALID_NUM : DIGIT+ LETTER* ;
 ID : LETTER (LETTER | [_] | DIGIT)*;
 
 SPACE	:	(' ' | '\t')+  -> skip ;
@@ -69,6 +74,7 @@ ANY : . ;
 
 fragment LETTER : 'a'..'z' | 'A'..'Z' ;
 fragment DIGIT  : '0'..'9' ;
+fragment HEXDIGIT : 'a'..'f' | 'A' .. 'F' | '0' .. '9';
 
 fragment A : [aA];
 fragment B : [bB];

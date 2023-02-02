@@ -4,5 +4,5 @@ namespace Icons;
 
 public class Icon : ComponentBase
 {
-    [Parameter] public string? Height { get; set; }
+    [Parameter] [EditorRequired] public string? Height { get; set; }
 }

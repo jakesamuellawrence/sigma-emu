@@ -31,8 +31,7 @@ public class AssemblerListener : Sigma16BaseListener
 
     public override void ExitData_instruction(Sigma16Parser.Data_instructionContext context)
     {
-        var value = int.Parse(context.NUM().GetText());
-        var code1 = Word.FromInt(value);
+        var code1 = GetWordFromNumberLiteral(context.number_literal());
         _listing.AddInstruction(context.Start.Line, code1);
     }
 
@@ -78,9 +77,16 @@ public class AssemblerListener : Sigma16BaseListener
         _listing.AddInstruction(context.Start.Line, code1, displacementWord);
     }
 
+    private Word GetWordFromNumberLiteral(Sigma16Parser.Number_literalContext literal)
+    {
+        if (literal.NUM() is not null) return Word.FromInt(int.Parse(literal.NUM().GetText()));
+
+        return Word.FromHex(literal.HEXNUM().GetText()[1..]);
+    }
+
     private Word GetWordFromDisplacement(Sigma16Parser.DisplacementContext displacement)
     {
-        if (displacement.num != null) return Word.FromInt(int.Parse(displacement.num.Text));
+        if (displacement.num != null) return GetWordFromNumberLiteral(displacement.number_literal());
 
         var label = displacement.label().GetText();
         _listing.UseLabel(label, displacement.Start.Line);
