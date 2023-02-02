@@ -17,6 +17,7 @@
                 <span class="text-text-write">@error.Format()</span>
             }
             <div class="d-flex flex-row gap-4 fw-bold">
+                <span class="col-1">Breakpoint?</span>
                 <span class="col-1">Line</span>
                 <span class="col-1">Address</span>
                 <span class="col-1">Code</span>
@@ -30,6 +31,14 @@
                     <hr class="text-text-write my-0 border border-1 border-text-write"/>
                 }
                 <div class="d-flex flex-row gap-4">
+                    @if (line.HasBreakpoint)
+                    {
+                        <span role="button" class="col-1" @onclick="() => RemoveBreakpoint(line)">T</span>
+                    }
+                    else
+                    {
+                        <span role="button" class="col-1" @onclick="() => AddBreakpoint(line)">F</span>
+                    }
                     <span class="col-1">@lineNumber</span>
                     <span class="col-1">@(line.Address is null ? "" : line.Address.AsHexString())</span>
                     <span class="col-1">
@@ -71,5 +80,20 @@
     [Parameter]
     [EditorRequired]
     public Register? ProgramCounter { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback<HashSet<Word>> OnUpdateBreakpoints { get; set; }
+
+    private void AddBreakpoint(ListingLine line)
+    {
+        line.HasBreakpoint = true;
+        OnUpdateBreakpoints.InvokeAsync(Listing?.GetBreakpointAddresses());
+    }
+
+    private void RemoveBreakpoint(ListingLine line)
+    {
+        line.HasBreakpoint = false;
+    }
 
 }

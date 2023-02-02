@@ -148,6 +148,24 @@ public class Processor
         ProcessorState = ProcessorRunningState.Stopped;
 
         ResetReadWrite();
+        ResetBreakpoints();
+    }
+
+    public void SetBreakpoints(HashSet<Word> addresses)
+    {
+        ResetBreakpoints();
+        AddBreakpoints(addresses);
+    }
+
+    private void AddBreakpoints(HashSet<Word> addresses)
+    {
+        foreach (var address in addresses)
+            Memory[address].HasBreakpoint = true;
+    }
+
+    private void ResetBreakpoints()
+    {
+        for (var i = 0; i < Memory.MaxMemory; i++) Memory[i].HasBreakpoint = false;
     }
 
     public void LoadListing(Listing listing)
@@ -196,6 +214,9 @@ public class Processor
         else
             RunRrrInstruction(op,
                 RegisterFile[destination], RegisterFile[operandA], RegisterFile[operandB]);
+
+        if (Memory[ProgramCounter.GetValueWithoutReading()].HasBreakpoint)
+            Pause();
     }
 
     private void RunRxInstruction(RxInstruction op, Register destination, Register offset)

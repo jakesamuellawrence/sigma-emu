@@ -9,7 +9,8 @@
     <div class="d-flex flex-row flex-grow-1 flex-shrink-1 overflow-auto">
         @if (_listing != null)
         {
-            <ListingDisplay Listing="_listing" ProgramCounter="_processor.ProgramCounter"/>
+            <ListingDisplay Listing="_listing" ProgramCounter="_processor.ProgramCounter"
+                            OnUpdateBreakpoints="_processor.SetBreakpoints"/>
         }
         else
         {

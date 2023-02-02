@@ -107,4 +107,15 @@ public class Listing
     {
         return _errors.Count != 0;
     }
+
+    public HashSet<Word> GetBreakpointAddresses()
+    {
+        var set = new HashSet<Word>();
+
+        foreach (var line in _lines)
+            if (line.HasBreakpoint && line.Address is not null)
+                set.Add(line.Address);
+
+        return set;
+    }
 }

@@ -2,4 +2,5 @@
 
 public class MemoryUnit : WordStore
 {
+    public bool HasBreakpoint;
 }

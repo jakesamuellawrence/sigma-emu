@@ -2,13 +2,7 @@
 
 public class ListingLine
 {
-    // public ListingLine(Word address, Word code1, string source, Word? code2 = null)
-    // {
-    //     Address = address;
-    //     Code1 = code1;
-    //     Code2 = code2;
-    //     Source = source;
-    // }
+    public bool HasBreakpoint = false;
 
     public Word? Address { get; set; }
     public Word? Code1 { get; set; }
