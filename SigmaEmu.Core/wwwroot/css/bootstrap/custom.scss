@@ -22,6 +22,10 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
+.square {
+  aspect-ratio: 1;
+}
+
 //
 //@import "../../../node_modules/bootstrap/scss/mixins";
 //@import "../../../node_modules/bootstrap/scss/root";

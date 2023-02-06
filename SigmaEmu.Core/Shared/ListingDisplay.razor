@@ -17,7 +17,7 @@
                 <span class="text-text-write">@error.Format()</span>
             }
             <div class="d-flex flex-row gap-4 fw-bold">
-                <span class="col-1">Breakpoint?</span>
+                <span class="square overflow-hidden text-center">BP</span>
                 <span class="col-1">Line</span>
                 <span class="col-1">Address</span>
                 <span class="col-1">Code</span>
@@ -31,14 +31,15 @@
                     <hr class="text-text-write my-0 border border-1 border-text-write"/>
                 }
                 <div class="d-flex flex-row gap-4">
-                    @if (line.HasBreakpoint)
-                    {
-                        <span role="button" class="col-1" @onclick="() => RemoveBreakpoint(line)">T</span>
-                    }
-                    else
-                    {
-                        <span role="button" class="col-1" @onclick="() => AddBreakpoint(line)">F</span>
-                    }
+                    <div @onclick="() => {if (line.HasBreakpoint) RemoveBreakpoint(line); else AddBreakpoint(line);}"
+                         class="square d-flex justify-content-center align-items-center"
+                         role="button">
+                        @if (line.HasBreakpoint)
+                        {
+                            <div class="h-75 w-75 rounded rounded-circle bg-text-read">
+                            </div>
+                        }
+                    </div>
                     <span class="col-1">@lineNumber</span>
                     <span class="col-1">@(line.Address is null ? "" : line.Address.AsHexString())</span>
                     <span class="col-1">
@@ -94,6 +95,7 @@
     private void RemoveBreakpoint(ListingLine line)
     {
         line.HasBreakpoint = false;
+        OnUpdateBreakpoints.InvokeAsync(Listing?.GetBreakpointAddresses());
     }
 
 }
