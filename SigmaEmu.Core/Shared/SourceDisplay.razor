@@ -16,23 +16,60 @@
 }
 else
 {
-    <div class="w-100 h-100 bg-grey-main text-white p-2 d-flex flex-column overflow-auto font-monospace" style="white-space: pre">
-        @for (var lineNumber = 1; lineNumber <= Source.NumLines; lineNumber++)
-        {
-            var line = Source.GetLine(lineNumber);
-            <div class="d-flex flex-row gap-2">
-                <span class="col-1">@lineNumber</span>
-                <span class="col">@line</span>
-            </div>
-            @foreach (var error in line.Errors)
-            {
-                <span class="text-text-write">@error.Format()</span>
-            }
-        }
+    @* <div class="w-100 h-100 bg-grey-main text-white p-2 d-flex flex-column overflow-auto font-monospace" style="white-space: pre"> *@
+    @*     @for (var lineNumber = 1; lineNumber <= Source.NumLines; lineNumber++) *@
+    @*     { *@
+    @*         var line = Source.GetLine(lineNumber); *@
+    @*         <div class="d-flex flex-row gap-2"> *@
+    @*             <span class="col-1">@lineNumber</span> *@
+    @*             <span class="col">@line</span> *@
+    @*         </div> *@
+    @*         @foreach (var error in line.Errors) *@
+    @*         { *@
+    @*             <span class="text-text-write">@error.Format()</span> *@
+    @*         } *@
+    @*     } *@
+    @* </div> *@
+    <div class="w-100 h-100 bg-grey-main">
+        <StandaloneCodeEditor @ref="_editor" Id="source-editor" ConstructionOptions="EditorConstructionOptions"
+                              CssClass="w-100 h-100"
+                              OnDidInit="EditorOnDidInit"/>
     </div>
 }
 
 @code {
+
+    private StandaloneCodeEditor? _editor;
+
+    private StandaloneEditorConstructionOptions EditorConstructionOptions(StandaloneCodeEditor editor)
+    {
+        return new StandaloneEditorConstructionOptions
+        {
+            Padding = new EditorPaddingOptions { Top = 10, Bottom = 10 },
+            Theme = "vs-dark",
+            Value = "test"
+        };
+    }
+
+    private async Task EditorOnDidInit()
+    {
+        Console.WriteLine("initialised");
+        if (_editor is null || Source is null) return;
+        await _editor.SetValue(Source.ToString());
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_editor is null || Source is null) return;
+
+        try
+        {
+            await _editor.SetValue(Source.ToString());
+        }
+        catch
+        {
+        }
+    }
 
     [Parameter]
     [EditorRequired]
