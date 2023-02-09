@@ -1,7 +1,7 @@
 ﻿@page "/"
 @using SigmaEmu.Assembler.Assembler
-@using SigmaEmu.Shared
 @using SigmaEmu.Core.Models
+@using SigmaEmu.Shared
 
 <div class="d-flex flex-column w-100 h-100">
     <Toolbar OnOpen="LoadFile" OnAssemble="AssembleSource" OnLoad="LoadListing"
@@ -12,9 +12,16 @@
             <ListingDisplay Listing="_listing" ProgramCounter="_processor.ProgramCounter"
                             OnUpdateBreakpoints="_processor.SetBreakpoints"/>
         }
+        else if (_source != null)
+        {
+            <StandaloneCodeEditor @ref=_codeEditor ConstructionOptions="EditorConstructionOptions"
+                                  CssClass="w-100 h-100"/>
+        }
         else
         {
-            <SourceDisplay Source="_source" LoadFileEvent="LoadFile"/>
+            <div class="w-100 h-100 bg-grey-darkest d-flex justify-content-around align-items-center">
+                <LoadFilePrompt LoadFileEvent="LoadFile"/>
+            </div>
         }
         <ProcessorStatus Processor="_processor" OnPcEdited="StateHasChanged" OnPlay="_processor.Play"
                          OnStep="_processor.Step" OnReset="_processor.Reset" OnPause="_processor.Pause"
@@ -27,6 +34,8 @@
 
     private Source? _source;
     private Listing? _listing;
+
+    private StandaloneCodeEditor _codeEditor = new();
 
     private readonly Processor _processor = new();
 
@@ -45,6 +54,7 @@
         var fileStream = file.OpenReadStream();
         _source = await Assembler.ParseAsync(fileStream);
         _listing = null;
+        _codeEditor?.SetValue(_source.ToString());
         StateHasChanged();
     }
 
@@ -61,6 +71,16 @@
         if (_listing == null || _listing.HasErrors()) return;
         _processor.LoadListing(_listing);
         _processor.Ready();
+    }
+
+    private StandaloneEditorConstructionOptions EditorConstructionOptions(StandaloneCodeEditor editor)
+    {
+        return new StandaloneEditorConstructionOptions
+        {
+            Padding = new EditorPaddingOptions { Top = 10, Bottom = 10 },
+            Theme = "vs-dark",
+            Value = _source?.ToString()
+        };
     }
 
 }

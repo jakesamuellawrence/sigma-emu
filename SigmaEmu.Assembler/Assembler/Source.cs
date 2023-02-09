@@ -20,6 +20,8 @@ public class Source
         return _lines[lineNumber - 1];
     }
 
+    // public void SetText(string)
+
     public void AddError(SourceError error)
     {
         if (error.LineNumber > NumLines) return;

@@ -1,0 +1,18 @@
+﻿<div class="bg-grey-main text-text-lighter p-3 d-inline-block rounded-2 flex-grow-0">
+    <p>No file currently open. Please select a file</p>
+    <div class="d-flex flex-row justify-content-center w-100 ">
+        <FileUpload ProcessFile="LoadFileEvent">
+            <div class="bg-grey-lighter border border-2 border-dark rounded-2 px-4">
+                Browse
+            </div>
+        </FileUpload>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback<IBrowserFile> LoadFileEvent { get; set; }
+
+}
