@@ -1,6 +1,7 @@
 lea R1,1[R0]
 jumpf R1,a[R0]
 jumpf R0,a[R0]
+lea R4,12[R2]
 trap R0,R0,R0
 
 a lea R7,8[R0]

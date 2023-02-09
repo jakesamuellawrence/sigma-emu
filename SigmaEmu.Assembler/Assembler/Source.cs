@@ -1,4 +1,5 @@
-﻿using SigmaEmu.Shared;
+﻿using System.Text;
+using SigmaEmu.Shared;
 
 namespace SigmaEmu.Assembler.Assembler;
 
@@ -53,5 +54,10 @@ public class Source
     public override string ToString()
     {
         return _text;
+    }
+
+    public Stream AsStream()
+    {
+        return new MemoryStream(Encoding.UTF8.GetBytes(_text));
     }
 }

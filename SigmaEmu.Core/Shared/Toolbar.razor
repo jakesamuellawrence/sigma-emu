@@ -16,10 +16,15 @@
     <SvgButton OnClick="@OnLoad" Enabled="@CanLoad" Label="Load">
         <Icons.CPU Height="@Height"/>
     </SvgButton>
-    @* <button class="me-2" @onclick="OnAssemble">Assemble</button> *@
-    @* <button class="me-2" @onclick="OnLoad">Load</button> *@
-    @* <button class="me-2">Save</button> *@
-    @* <button class="me-2">Breakpoints</button> *@
+
+    @{
+        var separatorColour = CanSave ? "text-main" : "text-darker";
+    }
+    <div class="h-50 border border-@separatorColour border-3 rounded-2"></div>
+
+    <SvgButton OnClick="@OnSave" Enabled="@CanSave" Label="Save">
+        <Icons.Save Height="@Height"/>
+    </SvgButton>
 </div>
 
 @code {
@@ -37,6 +42,9 @@
     public bool CanLoad { get; set; }
 
     [Parameter]
+    public bool CanSave { get; set; }
+
+    [Parameter]
     [EditorRequired]
     public EventCallback OnAssemble { get; set; }
 
@@ -47,5 +55,9 @@
     [Parameter]
     [EditorRequired]
     public EventCallback<IBrowserFile> OnOpen { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback OnSave { get; set; }
 
 }

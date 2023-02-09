@@ -2,10 +2,13 @@
 @using SigmaEmu.Assembler.Assembler
 @using SigmaEmu.Core.Models
 @using SigmaEmu.Shared
+@inject IJSRuntime _jsRuntime
 
 <div class="d-flex flex-column w-100 h-100">
-    <Toolbar OnOpen="LoadFile" OnAssemble="AssembleSource" OnLoad="LoadListing"
-             Height="40px" CanOpen="true" CanAssemble="@(_source is not null)" CanLoad="@(_listing is not null)"/>
+    <Toolbar OnOpen="LoadFile" OnAssemble="AssembleSource" OnLoad="LoadListing" OnSave="SaveSourceAsync"
+             CanOpen="true" CanAssemble="@(_source is not null)" CanLoad="@(_listing is not null)"
+             CanSave="@(_source is not null)"
+             Height="40px"/>
     <div class="d-flex flex-row flex-grow-1 flex-shrink-1 overflow-auto">
         @if (_listing != null)
         {
@@ -55,6 +58,18 @@
         if (_codeEditor is null) return;
 
         _source = Source.FromString(await _codeEditor.GetValue());
+    }
+
+    private async Task SaveSourceAsync()
+    {
+        if (_source is null) return;
+
+        var sourceStream = _source.AsStream();
+        var filename = "test.sig";
+
+        using var streamReference = new DotNetStreamReference(sourceStream);
+
+        await _jsRuntime.InvokeVoidAsync("downloadFileFromStream", filename, streamReference);
     }
 
     private async void LoadFile(IBrowserFile file)
