@@ -4,28 +4,28 @@ namespace SigmaEmu.Assembler.Assembler;
 
 public class Source
 {
-    private readonly SourceLine[] _lines;
+    private readonly List<SourceError> _errors;
+    private readonly string _text;
 
-    private Source(SourceLine[] lines)
+    private Source(string text)
     {
-        _lines = lines;
+        _text = text;
+
+        (Tree, _errors) = Assembler.Parse(_text);
     }
 
-    public Sigma16Parser.ProgramContext? Tree { get; set; }
+    public Sigma16Parser.ProgramContext? Tree { get; }
 
-    public int NumLines => _lines.Length;
+    public int NumLines => _text.Split("\n").Length;
 
-    public SourceLine GetLine(int lineNumber)
+    public string GetLine(int lineNumber)
     {
-        return _lines[lineNumber - 1];
+        return _text.Split("\n")[lineNumber - 1];
     }
-
-    // public void SetText(string)
 
     public void AddError(SourceError error)
     {
-        if (error.LineNumber > NumLines) return;
-        GetLine(error.LineNumber).AddError(error);
+        _errors.Add(error);
     }
 
     public void AddErrors(IEnumerable<SourceError> errors)
@@ -35,23 +35,23 @@ public class Source
 
     public bool HasErrors()
     {
-        return _lines.Any(line => line.HasError());
+        return _errors.Count != 0;
     }
 
     public static async Task<Source> FromFileStreamAsync(Stream fileStream)
     {
-        var lines = new List<SourceLine>();
         var fileReader = new StreamReader(fileStream);
 
-        string? line;
-        while ((line = await fileReader.ReadLineAsync()) != null) lines.Add(new SourceLine(line));
+        return new Source(await fileReader.ReadToEndAsync());
+    }
 
-        return new Source(lines.ToArray());
+    public static Source FromString(string text)
+    {
+        return new Source(text);
     }
 
     public override string ToString()
     {
-        var strings = _lines.Select(line => line.Text);
-        return string.Join("\n", strings);
+        return _text;
     }
 }

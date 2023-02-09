@@ -15,7 +15,8 @@
         else if (_source != null)
         {
             <StandaloneCodeEditor @ref=_codeEditor ConstructionOptions="EditorConstructionOptions"
-                                  CssClass="w-100 h-100"/>
+                                  CssClass="w-100 h-100"
+                                  OnDidChangeModelContent="EditorContentChanged"/>
         }
         else
         {
@@ -35,7 +36,7 @@
     private Source? _source;
     private Listing? _listing;
 
-    private StandaloneCodeEditor _codeEditor = new();
+    private StandaloneCodeEditor? _codeEditor = new();
 
     private readonly Processor _processor = new();
 
@@ -49,10 +50,17 @@
         _processor.Reset();
     }
 
+    private async Task EditorContentChanged(ModelContentChangedEvent e)
+    {
+        if (_codeEditor is null) return;
+
+        _source = Source.FromString(await _codeEditor.GetValue());
+    }
+
     private async void LoadFile(IBrowserFile file)
     {
         var fileStream = file.OpenReadStream();
-        _source = await Assembler.ParseAsync(fileStream);
+        _source = await Source.FromFileStreamAsync(fileStream);
         _listing = null;
         _codeEditor?.SetValue(_source.ToString());
         StateHasChanged();
