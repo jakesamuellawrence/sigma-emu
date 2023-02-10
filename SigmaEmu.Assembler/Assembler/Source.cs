@@ -5,23 +5,32 @@ namespace SigmaEmu.Assembler.Assembler;
 
 public class Source
 {
-    private readonly List<SourceError> _errors;
-    private readonly string _text;
+    private string _content;
+    private List<SourceError> _errors;
 
-    private Source(string text)
+    public Source(string fileName, string content)
     {
-        _text = text;
+        _content = content;
+        FileName = fileName;
 
-        (Tree, _errors) = Assembler.Parse(_text);
+        (Tree, _errors) = Assembler.Parse(_content);
     }
 
-    public Sigma16Parser.ProgramContext? Tree { get; }
+    public string FileName { get; }
 
-    public int NumLines => _text.Split("\n").Length;
+    public Sigma16Parser.ProgramContext? Tree { get; private set; }
+
+    public int NumLines => _content.Split("\n").Length;
 
     public string GetLine(int lineNumber)
     {
-        return _text.Split("\n")[lineNumber - 1];
+        return _content.Split("\n")[lineNumber - 1];
+    }
+
+    public void SetContent(string content)
+    {
+        _content = content;
+        (Tree, _errors) = Assembler.Parse(_content);
     }
 
     public void AddError(SourceError error)
@@ -39,25 +48,13 @@ public class Source
         return _errors.Count != 0;
     }
 
-    public static async Task<Source> FromFileStreamAsync(Stream fileStream)
-    {
-        var fileReader = new StreamReader(fileStream);
-
-        return new Source(await fileReader.ReadToEndAsync());
-    }
-
-    public static Source FromString(string text)
-    {
-        return new Source(text);
-    }
-
     public override string ToString()
     {
-        return _text;
+        return _content;
     }
 
     public Stream AsStream()
     {
-        return new MemoryStream(Encoding.UTF8.GetBytes(_text));
+        return new MemoryStream(Encoding.UTF8.GetBytes(_content));
     }
 }

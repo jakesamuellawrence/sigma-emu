@@ -55,9 +55,9 @@
 
     private async Task EditorContentChanged(ModelContentChangedEvent e)
     {
-        if (_codeEditor is null) return;
+        if (_codeEditor is null || _source is null) return;
 
-        _source = Source.FromString(await _codeEditor.GetValue());
+        _source.SetContent(await _codeEditor.GetValue());
     }
 
     private async Task SaveSourceAsync()
@@ -65,7 +65,7 @@
         if (_source is null) return;
 
         var sourceStream = _source.AsStream();
-        var filename = "test.sig";
+        var filename = _source.FileName;
 
         using var streamReference = new DotNetStreamReference(sourceStream);
 
@@ -74,10 +74,14 @@
 
     private async void LoadFile(IBrowserFile file)
     {
-        var fileStream = file.OpenReadStream();
-        _source = await Source.FromFileStreamAsync(fileStream);
+        var streamReader = new StreamReader(file.OpenReadStream());
+
+        _source = new Source(file.Name, await streamReader.ReadToEndAsync());
+
         _listing = null;
+
         _codeEditor?.SetValue(_source.ToString());
+
         StateHasChanged();
     }
 
