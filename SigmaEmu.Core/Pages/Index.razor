@@ -2,7 +2,7 @@
 @using SigmaEmu.Assembler.Assembler
 @using SigmaEmu.Core.Models
 @using SigmaEmu.Shared
-@inject IJSRuntime _jsRuntime
+@inject IJSRuntime JsRuntime
 
 <div class="d-flex flex-column w-100 h-100">
     <Toolbar OnOpen="LoadFile" OnAssemble="AssembleSource" OnLoad="LoadListing" OnSave="SaveSourceAsync"
@@ -15,18 +15,18 @@
             <ListingDisplay Listing="_listing" ProgramCounter="_processor.ProgramCounter"
                             OnUpdateBreakpoints="_processor.SetBreakpoints"/>
         }
-        else if (_source != null)
+        else
         {
             <StandaloneCodeEditor @ref=_codeEditor ConstructionOptions="EditorConstructionOptions"
                                   CssClass="w-100 h-100"
                                   OnDidChangeModelContent="EditorContentChanged"/>
         }
-        else
-        {
-            <div class="w-100 h-100 bg-grey-darkest d-flex justify-content-around align-items-center">
-                <LoadFilePrompt LoadFileEvent="LoadFile"/>
-            </div>
-        }
+        @* else *@
+        @* { *@
+        @*     $1$ <div class="w-100 h-100 bg-grey-darkest d-flex justify-content-around align-items-center"> #1# *@
+        @*     $1$     <LoadFilePrompt LoadFileEvent="LoadFile"/> #1# *@
+        @*     $1$ </div> #1# *@
+        @* } *@
         <ProcessorStatus Processor="_processor" OnPcEdited="StateHasChanged" OnPlay="_processor.Play"
                          OnStep="_processor.Step" OnReset="_processor.Reset" OnPause="_processor.Pause"
                          OnStop="_processor.Stop"/>
@@ -36,7 +36,7 @@
 
 @code {
 
-    private Source? _source;
+    private Source _source = new("new.txt", "");
     private Listing? _listing;
 
     private StandaloneCodeEditor? _codeEditor = new();
@@ -46,6 +46,14 @@
     protected override void OnInitialized()
     {
         _processor.OnTick += StateHasChanged;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (_codeEditor is null) return;
+
+        await JsRuntime.InvokeVoidAsync("blazorMonaco.editor.registerSigma16");
+        await Global.SetModelLanguage(await _codeEditor.GetModel(), "Sigma16");
     }
 
     private void Reset()
@@ -69,7 +77,7 @@
 
         using var streamReference = new DotNetStreamReference(sourceStream);
 
-        await _jsRuntime.InvokeVoidAsync("downloadFileFromStream", filename, streamReference);
+        await JsRuntime.InvokeVoidAsync("downloadFileFromStream", filename, streamReference);
     }
 
     private async void LoadFile(IBrowserFile file)
