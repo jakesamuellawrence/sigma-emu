@@ -1,0 +1,26 @@
+﻿<div class="bg-grey-main text-text-lighter p-3 d-inline-block rounded-2 flex-grow-0">
+    <p class="text-center">No file currently open. <br/> Please either open one or create a new one</p>
+    <div class="d-flex flex-row justify-content-center w-100 gap-4">
+        <div class="bg-grey-lighter border border-2 border-dark rounded-2 px-4"
+             @onclick="OnNew" role="button">
+            New
+        </div>
+        <FileUpload ProcessFile="LoadFileEvent">
+            <div class="bg-grey-lighter border border-2 border-dark rounded-2 px-4">
+                Open
+            </div>
+        </FileUpload>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback<IBrowserFile> LoadFileEvent { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback OnNew { get; set; }
+
+}

@@ -1,9 +1,7 @@
 ﻿<div class="bg-grey-darker d-flex flex-row align-items-center p-2 ps-3 border-bottom border-2 border-dark gap-4">
-    <FileUpload ProcessFile="OnOpen">
-        <SvgButton Label="Open" Enabled="@CanOpen">
-            <Icons.Folder Height="@Height"/>
-        </SvgButton>
-    </FileUpload>
+    <SvgButton Label="New" Enabled="CanOpen" OnClick="OnNew">
+        <Icons.File Height="@Height"/>
+    </SvgButton>
     <SvgButton Enabled="CanAssemble">
         <Icons.RightArrow Height="@Height"/>
     </SvgButton>
@@ -22,6 +20,11 @@
     }
     <div class="h-50 border border-@separatorColour border-3 rounded-2"></div>
 
+    <FileUpload ProcessFile="OnOpen">
+        <SvgButton Label="Open" Enabled="@CanOpen">
+            <Icons.Folder Height="@Height"/>
+        </SvgButton>
+    </FileUpload>
     <SvgButton OnClick="@OnSave" Enabled="@CanSave" Label="Save">
         <Icons.Save Height="@Height"/>
     </SvgButton>
@@ -43,6 +46,10 @@
 
     [Parameter]
     public bool CanSave { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback OnNew { get; set; }
 
     [Parameter]
     [EditorRequired]

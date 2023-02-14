@@ -5,7 +5,7 @@
 @inject IJSRuntime JsRuntime
 
 <div class="d-flex flex-column w-100 h-100">
-    <Toolbar OnOpen="LoadFile" OnAssemble="AssembleSource" OnLoad="LoadListing" OnSave="SaveSourceAsync"
+    <Toolbar OnNew="NewSource" OnOpen="LoadFile" OnAssemble="AssembleSource" OnLoad="LoadListing" OnSave="SaveSourceAsync"
              CanOpen="true" CanAssemble="@(_source is not null)" CanLoad="@(_listing is not null)"
              CanSave="@(_source is not null)"
              Height="40px"/>
@@ -25,7 +25,7 @@
         else
         {
             <div class="w-100 h-100 bg-grey-darkest d-flex justify-content-around align-items-center">
-                <LoadFilePrompt LoadFileEvent="LoadFile"/>
+                <NoFilePrompt LoadFileEvent="LoadFile" OnNew="NewSource"/>
             </div>
         }
         <ProcessorStatus Processor="_processor" OnPcEdited="StateHasChanged" OnPlay="_processor.Play"
@@ -78,6 +78,12 @@
         using var streamReference = new DotNetStreamReference(sourceStream);
 
         await JsRuntime.InvokeVoidAsync("downloadFileFromStream", filename, streamReference);
+    }
+
+    private void NewSource()
+    {
+        _source = new Source("new.txt", "");
+        _codeEditor?.SetValue(_source.ToString());
     }
 
     private async void LoadFile(IBrowserFile file)
