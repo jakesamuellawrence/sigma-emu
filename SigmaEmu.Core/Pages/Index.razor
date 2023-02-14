@@ -34,7 +34,6 @@
     </div>
 </div>
 
-
 @code {
 
     private Source? _source;
@@ -47,12 +46,6 @@
     protected override void OnInitialized()
     {
         _processor.OnTick += StateHasChanged;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Console.WriteLine("initialising");
-    // await JsRuntime.InvokeVoidAsync("blazorMonaco.editor.waitTillMonacoLoaded");
     }
 
     private async Task OnMonacoEditorInitialised()
