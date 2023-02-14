@@ -15,18 +15,19 @@
             <ListingDisplay Listing="_listing" ProgramCounter="_processor.ProgramCounter"
                             OnUpdateBreakpoints="_processor.SetBreakpoints"/>
         }
-        else
+        else if (_source != null)
         {
             <StandaloneCodeEditor @ref=_codeEditor ConstructionOptions="EditorConstructionOptions"
                                   CssClass="w-100 h-100"
-                                  OnDidChangeModelContent="EditorContentChanged"/>
+                                  OnDidChangeModelContent="EditorContentChanged"
+                                  OnDidInit="OnMonacoEditorInitialised"/>
         }
-        @* else *@
-        @* { *@
-        @*     $1$ <div class="w-100 h-100 bg-grey-darkest d-flex justify-content-around align-items-center"> #1# *@
-        @*     $1$     <LoadFilePrompt LoadFileEvent="LoadFile"/> #1# *@
-        @*     $1$ </div> #1# *@
-        @* } *@
+        else
+        {
+            <div class="w-100 h-100 bg-grey-darkest d-flex justify-content-around align-items-center">
+                <LoadFilePrompt LoadFileEvent="LoadFile"/>
+            </div>
+        }
         <ProcessorStatus Processor="_processor" OnPcEdited="StateHasChanged" OnPlay="_processor.Play"
                          OnStep="_processor.Step" OnReset="_processor.Reset" OnPause="_processor.Pause"
                          OnStop="_processor.Stop"/>
@@ -36,10 +37,10 @@
 
 @code {
 
-    private Source _source = new("new.txt", "");
+    private Source? _source;
     private Listing? _listing;
 
-    private StandaloneCodeEditor? _codeEditor = new();
+    private StandaloneCodeEditor? _codeEditor;
 
     private readonly Processor _processor = new();
 
@@ -49,6 +50,12 @@
     }
 
     protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("initialising");
+    // await JsRuntime.InvokeVoidAsync("blazorMonaco.editor.waitTillMonacoLoaded");
+    }
+
+    private async Task OnMonacoEditorInitialised()
     {
         if (_codeEditor is null) return;
 
