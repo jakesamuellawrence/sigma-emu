@@ -18,7 +18,6 @@ let registers = [
 let dataKeyword = ["data"];
 
 blazorMonaco.editor.registerSigma16 = function () {
-    console.log("defining lang");
 
     monaco.languages.register({
         id: "Sigma16"
@@ -46,11 +45,8 @@ blazorMonaco.editor.registerSigma16 = function () {
         }
     });
 
-    console.log(monaco);
-
     monaco.languages.registerCompletionItemProvider("Sigma16", {
         provideCompletionItems: (model, position) => {
-            console.log("trying to autocomplete");
             let keywords = mnemonics.concat(registers);
             let suggestions = [
                 ...keywords.map(keyword => {
@@ -65,7 +61,4 @@ blazorMonaco.editor.registerSigma16 = function () {
             return {suggestions: suggestions}
         },
     });
-
-    console.log("autocomplete added");
 }
-    

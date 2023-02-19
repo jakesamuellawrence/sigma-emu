@@ -1,0 +1,37 @@
+startfor
+    load    R1, x[R0]
+    load    R2, i[R0]
+    load    R3, n[R0]
+
+    cmplt   R4, R2, R3
+    jumpf   R4, endfor[R0]
+
+    load    R5, v1[R2]
+    load    R6, v2[R2]
+    mul     R5, R5, R6
+    add     R1, R1, R5
+    store   R1, x[R0]
+
+    lea     R7, 1[R0]
+    add     R2, R2, R7
+    store   R2, i[R0]
+    jump    startfor[R0]
+endfor
+
+trap R0,R0,R0
+
+x   data 0
+i   data 0
+n   data 6
+v1  data 12
+    data 15
+    data 8
+    data 10
+    data 7
+    data 8
+v2  data 9
+    data 17
+    data 11
+    data 8
+    data 2
+    data 1

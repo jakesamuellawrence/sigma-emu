@@ -1,6 +1,10 @@
 ﻿namespace SigmaEmu.Shared;
 
-public class SourceError : Error
+public struct SourceError
 {
-    public new int LineNumber { get; init; }
+    public int StartLine { get; init; }
+    public int EndLine { get; init; }
+    public int StartColumn { get; init; }
+    public int EndColumn { get; init; }
+    public string Message { get; init; }
 }

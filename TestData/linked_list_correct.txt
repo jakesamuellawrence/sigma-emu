@@ -1,0 +1,63 @@
+; Program for manipulating a linked list. 
+; A function for inserting a new node into the list is defined, then called a number of times
+; Each node in the list takes the form:
+;       node.v = the value held by the node
+;       node.next = the address of the start of the next node
+
+;;;;;;;;
+; Main program
+; Adds 3 nodes, with values 2,3,4
+
+; insert(2);
+lea     R1, 2[R0]
+jal     R14, fn_insert[R0]
+; insert(3);
+lea     R1, 3[R0]
+jal     R14, fn_insert[R0]
+; insert(4);
+lea     R1, 3[R0]
+jal     R14, fn_insert[R0]
+
+;;;;;;;;
+; function for inserting a node at the end of list
+; Takes it's parameter, value, in R1, which represents the value of the new node
+; Expects return address to be in R14
+; Uses registers:
+;   R1 - value
+;   R2 - last
+;   R14 - return address
+fn_insert
+    ; last = &list
+    lea     R2, list[R0]
+
+    ; while (last->next != NULL)
+    ;       last = last->next
+    startwhile
+        load    R5, 1[R4]   ; R5 := last->next
+        cmpeq   R6, R5, R0 ; R6 := (last->next == NULL)
+        jumpt   R6, endwhile[R0]  ; jump to end if last->next == NULL
+
+        load    R2, 0[R5]   ; last = last->next
+
+        jump    startwhile[R0]
+    endwhile
+
+    ; *(last + node_size) := value
+    load    R3, node_size[R0]   ; R3 := node_size
+    add     R4, R2, R3          ; R3 := last + node_size
+    store   R1, 0[R4]           ; *(last + node_size) := value
+
+    ; *(last + node_size + 1) := NULL
+    store   R0, 1[R4]
+
+    ; last->next = last + node_size
+    add     R3, R3, R2          ; R3 := last + node_size
+    store   R3, 1[R2]           ; last->next = last + node_size
+
+    ; return
+    jump    0[R14]
+
+node_size   data 2
+list        data 1      ; value of node
+            data 0      ; NULL pointer
+            

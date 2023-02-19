@@ -15,7 +15,10 @@ public class ErrorListener : BaseErrorListener
         Errors.Add(new SourceError
         {
             Message = msg,
-            LineNumber = line
+            StartLine = offendingSymbol.Line,
+            EndLine = offendingSymbol.Line,
+            StartColumn = charPositionInLine + 1,
+            EndColumn = charPositionInLine + offendingSymbol.Text.Length + 1
         });
     }
 

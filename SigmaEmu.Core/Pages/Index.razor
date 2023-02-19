@@ -66,6 +66,8 @@
         if (_codeEditor is null || _source is null) return;
 
         _source.SetContent(await _codeEditor.GetValue());
+
+        await JsRuntime.InvokeVoidAsync("blazorMonaco.editor.SetErrors", _source.Errors);
     }
 
     private async Task SaveSourceAsync()
@@ -118,9 +120,10 @@
     {
         return new StandaloneEditorConstructionOptions
         {
-            Padding = new EditorPaddingOptions { Top = 10, Bottom = 10 },
+            Padding = new EditorPaddingOptions { Top = 30, Bottom = 30 },
             Theme = "vs-dark",
-            Value = _source?.ToString()
+            Value = _source?.ToString(),
+            FixedOverflowWidgets = true
         };
     }
 

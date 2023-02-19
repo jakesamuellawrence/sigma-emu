@@ -6,14 +6,13 @@ namespace SigmaEmu.Assembler.Assembler;
 public class Source
 {
     private string _content;
-    private List<SourceError> _errors;
 
     public Source(string fileName, string content)
     {
         _content = content;
         FileName = fileName;
 
-        (Tree, _errors) = Assembler.Parse(_content);
+        (Tree, Errors) = Assembler.Parse(_content);
     }
 
     public string FileName { get; }
@@ -21,6 +20,8 @@ public class Source
     public Sigma16Parser.ProgramContext? Tree { get; private set; }
 
     public int NumLines => _content.Split("\n").Length;
+
+    public List<SourceError> Errors { get; private set; }
 
     public string GetLine(int lineNumber)
     {
@@ -30,12 +31,12 @@ public class Source
     public void SetContent(string content)
     {
         _content = content;
-        (Tree, _errors) = Assembler.Parse(_content);
+        (Tree, Errors) = Assembler.Parse(_content);
     }
 
     public void AddError(SourceError error)
     {
-        _errors.Add(error);
+        Errors.Add(error);
     }
 
     public void AddErrors(IEnumerable<SourceError> errors)
@@ -45,7 +46,7 @@ public class Source
 
     public bool HasErrors()
     {
-        return _errors.Count != 0;
+        return Errors.Count != 0;
     }
 
     public override string ToString()
