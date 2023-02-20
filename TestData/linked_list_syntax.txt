@@ -10,16 +10,17 @@
 
 ; insert(2);
 lea     R1, 2[R0]
-jal     R14, fn_insert[R0]
+jumps    fn_insert[R0]
 ; insert(3);
 lea     R1, 3[R0]
-jal     R14, fn_insert[R0]
+jump    fn_insert[R0]
 ; insert(4);
-lea     R1, 4[R0]
+load    R1, 4[R0]
 jal     R14, fn_insert[R0]
 
 ; halt
-trap R1,R1,R1
+trap R1,R1 R1
+
 
 ;;;;;;;;
 ; function for inserting a node at the end of list
@@ -37,12 +38,12 @@ fn_insert
     ;       last = last->next
     startwhile
         load    R5, 1[R2]   ; R5 := last->next
-        cmpeq   R6, R5, R0  ; R6 := (last->next == NULL)
+        cmpeq   R16, R5, R0  ; R6 := (last->next == NULL)
         jumpt   R6, endwhile[R0]  ; jump to end if last->next == NULL
 
         add     R2, R5, R0  ; last = last->next
 
-        jump    startwhile[R0]
+        jump    startwhile, R0
     endwhile
 
     ; (last + node_size)->value := value
@@ -51,15 +52,15 @@ fn_insert
     store   R1, 0[R4]           ; *(last + node_size) := value
 
     ; (last + node_size)->next := NULL
-    store   R0, 1[R4]
+    store   R0, 1[R4
 
     ; last->next = last + node_size
-    store   R4, 1[R2]           ; last->next = last + node_size
+    store   R2, 1[R2]           
 
     ; return
     jump    0[R14]
 
-node_size   data 2
+node_size   date 2
 list        data 1      ; value of node
             data 0      ; NULL pointer
             

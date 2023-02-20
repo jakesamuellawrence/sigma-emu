@@ -10,12 +10,12 @@
 
 ; insert(2);
 lea     R1, 2[R0]
-jal     R14, fn_insert[R0]
+jump    fn_insert[R0]
 ; insert(3);
 lea     R1, 3[R0]
-jal     R14, fn_insert[R0]
+jump    fn_insert[R0]
 ; insert(4);
-lea     R1, 4[R0]
+load    R1, 4[R0]
 jal     R14, fn_insert[R0]
 
 ; halt
@@ -54,7 +54,7 @@ fn_insert
     store   R0, 1[R4]
 
     ; last->next = last + node_size
-    store   R4, 1[R2]           ; last->next = last + node_size
+    store   R2, 1[R2]           
 
     ; return
     jump    0[R14]
