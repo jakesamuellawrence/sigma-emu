@@ -17,11 +17,11 @@
                 <span class="text-text-write">@error.Format()</span>
             }
             <div class="d-flex flex-row gap-4 fw-bold">
-                <span class="square overflow-hidden text-center">BP</span>
-                <span class="col-1">Line</span>
-                <span class="col-1">Address</span>
-                <span class="col-1">Code</span>
-                <span class="col">Source</span>
+                <span style="width: @(BpColWidth)px">BP</span>
+                <span style="width: @(LineNumberColWidth)px">Line</span>
+                <span style="width: @(AddressColWidth)px">Address</span>
+                <span style="width: @(CodeColWidth)px">Code</span>
+                <span>Source</span>
             </div>
             @for (var lineNumber = 1; lineNumber <= Listing.NumLines; lineNumber++)
             {
@@ -32,7 +32,8 @@
                 }
                 <div class="d-flex flex-row gap-4">
                     <div @onclick="() => {if (line.HasBreakpoint) RemoveBreakpoint(line); else AddBreakpoint(line);}"
-                         class="square d-flex justify-content-center align-items-center"
+                         class="flex-shrink-0 d-flex justify-content-center align-items-center"
+                         style="width: @(BpColWidth)px"
                          role="button">
                         @if (line.HasBreakpoint)
                         {
@@ -40,13 +41,13 @@
                             </div>
                         }
                     </div>
-                    <span class="col-1">@lineNumber</span>
-                    <span class="col-1">@(line.Address is null ? "" : line.Address.AsHexString())</span>
-                    <span class="col-1">
+                    <span class="flex-shrink-0" style="width: @(LineNumberColWidth)px">@lineNumber</span>
+                    <span class="flex-shrink-0" style="width: @(AddressColWidth)px">@(line.Address is null ? "" : line.Address.AsHexString())</span>
+                    <span class="flex-shrink-0" style="width: @(CodeColWidth)px">
                         @(line.Code1 is null ? "" : line.Code1.AsHexString())
                         @(line.Code2 is null ? "" : line.Code2.AsHexString())
                     </span>
-                    <span class="col" style="white-space: pre">@line.Source</span>
+                    <span class="flex-shrink-0" style="white-space: pre">@line.Source</span>
                 </div>
                 @foreach (var error in Listing.GetErrorsForLine(lineNumber))
                 {
@@ -73,6 +74,11 @@
 </div>
 
 @code {
+
+        const int BpColWidth = 24;
+        const int LineNumberColWidth = 36;
+        const int AddressColWidth = 62;
+        const int CodeColWidth = 80;
 
     [Parameter]
     [EditorRequired]
