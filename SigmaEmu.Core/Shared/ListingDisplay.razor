@@ -17,10 +17,10 @@
                 <span class="text-text-write">@error.Format()</span>
             }
             <div class="d-flex flex-row gap-4 fw-bold">
-                <span style="width: @(BpColWidth)px">BP</span>
-                <span style="width: @(LineNumberColWidth)px">Line</span>
-                <span style="width: @(AddressColWidth)px">Address</span>
-                <span style="width: @(CodeColWidth)px">Code</span>
+                <span class="flex-shrink-0" style="width: @(BpColWidth)px">BP</span>
+                <span class="flex-shrink-0" style="width: @(LineNumberColWidth)px">Line</span>
+                <span class="flex-shrink-0" style="width: @(AddressColWidth)px">Address</span>
+                <span class="flex-shrink-0" style="width: @(CodeColWidth)px">Code</span>
                 <span>Source</span>
             </div>
             @for (var lineNumber = 1; lineNumber <= Listing.NumLines; lineNumber++)
@@ -41,7 +41,7 @@
                             </div>
                         }
                     </div>
-                    <span class="flex-shrink-0" style="width: @(LineNumberColWidth)px">@lineNumber</span>
+                    <span class="flex-shrink-0 overflow-auto" style="width: @(LineNumberColWidth)px">@lineNumber</span>
                     <span class="flex-shrink-0" style="width: @(AddressColWidth)px">@(line.Address is null ? "" : line.Address.AsHexString())</span>
                     <span class="flex-shrink-0" style="width: @(CodeColWidth)px">
                         @(line.Code1 is null ? "" : line.Code1.AsHexString())
@@ -54,19 +54,22 @@
                     <span class="text-text-write">@error.Message</span>
                 }
             }
+
             <div class="d-flex flex-row gap-4 fw-bold mt-4">
-                <span class="col-1">Address</span>
-                <span class="col-2">Symbol</span>
-                <span class="col-1">Defined on</span>
-                <span class="col-1">Used on</span>
+                <span class="flex-shrink-0" style="width: @(BpColWidth)px"></span>
+                <span class="flex-shrink-0" style="width: @(LineNumberColWidth)px">Def</span>
+                <span class="flex-shrink-0" style="width: @(AddressColWidth)px">Address</span>
+                <span class="flex-shrink-0" style="width: @(CodeColWidth)px">Used</span>
+                <span>Symbol</span>
             </div>
             @foreach (var label in Listing.Labels)
             {
                 <div class="d-flex flex-row gap-4">
-                    <span class="col-1">@(label.Address?.AsHexString() ?? "")</span>
-                    <span class="col-2">@label.Name</span>
-                    <span class="col-1">@(label.DefinedOn)</span>
-                    <span class="col-1">[@(string.Join(", ", label.UsedOn))]</span>
+                    <span class="flex-shrink-0" style="width: @(BpColWidth)px"></span>
+                    <span class="flex-shrink-0 overflow-auto" style="width: @(LineNumberColWidth)px">@(label.DefinedOn)</span>
+                    <span class="flex-shrink-0" style="width: @(AddressColWidth)px">@(label.Address?.AsHexString() ?? "")</span>
+                    <span class="flex-shrink-0" style="width: @(CodeColWidth)px">[@(string.Join(", ", label.UsedOn))]</span>
+                    <span class="flex-shrink-0">@label.Name</span>
                 </div>
             }
         </div>
@@ -79,6 +82,10 @@
         const int LineNumberColWidth = 36;
         const int AddressColWidth = 62;
         const int CodeColWidth = 80;
+
+    // const int LabelAddressColWidth = LineNumberColWidth + AddressColWidth;
+    // const int LabelSymbolColWidth = 100;
+    // const int LabelDefinedColWidth = 90;
 
     [Parameter]
     [EditorRequired]
