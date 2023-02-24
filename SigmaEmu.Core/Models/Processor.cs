@@ -26,7 +26,8 @@ public class Processor
         };
         _clock.Stop();
 
-        for (var i = 0; i < MaxRegisters; i++) RegisterFile[i] = new Register();
+        RegisterFile[0] = new ReadOnlyRegister();
+        for (var i = 1; i < MaxRegisters; i++) RegisterFile[i] = new Register();
 
         _rrrMap = new Dictionary<RrrInstruction, Action<Register, Register, Register>>
         {

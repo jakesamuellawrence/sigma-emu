@@ -4,12 +4,12 @@ namespace SigmaEmu.Core.Models;
 
 public class WordStore
 {
-    private Word _value = Word.FromInt(0);
+    protected Word _value = Word.FromInt(0);
 
-    public bool WasWrittenTo { get; private set; }
-    public bool WasReadFrom { get; private set; }
+    public bool WasWrittenTo { get; protected set; }
+    public bool WasReadFrom { get; protected set; }
 
-    public Word Value
+    public virtual Word Value
     {
         get
         {
