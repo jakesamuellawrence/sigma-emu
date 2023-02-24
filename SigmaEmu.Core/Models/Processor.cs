@@ -166,7 +166,6 @@ public class Processor
         ProcessorState = ProcessorRunningState.Stopped;
 
         ResetReadWrite();
-        ResetBreakpoints();
     }
 
     public void SetBreakpoints(HashSet<Word> addresses)

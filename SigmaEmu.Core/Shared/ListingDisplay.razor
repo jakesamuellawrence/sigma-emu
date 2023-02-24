@@ -107,4 +107,9 @@
         OnUpdateBreakpoints.InvokeAsync(Listing?.GetBreakpointAddresses());
     }
 
+    protected override void OnInitialized()
+    {
+        OnUpdateBreakpoints.InvokeAsync(Listing?.GetBreakpointAddresses());
+    }
+
 }
