@@ -63,6 +63,8 @@
 
         await JsRuntime.InvokeVoidAsync("blazorMonaco.editor.registerSigma16");
         await Global.SetModelLanguage(await _codeEditor.GetModel(), "Sigma16");
+
+        await JsRuntime.InvokeVoidAsync("blazorMonaco.editor.SetErrors", _source?.Errors);
     }
 
     private void Reset()
