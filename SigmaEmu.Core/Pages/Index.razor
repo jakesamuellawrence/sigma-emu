@@ -97,6 +97,8 @@
     {
         _source = new Source("new.txt", "");
         _codeEditor?.SetValue(_source.ToString());
+
+        _listing = null;
     }
 
     private async void LoadFile(IBrowserFile file)
@@ -121,6 +123,8 @@
 
     private void LoadListing()
     {
+        Reset();
+
         Console.WriteLine("Loading Listing");
         if (_listing == null || _listing.HasErrors()) return;
         _processor.LoadListing(_listing);
