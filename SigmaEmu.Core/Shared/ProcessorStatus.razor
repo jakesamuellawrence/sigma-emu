@@ -10,22 +10,37 @@
         <div class="w-100 d-flex flex-row justify-content-around gap-4 align-items-center bg-grey-darkest rounded-2 p-2">
             <SvgButton OnClick="OnPlay" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
                        Active="Processor.ProcessorState == ProcessorRunningState.Playing">
-                <Icons.Play Height="30px"/>
+                <Icons.Play Height="@Height"/>
             </SvgButton>
+
+            <SvgButton OnClick="OnPlayFast" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
+                       Active="Processor.ProcessorState == ProcessorRunningState.PlayingFast">
+                <Icons.PlayFast Height="@Height"/>
+            </SvgButton>
+
+            <SvgButton OnClick="OnPlayUnbounded" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
+                       Active="Processor.ProcessorState == ProcessorRunningState.PlayingUnbounded">
+                <Icons.PlayFastest Height="@Height"/>
+            </SvgButton>
+
             <SvgButton OnClick="OnPause" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
                        Active="Processor.ProcessorState == ProcessorRunningState.Paused">
-                <Icons.Pause Height="30px"/>
+                <Icons.Pause Height="@Height"/>
             </SvgButton>
+
             <SvgButton OnClick="OnStop" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
                        Active="Processor.ProcessorState == ProcessorRunningState.Stopped">
-                <Icons.Stop Height="30px"/>
+                <Icons.Stop Height="@Height"/>
             </SvgButton>
+
             <div class="border-start border-2 border-text-main " style="height: 80%"></div>
+
             <SvgButton OnClick="OnStep" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped">
-                <Icons.Step Height="30px"/>
+                <Icons.Step Height="@Height"/>
             </SvgButton>
+
             <SvgButton OnClick="OnReset" Enabled="true">
-                <Icons.Reload Height="30px"/>
+                <Icons.Reload Height="@Height"/>
             </SvgButton>
         </div>
 
@@ -45,6 +60,9 @@
 @code {
 
     [Parameter]
+    public string Height { get; set; } = "30px";
+
+    [Parameter]
     [EditorRequired]
     public Processor? Processor { get; set; }
 
@@ -59,6 +77,13 @@
     [Parameter]
     [EditorRequired]
     public EventCallback OnPlay { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback OnPlayFast { get; set; }
+
+    [Parameter]
+    public EventCallback OnPlayUnbounded { get; set; }
 
     [Parameter]
     [EditorRequired]

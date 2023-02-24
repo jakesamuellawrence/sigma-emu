@@ -8,7 +8,9 @@ public class Processor
     public const int MaxRegisters = 16;
 
     private const int RemainderRegister = 15;
+
     private const int BaseClockTickTime = 1000;
+    private const int FastClockTickTime = 200;
 
     private readonly Timer _clock;
 
@@ -120,6 +122,21 @@ public class Processor
     public void Play()
     {
         ProcessorState = ProcessorRunningState.Playing;
+        _clock.Interval = BaseClockTickTime;
+        _clock.Start();
+    }
+
+    public void PlayFast()
+    {
+        ProcessorState = ProcessorRunningState.PlayingFast;
+        _clock.Interval = FastClockTickTime;
+        _clock.Start();
+    }
+
+    public void PlayUnbounded()
+    {
+        ProcessorState = ProcessorRunningState.PlayingUnbounded;
+        _clock.Interval = 0.001;
         _clock.Start();
     }
 
