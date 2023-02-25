@@ -6,7 +6,8 @@
 
 <div class="d-flex flex-column w-100 h-100">
     <Toolbar OnNew="NewSource" OnOpen="LoadFile" OnAssemble="AssembleSource" OnLoad="LoadListing" OnSave="SaveSourceAsync"
-             CanOpen="true" CanAssemble="@(_source is not null && !_source.HasErrors())" CanLoad="@(_listing is not null)"
+             CanOpen="true" CanAssemble="@(_source is not null && !_source.HasErrors())"
+             CanLoad="@(_listing is not null && !_listing.HasErrors())"
              CanSave="@(_source is not null)"
              Height="40px"/>
     <div class="d-flex flex-row overflow-hidden">
