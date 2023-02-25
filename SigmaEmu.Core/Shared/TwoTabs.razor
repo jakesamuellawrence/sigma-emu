@@ -1,0 +1,59 @@
+﻿<div class="d-flex flex-column w-100 h-100">
+    <div class="d-flex flex-row border-bottom border-2 border-dark">
+        <span class="@(ActiveTab == Tab.Left ? "bg-grey-lighter" : "bg-grey-darker") flex-grow-1 border-right p-2"
+              @onclick="() => SwitchTabs(Tab.Left)"
+              role="button">
+            @LeftLabel
+        </span>
+        @if (HasRightTab)
+        {
+            <span class="@(ActiveTab == Tab.Right ? "bg-grey-lighter" : "bg-grey-darker") flex-grow-1 p-2"
+                  @onclick="() => SwitchTabs(Tab.Right)"
+                  role="button">
+                @RightLabel
+            </span>
+        }
+    </div>
+    <div class="w-100 h-100">
+        @(ActiveTab == Tab.Left ? LeftTab : RightTab)
+    </div>
+</div>
+
+@code {
+
+    public enum Tab
+    {
+        Left,
+        Right
+    }
+
+    [Parameter]
+    public Tab ActiveTab { get; set; } = Tab.Left;
+
+    [Parameter]
+    [EditorRequired]
+    public bool HasRightTab { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public string? LeftLabel { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public string? RightLabel { get; set; }
+
+    [Parameter]
+    public RenderFragment? LeftTab { get; set; }
+
+    [Parameter]
+    public RenderFragment? RightTab { get; set; }
+
+    [Parameter]
+    public EventCallback<Tab> OnSwitchTab { get; set; }
+
+    private void SwitchTabs(Tab tab)
+    {
+        OnSwitchTab.InvokeAsync(tab);
+    }
+
+}

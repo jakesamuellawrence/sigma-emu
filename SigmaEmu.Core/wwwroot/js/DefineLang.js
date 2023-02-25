@@ -18,7 +18,7 @@ let registers = [
 let dataKeyword = ["data"];
 
 blazorMonaco.editor.registerSigma16 = function () {
-
+    
     monaco.languages.register({
         id: "Sigma16"
     });

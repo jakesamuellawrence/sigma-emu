@@ -9,25 +9,38 @@
              CanOpen="true" CanAssemble="@(_source is not null && !_source.HasErrors())" CanLoad="@(_listing is not null)"
              CanSave="@(_source is not null)"
              Height="40px"/>
-    <div class="d-flex flex-row flex-grow-1 flex-shrink-1 overflow-auto">
-        @if (_listing != null)
-        {
-            <ListingDisplay Listing="_listing" ProgramCounter="_processor.ProgramCounter"
-                            OnUpdateBreakpoints="_processor.SetBreakpoints"/>
-        }
-        else if (_source != null)
-        {
-            <StandaloneCodeEditor @ref=_codeEditor ConstructionOptions="EditorConstructionOptions"
-                                  CssClass="w-100 h-100"
-                                  OnDidChangeModelContent="EditorContentChanged"
-                                  OnDidInit="OnMonacoEditorInitialised"/>
-        }
-        else
-        {
-            <div class="w-100 h-100 bg-grey-darkest d-flex justify-content-around align-items-center">
-                <NoFilePrompt LoadFileEvent="LoadFile" OnNew="NewSource"/>
-            </div>
-        }
+    <div class="d-flex flex-row overflow-hidden">
+        <div class="flex-grow-1 flex-shrink-1" style="min-width: 0">
+            @if (_source is null)
+            {
+                <div class="w-100 h-100 bg-grey-darkest d-flex justify-content-around align-items-center">
+                    <NoFilePrompt LoadFileEvent="LoadFile" OnNew="NewSource"/>
+                </div>
+            }
+            else
+            {
+                <TwoTabs LeftLabel="Source" RightLabel="Listing" HasRightTab="_listing is not null"
+                         OnSwitchTab="tab => _activeTab = tab"
+                         ActiveTab="_activeTab">
+                    <LeftTab>
+                        <StandaloneCodeEditor
+                            @ref="_codeEditor"
+                            ConstructionOptions="EditorConstructionOptions"
+                            OnDidInit="OnMonacoEditorInitialised"
+                            OnDidChangeModelContent="EditorContentChanged"
+                            Id="code_editor"
+                            CssClass="w-100 h-100"/>
+                    </LeftTab>
+                    <RightTab>
+                        @if (_listing is not null)
+                        {
+                            <ListingDisplay Listing="_listing" ProgramCounter="_processor.ProgramCounter"
+                                            OnUpdateBreakpoints="_processor.SetBreakpoints"/>
+                        }
+                    </RightTab>
+                </TwoTabs>
+            }
+        </div>
         <ProcessorStatus Processor="_processor" OnPcEdited="StateHasChanged" OnPlay="_processor.Play"
                          OnPlayFast="_processor.PlayFast" OnPlayUnbounded="_processor.PlayUnbounded"
                          OnStep="_processor.Step" OnReset="_processor.Reset" OnPause="_processor.Pause"
@@ -50,6 +63,8 @@
     private Listing? _listing;
 
     private StandaloneCodeEditor? _codeEditor;
+
+    private TwoTabs.Tab _activeTab = TwoTabs.Tab.Left;
 
     private readonly Processor _processor = new();
 
@@ -100,6 +115,7 @@
         _codeEditor?.SetValue(_source.ToString());
 
         _listing = null;
+        _activeTab = TwoTabs.Tab.Left;
     }
 
     private async void LoadFile(IBrowserFile file)
@@ -109,6 +125,7 @@
         _source = new Source(file.Name, await streamReader.ReadToEndAsync());
 
         _listing = null;
+        _activeTab = TwoTabs.Tab.Left;
 
         _codeEditor?.SetValue(_source.ToString());
 
@@ -119,6 +136,7 @@
     {
         if (_source is null || _source.HasErrors()) return;
         _listing = Assembler.Assemble(_source);
+        _activeTab = TwoTabs.Tab.Right;
         Reset();
     }
 
@@ -136,7 +154,7 @@
     {
         return new StandaloneEditorConstructionOptions
         {
-            Padding = new EditorPaddingOptions { Top = 30, Bottom = 30 },
+            Padding = new EditorPaddingOptions { Top = 10, Bottom = 10 },
             Theme = "vs-dark",
             Value = _source?.ToString(),
             FixedOverflowWidgets = true
