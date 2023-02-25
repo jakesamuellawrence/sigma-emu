@@ -6,7 +6,7 @@
     }
     else
     {
-        <h3>Control &#x2022 @Processor.ProcessorState</h3>
+        <h3>Control &#x2022 @Processor.ProcessorState.ForDisplay()</h3>
         <div class="w-100 d-flex flex-row justify-content-around gap-4 align-items-center bg-grey-darkest rounded-2 p-2">
             <SvgButton OnClick="OnPlay" Enabled="Processor.ProcessorState != ProcessorRunningState.Stopped"
                        Active="Processor.ProcessorState == ProcessorRunningState.Playing">
