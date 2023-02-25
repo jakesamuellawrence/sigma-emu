@@ -20,7 +20,8 @@
             }
             else
             {
-                <TwoTabs LeftLabel="Source" RightLabel="Listing" HasRightTab="_listing is not null"
+                <TwoTabs LeftLabel="@($"{_source.FileName}")" RightLabel="@("Listing")"
+                         HasRightTab="_listing is not null"
                          OnSwitchTab="tab => _activeTab = tab"
                          ActiveTab="_activeTab">
                     <LeftTab>
